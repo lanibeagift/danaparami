@@ -86,7 +86,7 @@
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
         
         .audio-player-container { margin-top: 15px; width: 100%; display: flex; justify-content: center; }
-        audio { height: 40px; border-radius: 20px; outline: none; }
+        audio { height: 45px; border-radius: 20px; outline: none; width: 100%; }
         
         .speed-controls { display: flex; gap: 15px; margin-top: 15px; margin-bottom: 30px; }
         .divider { width: 100%; height: 1px; border-top: 1px dashed #cbd5e1; margin: 30px 0; }
@@ -147,13 +147,19 @@
           { id: 32, word: "Refused admission", ipa: "/rɪˈfjuːzd ədˈmɪʃn/", vi: "Bị từ chối nhận vào khóa thiền", example: "Have you ever been refused admission to a course or had to leave a course for any reason?" }
         ];
 
+        // BỔ SUNG ĐẦY ĐỦ CÂU HỎI TRONG ĐƠN CHO ROLEPLAY
         const roleplayQuestions = [
             { id: 1, en: "Are you committed fully and exclusively to the practice of Vipassana meditation?", vi: "Quý vị có cam kết hoàn toàn và duy nhất với việc thực hành thiền Vipassana không?" },
-            { id: 2, en: "Do you now have or have you had in the past any mental difficulties?", vi: "Hiện tại quý vị có đang hoặc đã từng gặp khó khăn gì về tinh thần không?" },
-            { id: 3, en: "Are you presently taking any medication?", vi: "Hiện tại quý vị có đang dùng bất kỳ loại thuốc nào không?" },
-            { id: 4, en: "Have you had any personal tragedy in the past year?", vi: "Quý vị có gặp bi kịch cá nhân nào trong năm qua không?" },
-            { id: 5, en: "Are your relations harmonious?", vi: "Mối quan hệ của quý vị có hòa hợp hay không?" },
-            { id: 6, en: "Is your spouse in favor of you taking the course?", vi: "Vợ/chồng của quý vị có ủng hộ việc quý vị tham gia khóa thiền không?" }
+            { id: 2, en: "Have you maintained the Five Precepts in your daily life since your last course?", vi: "Quý vị có duy trì Năm Giới trong đời sống hàng ngày kể từ khóa thiền gần nhất không?" },
+            { id: 3, en: "Do you practice any other meditation techniques or energy-based healing techniques?", vi: "Quý vị có thực hành phương pháp thiền nào khác hay các kỹ thuật chữa lành bằng năng lượng không?" },
+            { id: 4, en: "Are your relations harmonious?", vi: "Mối quan hệ của quý vị có hòa hợp hay không?" },
+            { id: 5, en: "Is your spouse in favor of you taking the course?", vi: "Vợ/chồng của quý vị có ủng hộ việc quý vị tham gia khóa thiền không?" },
+            { id: 6, en: "Do you now have or have you had in the past any mental difficulties?", vi: "Hiện tại quý vị có đang hoặc đã từng gặp khó khăn gì về tinh thần không?" },
+            { id: 7, en: "Do you now have any chronic health conditions, injuries, or recent surgeries?", vi: "Hiện tại quý vị có tình trạng sức khỏe mãn tính, chấn thương hay ca phẫu thuật gần đây nào không?" },
+            { id: 8, en: "Are you presently taking any medication (prescribed or otherwise)?", vi: "Hiện tại quý vị có đang dùng bất kỳ loại thuốc nào (theo toa hoặc cách khác) không?" },
+            { id: 9, en: "Have you had any personal tragedy in the past year?", vi: "Quý vị có gặp bi kịch cá nhân nào trong năm qua không?" },
+            { id: 10, en: "Have you ever been refused admission to a course or had to leave a course?", vi: "Quý vị đã bao giờ bị từ chối nhận vào khóa thiền hoặc phải rời khỏi khóa thiền chưa?" },
+            { id: 11, en: "Do you understand that all information will be treated as confidential?", vi: "Quý vị có hiểu rằng tất cả thông tin sẽ được giữ bí mật không?" }
         ];
 
         const Topic1App = () => {
@@ -168,7 +174,7 @@
           const [typeInput, setTypeInput] = useState("");
           const [typeResult, setTypeResult] = useState(null); 
 
-          // Recording States (Dùng chung cho cả Vocab và Roleplay)
+          // Recording States (Chung cho Vocab & Roleplay)
           const [isRecording, setIsRecording] = useState(false);
           const [audioURL, setAudioURL] = useState(null);
           const mediaRecorderRef = useRef(null);
@@ -203,7 +209,7 @@
             }
           };
 
-          // --- LOGIC GHI ÂM (Microphone) ---
+          // --- LOGIC GHI ÂM (Microphone Thật) ---
           const startRecording = async () => {
               try {
                   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -221,14 +227,13 @@
                   setIsRecording(true);
                   setAudioURL(null); // Xóa file cũ nếu thu lại
               } catch (err) {
-                  alert("Không thể truy cập Micro. Vui lòng cấp quyền Micro cho trình duyệt nhé!");
+                  alert("Trình duyệt không được cấp quyền sử dụng Micro. Vui lòng cho phép Micro trong cài đặt trình duyệt nhé!");
               }
           };
 
           const stopRecording = () => {
               if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
                   mediaRecorderRef.current.stop();
-                  // Tắt đèn đỏ micro trên trình duyệt
                   mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
               }
               setIsRecording(false);
@@ -247,13 +252,12 @@
               setAudioURL(null);
           };
 
-
           // --- LOGIC TAB VOCABULARY ---
           const isNextEnabled = () => {
               if (currentStep === 1) return isFlipped;
               if (currentStep === 2) return quizResult === 'correct';
               if (currentStep === 3) return typeResult === 'correct';
-              if (currentStep === 4) return audioURL !== null; // Cho qua bài nếu đã thu âm
+              if (currentStep === 4) return audioURL !== null; // Cho qua bài nếu đã thu âm xong
               return false;
           };
 
@@ -309,7 +313,6 @@
               }
           };
 
-          // Handle Tab Switch
           const handleTabSwitch = (tab) => {
               setActiveMainTab(tab);
               resetRecordingState();
@@ -525,21 +528,22 @@
                       
                       <textarea 
                           className="rp-textarea"
-                          placeholder="Gõ câu trả lời bằng tiếng Anh, hoặc dùng micro để thu âm..."
+                          placeholder="Bạn có thể gõ câu trả lời bằng tiếng Anh, hoặc dùng micro để thu âm lời nói..."
                           value={rpAnswer}
                           onChange={(e) => setRpAnswer(e.target.value)}
                       ></textarea>
 
                       <div style={{display: 'flex', flexDirection: 'column', width: '100%', gap: '15px'}}>
-                          <div style={{display: 'flex', gap: '15px', alignItems: 'center'}}>
+                          <div style={{display: 'flex', gap: '15px', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
                               <button 
                                   className={`btn-record ${isRecording ? 'recording' : ''} ${!isRecording && audioURL ? 'recorded' : ''}`}
                                   onClick={toggleRecording}
+                                  style={{flexShrink: 0}}
                               >
                                   {isRecording ? '⏹️ Bấm để DỪNG thu' : (audioURL ? '🔄 Thu âm lại' : '🎤 Bấm để trả lời')}
                               </button>
                               
-                              {audioURL && <audio src={audioURL} controls style={{flex: 1, height: '45px'}} />}
+                              {audioURL && <audio src={audioURL} controls style={{flex: 1, minWidth: '200px'}} />}
                           </div>
 
                           <button 
