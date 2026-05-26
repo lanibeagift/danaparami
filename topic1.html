@@ -77,10 +77,16 @@
         /* Roleplay Specific */
         .rp-textarea { width: 100%; height: 120px; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; font-size: 18px; font-family: inherit; outline: none; resize: none; transition: border-color 0.2s; margin-top: 25px; margin-bottom: 15px;}
         .rp-textarea:focus { border-color: #14b8a6; }
-        .btn-record { background-color: #14b8a6; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 16px; transition: all 0.2s; }
+        
+        /* Record Button Styles */
+        .btn-record { background-color: #14b8a6; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; transition: all 0.2s; }
         .btn-record:hover { background-color: #0d9488; }
         .btn-record.recording { background-color: #ef4444; animation: pulse 1.5s infinite; }
+        .btn-record.recorded { background-color: #f59e0b; color: white; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        
+        .audio-player-container { margin-top: 15px; width: 100%; display: flex; justify-content: center; }
+        audio { height: 40px; border-radius: 20px; outline: none; }
         
         .speed-controls { display: flex; gap: 15px; margin-top: 15px; margin-bottom: 30px; }
         .divider { width: 100%; height: 1px; border-top: 1px dashed #cbd5e1; margin: 30px 0; }
@@ -95,9 +101,8 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useRef } = React;
 
-        // DỮ LIỆU TỪ VỰNG (Đã xóa Nhóm 6)
         const vocabularyData = [
           // Nhóm 1: Personal Details
           { id: 1, word: "Location", ipa: "/ləʊˈkeɪʃən/", vi: "Địa điểm", example: "Location" },
@@ -106,7 +111,7 @@
           { id: 4, word: "Attach a recent photograph", ipa: "/əˈtætʃ ə ˈriːsnt ˈfəʊtəɡrɑːf/", vi: "Đính kèm một bức ảnh gần đây", example: "Please attach a recent photograph" },
           { id: 5, word: "Essential for identification", ipa: "/ɪˈsenʃl fər aɪˌdentɪfɪˈkeɪʃn/", vi: "Cần thiết để nhận dạng", example: "Essential for identification by the conducting teacher." },
           
-          // Nhóm 2: Meditation Experience & Course Info
+          // Nhóm 2: Meditation Experience
           { id: 6, word: "Intensive practice", ipa: "/ɪnˈtensɪv ˈpræktɪs/", vi: "Thực hành chuyên sâu", example: "The Special 10-Day course, Long Courses of 20 days or more and the Teachers' Self-Course are opportunities for deep, intensive practice of Vipassana meditation." },
           { id: 7, word: "Committed fully and exclusively", ipa: "/kəˈmɪtɪd ˈfʊli ənd ɪksˈkluːsɪvli/", vi: "Cam kết hoàn toàn và duy nhất", example: "Are you committed fully and exclusively to the practice of Vipassana meditation as taught by S.N." },
           { id: 8, word: "Authorized assistant teachers", ipa: "/ˈɔːθəraɪzd əˈsɪstənt ˈtiːtʃərz/", vi: "Các vị phụ giáo được ủy quyền", example: "Goenka and his authorized assistant teachers?" },
@@ -142,7 +147,6 @@
           { id: 32, word: "Refused admission", ipa: "/rɪˈfjuːzd ədˈmɪʃn/", vi: "Bị từ chối nhận vào khóa thiền", example: "Have you ever been refused admission to a course or had to leave a course for any reason?" }
         ];
 
-        // DỮ LIỆU ROLE-PLAY PHỎNG VẤN
         const roleplayQuestions = [
             { id: 1, en: "Are you committed fully and exclusively to the practice of Vipassana meditation?", vi: "Quý vị có cam kết hoàn toàn và duy nhất với việc thực hành thiền Vipassana không?" },
             { id: 2, en: "Do you now have or have you had in the past any mental difficulties?", vi: "Hiện tại quý vị có đang hoặc đã từng gặp khó khăn gì về tinh thần không?" },
@@ -153,10 +157,9 @@
         ];
 
         const Topic1App = () => {
-          // Main Tab State
-          const [activeMainTab, setActiveMainTab] = useState('vocabulary'); // 'vocabulary' hoặc 'roleplay'
+          const [activeMainTab, setActiveMainTab] = useState('vocabulary');
 
-          // Vocabulary States
+          // Vocab States
           const [currentIndex, setCurrentIndex] = useState(0);
           const [currentStep, setCurrentStep] = useState(1); 
           const [isFlipped, setIsFlipped] = useState(false);
@@ -164,12 +167,15 @@
           const [quizResult, setQuizResult] = useState(null); 
           const [typeInput, setTypeInput] = useState("");
           const [typeResult, setTypeResult] = useState(null); 
-          const [hasRecorded, setHasRecorded] = useState(false);
+
+          // Recording States (Dùng chung cho cả Vocab và Roleplay)
+          const [isRecording, setIsRecording] = useState(false);
+          const [audioURL, setAudioURL] = useState(null);
+          const mediaRecorderRef = useRef(null);
 
           // Roleplay States
           const [rpIndex, setRpIndex] = useState(0);
           const [rpAnswer, setRpAnswer] = useState("");
-          const [isRecordingRp, setIsRecordingRp] = useState(false);
           const [showHint, setShowHint] = useState(false);
 
           const currentItem = vocabularyData[currentIndex];
@@ -186,6 +192,7 @@
             }
           }, [currentStep, currentIndex, activeMainTab]);
 
+          // --- LOGIC PHÁT ÂM ---
           const playAudio = (text, rate = 1.0) => {
             if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
               window.speechSynthesis.cancel();
@@ -196,12 +203,57 @@
             }
           };
 
-          // --- LOGIC CHO TAB VOCABULARY ---
+          // --- LOGIC GHI ÂM (Microphone) ---
+          const startRecording = async () => {
+              try {
+                  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                  mediaRecorderRef.current = new MediaRecorder(stream);
+                  const chunks = [];
+                  
+                  mediaRecorderRef.current.ondataavailable = e => chunks.push(e.data);
+                  mediaRecorderRef.current.onstop = () => {
+                      const blob = new Blob(chunks, { type: 'audio/webm' });
+                      const url = URL.createObjectURL(blob);
+                      setAudioURL(url);
+                  };
+                  
+                  mediaRecorderRef.current.start();
+                  setIsRecording(true);
+                  setAudioURL(null); // Xóa file cũ nếu thu lại
+              } catch (err) {
+                  alert("Không thể truy cập Micro. Vui lòng cấp quyền Micro cho trình duyệt nhé!");
+              }
+          };
+
+          const stopRecording = () => {
+              if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+                  mediaRecorderRef.current.stop();
+                  // Tắt đèn đỏ micro trên trình duyệt
+                  mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+              }
+              setIsRecording(false);
+          };
+
+          const toggleRecording = () => {
+              if (isRecording) {
+                  stopRecording();
+              } else {
+                  startRecording();
+              }
+          };
+
+          const resetRecordingState = () => {
+              if (isRecording) stopRecording();
+              setAudioURL(null);
+          };
+
+
+          // --- LOGIC TAB VOCABULARY ---
           const isNextEnabled = () => {
               if (currentStep === 1) return isFlipped;
               if (currentStep === 2) return quizResult === 'correct';
               if (currentStep === 3) return typeResult === 'correct';
-              if (currentStep === 4) return hasRecorded;
+              if (currentStep === 4) return audioURL !== null; // Cho qua bài nếu đã thu âm
               return false;
           };
 
@@ -215,7 +267,7 @@
                   setQuizResult(null);
                   setTypeInput("");
                   setTypeResult(null);
-                  setHasRecorded(false);
+                  resetRecordingState();
               }
           };
 
@@ -241,30 +293,26 @@
               );
           };
 
-          // --- LOGIC CHO TAB ROLEPLAY ---
-          const handleRpRecord = () => {
-              if (isRecordingRp) return;
-              setIsRecordingRp(true);
-              setRpAnswer(""); // Clear khung text khi bắt đầu nói
-              
-              // Giả lập nhận diện giọng nói (Speech-to-text) sau 2.5 giây
-              setTimeout(() => {
-                  setIsRecordingRp(false);
-                  setRpAnswer("Yes, I do. / No, I don't.");
-              }, 2500);
-          };
-
+          // --- LOGIC TAB ROLEPLAY ---
           const handleRpNext = () => {
               if (rpIndex < roleplayQuestions.length - 1) {
                   setRpIndex(prev => prev + 1);
                   setRpAnswer("");
                   setShowHint(false);
+                  resetRecordingState();
               } else {
-                  alert("Chúc mừng bạn đã hoàn thành phần phỏng vấn giả định!");
+                  alert("Tuyệt vời! Bạn đã hoàn thành phần phỏng vấn giả định!");
                   setRpIndex(0);
                   setRpAnswer("");
                   setShowHint(false);
+                  resetRecordingState();
               }
+          };
+
+          // Handle Tab Switch
+          const handleTabSwitch = (tab) => {
+              setActiveMainTab(tab);
+              resetRecordingState();
           };
 
           return (
@@ -273,13 +321,13 @@
               <div className="top-nav">
                   <button 
                       className={`nav-pill ${activeMainTab === 'vocabulary' ? 'active' : ''}`}
-                      onClick={() => setActiveMainTab('vocabulary')}
+                      onClick={() => handleTabSwitch('vocabulary')}
                   >
                       📚 1. Học Từ Vựng
                   </button>
                   <button 
                       className={`nav-pill ${activeMainTab === 'roleplay' ? 'active' : ''}`}
-                      onClick={() => setActiveMainTab('roleplay')}
+                      onClick={() => handleTabSwitch('roleplay')}
                   >
                       🎙️ 2. Role-play Phỏng Vấn
                   </button>
@@ -290,7 +338,6 @@
                   ========================================= */}
               {activeMainTab === 'vocabulary' && (
                   <>
-                      {/* TRẠNG THÁI TIẾN ĐỘ BƯỚC */}
                       <div className="sub-nav-container">
                           <div className="progress-bar">
                               {[1,2,3,4].map((step) => (
@@ -347,14 +394,10 @@
                                       else if (quizResult === 'incorrect' && opt.id !== currentItem.id) optClass += ' incorrect';
                                       
                                       return (
-                                          <div 
-                                              key={i} 
-                                              className={optClass}
-                                              onClick={() => {
+                                          <div key={i} className={optClass} onClick={() => {
                                                   if (opt.id === currentItem.id) setQuizResult('correct');
                                                   else setQuizResult('incorrect');
-                                              }}
-                                          >
+                                              }}>
                                               {opt.vi}
                                           </div>
                                       );
@@ -390,7 +433,7 @@
                           </div>
                       )}
 
-                      {/* BƯỚC 4: PHÁT ÂM */}
+                      {/* BƯỚC 4: PHÁT ÂM THẬT */}
                       {currentStep === 4 && (
                           <div className="card-area">
                               <div className="word-large">{currentItem.word}</div>
@@ -410,15 +453,19 @@
                               <div className="divider"></div>
                               
                               <div className="section-label">② Ghi âm giọng của bạn</div>
+                              
                               <button 
-                                  className={`btn-record ${hasRecorded ? 'recorded' : ''}`}
-                                  onClick={() => {
-                                      playAudio("Recording simulated"); 
-                                      setHasRecorded(true);
-                                  }}
+                                  className={`btn-record ${isRecording ? 'recording' : ''} ${!isRecording && audioURL ? 'recorded' : ''}`}
+                                  onClick={toggleRecording}
                               >
-                                  {hasRecorded ? '✅ Đã ghi âm tốt' : '🎤 Bấm để nói (Mô phỏng)'}
+                                  {isRecording ? '⏹️ Đang thu âm... Bấm để DỪNG' : (audioURL ? '🔄 Thu âm lại' : '🎤 Bấm để thu âm')}
                               </button>
+
+                              {audioURL && (
+                                  <div className="audio-player-container">
+                                      <audio src={audioURL} controls />
+                                  </div>
+                              )}
                           </div>
                       )}
 
@@ -443,16 +490,15 @@
               )}
 
               {/* =========================================
-                  GIAO DIỆN ROLE-PLAY 
+                  GIAO DIỆN ROLE-PLAY THU ÂM THẬT
                   ========================================= */}
               {activeMainTab === 'roleplay' && (
                   <div className="card-area" style={{minHeight: '400px', justifyContent: 'flex-start'}}>
                       <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '20px', alignItems: 'center'}}>
-                          <div style={{fontWeight: 'bold', color: '#14b8a6', fontSize: '18px'}}>🎙️ Luyện tập Điền đơn</div>
+                          <div style={{fontWeight: 'bold', color: '#14b8a6', fontSize: '18px'}}>🎙️ Luyện tập Phỏng vấn</div>
                           <div style={{color: '#94a3b8', fontWeight: 'bold'}}>Câu {rpIndex + 1} / {roleplayQuestions.length}</div>
                       </div>
 
-                      {/* Question */}
                       <div className="word-large" style={{color: '#0f172a', fontSize: '28px'}}>{currentRpQuestion.en}</div>
                       
                       <div style={{display: 'flex', gap: '15px', marginTop: '15px'}}>
@@ -475,31 +521,34 @@
 
                       <div className="divider" style={{margin: '20px 0'}}></div>
 
-                      {/* Answer Area */}
-                      <div style={{width: '100%', textAlign: 'left', fontWeight: 'bold', color: '#64748b'}}>Phản hồi của bạn:</div>
+                      <div style={{width: '100%', textAlign: 'left', fontWeight: 'bold', color: '#64748b'}}>Phản hồi của bạn (Gõ hoặc Thu âm):</div>
                       
                       <textarea 
                           className="rp-textarea"
-                          placeholder="Gõ câu trả lời bằng tiếng Anh, hoặc bấm nút Ghi âm bên dưới..."
+                          placeholder="Gõ câu trả lời bằng tiếng Anh, hoặc dùng micro để thu âm..."
                           value={rpAnswer}
                           onChange={(e) => setRpAnswer(e.target.value)}
                       ></textarea>
 
-                      <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px'}}>
-                          <button 
-                              className={`btn-record ${isRecordingRp ? 'recording' : ''}`} 
-                              onClick={handleRpRecord}
-                          >
-                              {isRecordingRp ? '🔴 Đang nghe...' : '🎤 Bấm để nói'}
-                          </button>
-                          
+                      <div style={{display: 'flex', flexDirection: 'column', width: '100%', gap: '15px'}}>
+                          <div style={{display: 'flex', gap: '15px', alignItems: 'center'}}>
+                              <button 
+                                  className={`btn-record ${isRecording ? 'recording' : ''} ${!isRecording && audioURL ? 'recorded' : ''}`}
+                                  onClick={toggleRecording}
+                              >
+                                  {isRecording ? '⏹️ Bấm để DỪNG thu' : (audioURL ? '🔄 Thu âm lại' : '🎤 Bấm để trả lời')}
+                              </button>
+                              
+                              {audioURL && <audio src={audioURL} controls style={{flex: 1, height: '45px'}} />}
+                          </div>
+
                           <button 
                               className="btn-next" 
-                              style={{width: 'auto', padding: '12px 30px', margin: 0, fontSize: '16px'}}
+                              style={{padding: '15px', marginTop: '10px', fontSize: '16px'}}
                               onClick={handleRpNext}
-                              disabled={rpAnswer.trim() === ''}
+                              disabled={rpAnswer.trim() === '' && !audioURL}
                           >
-                              {rpIndex < roleplayQuestions.length - 1 ? 'Câu tiếp theo →' : 'Hoàn thành 🎉'}
+                              {rpIndex < roleplayQuestions.length - 1 ? 'Câu tiếp theo →' : 'Hoàn thành bài tập 🎉'}
                           </button>
                       </div>
                   </div>
