@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Topic 1 - Loving English Flashcards</title>
+    <title>Topic 1 - Loving English</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -18,42 +18,47 @@
         }
         .container { max-width: 800px; margin: 0 auto; }
         
-        /* Top Navigation */
+        /* Top Nav */
         .top-nav { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .nav-pill { padding: 10px 20px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; cursor: pointer; font-weight: 600; color: #64748b; font-size: 14px; }
         .nav-pill.active { background-color: #e0f2fe; color: #0284c7; border-color: #bae6fd; }
 
-        /* Sub Navigation & Progress */
+        /* Sub Nav Container */
         .sub-nav-container { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); margin-bottom: 20px; border: 1px solid #f1f5f9; }
         .progress-bar { display: flex; gap: 5px; margin-bottom: 20px; }
-        .progress-segment { height: 4px; flex: 1; border-radius: 2px; background: #e2e8f0; }
+        .progress-segment { height: 4px; flex: 1; border-radius: 2px; background: #e2e8f0; transition: background 0.3s; }
         .progress-segment.active { background: #f43f5e; }
         
         .mode-nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .mode-tabs { display: flex; gap: 10px; }
-        .mode-tab { padding: 8px 16px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; cursor: pointer; font-size: 14px; color: #64748b; display: flex; align-items: center; gap: 6px; transition: all 0.2s;}
-        .mode-tab.active { background-color: #f0f9ff; color: #0284c7; border-color: #bae6fd; }
-        .mode-tab:hover { background-color: #f8fafc; }
         
-        /* Main Card Area */
-        .card-area { background: #fff; border-radius: 16px; padding: 40px; min-height: 300px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin-bottom: 20px; position: relative; }
+        /* Nút Step (Đã xử lý trạng thái Lock/Unlock) */
+        .mode-tab { padding: 8px 16px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; font-size: 14px; color: #64748b; display: flex; align-items: center; gap: 6px; font-weight: 600; transition: all 0.2s;}
+        .mode-tab.active { background-color: #f0f9ff; color: #0284c7; border-color: #bae6fd; }
+        .mode-tab.completed { background-color: #f8fafc; color: #10b981; border-color: #a7f3d0; }
+        .mode-tab.locked { opacity: 0.5; cursor: not-allowed; background-color: #f1f5f9; }
+
+        /* Card Area */
+        .card-area { background: #fff; border-radius: 16px; padding: 40px; min-height: 300px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin-bottom: 20px; transition: all 0.3s;}
         .card-area.flipped { background-color: #fff1f2; border-color: #ffe4e6; }
         
-        /* Typography inside Card */
+        /* Typography */
         .word-large { font-size: 32px; font-weight: bold; margin-bottom: 10px; color: #0f172a; }
         .word-red { color: #f43f5e; }
-        .ipa-text { color: #94a3b8; font-family: monospace; font-size: 18px; margin-bottom: 20px; letter-spacing: 1px; }
+        .ipa-text { color: #94a3b8; font-family: monospace; font-size: 18px; margin-bottom: 20px; }
         .vi-text { font-size: 20px; font-weight: bold; color: #334155; margin-bottom: 15px; }
-        .example-text { font-size: 16px; color: #64748b; font-style: italic; margin-bottom: 25px; }
+        .example-text { font-size: 16px; color: #64748b; font-style: italic; margin-bottom: 25px; padding: 0 20px; }
         
         /* Buttons */
         .btn-flip { color: #0ea5e9; font-weight: bold; cursor: pointer; font-size: 16px; border: none; background: none; padding: 10px; }
         .btn-audio-pink { background-color: #ffe4e6; color: #e11d48; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
         .btn-audio-blue { background-color: #e0f2fe; color: #0284c7; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
-        .btn-next { background-color: #f43f5e; color: white; width: 100%; border: none; padding: 18px; border-radius: 16px; font-size: 18px; font-weight: bold; cursor: pointer; transition: background-color 0.2s; box-shadow: 0 4px 10px rgba(244, 63, 94, 0.2); }
-        .btn-next:hover { background-color: #e11d48; }
         
-        /* Quiz Mode */
+        .btn-next { background-color: #f43f5e; color: white; width: 100%; border: none; padding: 18px; border-radius: 16px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 10px rgba(244, 63, 94, 0.2); }
+        .btn-next:hover:not(:disabled) { background-color: #e11d48; }
+        .btn-next:disabled { background-color: #cbd5e1; cursor: not-allowed; box-shadow: none; opacity: 0.7; }
+        
+        /* Quiz */
         .quiz-title { font-size: 16px; font-weight: bold; color: #64748b; margin-bottom: 15px; }
         .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; margin-top: 20px; }
         @media (max-width: 600px) { .quiz-grid { grid-template-columns: 1fr; } }
@@ -61,24 +66,22 @@
         .quiz-option:hover { border-color: #cbd5e1; background: #f8fafc; }
         .quiz-option.correct { border-color: #10b981; background: #ecfdf5; color: #047857; }
         .quiz-option.incorrect { border-color: #ef4444; background: #fef2f2; color: #b91c1c; }
-        .feedback-bar { margin-top: 20px; padding: 15px; border-radius: 12px; width: 100%; font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 8px; }
-        .feedback-success { background: #ecfdf5; color: #10b981; }
         
-        /* Type Mode */
+        /* Type */
         .type-input-group { display: flex; width: 100%; max-width: 500px; gap: 10px; margin-top: 20px; }
         .type-input { flex: 1; border: 2px solid #bae6fd; border-radius: 12px; padding: 15px; font-size: 16px; outline: none; }
         .type-input:focus { border-color: #0ea5e9; }
         .btn-check { background-color: #0ea5e9; color: white; border: none; padding: 0 30px; border-radius: 12px; font-weight: bold; cursor: pointer; }
         
-        /* Pronounce Mode */
+        /* Pronounce */
         .speed-controls { display: flex; gap: 15px; margin-top: 15px; margin-bottom: 30px; }
-        .btn-record { background-color: #0ea5e9; color: white; border: none; padding: 15px 40px; border-radius: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2); }
-        .section-label { color: #64748b; font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+        .btn-record { background-color: #0ea5e9; color: white; border: none; padding: 15px 40px; border-radius: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-record.recorded { background-color: #10b981; }
         .divider { width: 100%; height: 1px; border-top: 1px dashed #cbd5e1; margin: 30px 0; }
-
-        /* Bottom Pagination */
+        
+        /* Pagination */
         .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 20px; flex-wrap: wrap;}
-        .page-dot { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center; color: #64748b; font-size: 14px; cursor: pointer; background: #fff; }
+        .page-dot { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center; color: #94a3b8; font-size: 12px; background: #fff; }
         .page-dot.active { background-color: #e0f2fe; color: #0284c7; border-color: #bae6fd; font-weight: bold; }
     </style>
 </head>
@@ -88,7 +91,6 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // DỮ LIỆU ĐẦY ĐỦ 35 TỪ VỰNG TỪ ĐƠN ĐĂNG KÝ
         const vocabularyData = [
           // Nhóm 1: Personal Details
           { id: 1, word: "Location", ipa: "/ləʊˈkeɪʃən/", vi: "Địa điểm", example: "Location" },
@@ -127,12 +129,12 @@
           { id: 26, word: "Mental difficulties", ipa: "/ˈmentl ˈdɪfɪkəltiz/", vi: "Khó khăn về tinh thần", example: "8. Do you now have or have you had in the past any mental difficulties?" },
           { id: 27, word: "Chronic health conditions", ipa: "/ˈkrɒnɪk helθ kənˈdɪʃnz/", vi: "Tình trạng sức khỏe mãn tính", example: "Do you now have, or have you had, any chronic health conditions, injuries," },
           { id: 28, word: "Recent surgeries", ipa: "/ˈriːsnt ˈsɜːrdʒəriz/", vi: "Ca phẫu thuật gần đây", example: "major illnesses, and/or recent surgeries? If yes please give details with dates." },
-          { id: 29, word: "Medication (prescribed or otherwise)", ipa: "/ˌmedɪˈkeɪʃn (prɪˈskraɪbd ɔːr ˈʌðərwaɪz)/", vi: "Thuốc (theo toa hoặc cách khác)", example: "Are you presently taking any medication (prescribed or otherwise, e.g. herbal, natural)?" },
+          { id: 29, word: "Medication", ipa: "/ˌmedɪˈkeɪʃn/", vi: "Thuốc (theo toa hoặc cách khác)", example: "Are you presently taking any medication (prescribed or otherwise, e.g. herbal, natural)?" },
           { id: 30, word: "Dosages", ipa: "/ˈdəʊsɪdʒɪz/", vi: "Liều lượng", example: "If yes, please give details and dosages." },
           { id: 31, word: "Personal tragedy", ipa: "/ˈpɜːrsənl ˈtrædʒədi/", vi: "Bi kịch cá nhân", example: "Have you had any personal tragedy in the past year, e.g. death of a near relative, etc?" },
           { id: 32, word: "Refused admission", ipa: "/rɪˈfjuːzd ədˈmɪʃn/", vi: "Bị từ chối nhận vào khóa thiền", example: "Have you ever been refused admission to a course or had to leave a course for any reason?" },
 
-          // Nhóm 6: Yêu cầu Hành chính
+          // Nhóm 6: Administration
           { id: 33, word: "Current and accurate", ipa: "/ˈkɜːrənt ənd ˈækjərət/", vi: "Cập nhật và chính xác", example: "Qualifications for the course must be current and accurate at the time the course begins." },
           { id: 34, word: "Guarantee admission", ipa: "/ˌɡærənˈtiː ədˈmɪʃn/", vi: "Đảm bảo được nhận vào khóa", example: "Please understand that having the minimum qualifications does not guarantee admission." },
           { id: 35, word: "Vouching for", ipa: "/ˈvaʊtʃɪŋ fɔːr/", vi: "Đảm bảo/bảo lãnh cho", example: "By recommending this applicant you are personally vouching for his/her suitability" }
@@ -140,36 +142,31 @@
 
         const Topic1App = () => {
           const [currentIndex, setCurrentIndex] = useState(0);
-          const [activeMode, setActiveMode] = useState('flip'); // 'flip', 'quiz', 'type', 'speak'
+          
+          // Trạng thái các bước: 1 (Flip), 2 (Quiz), 3 (Type), 4 (Speak)
+          const [currentStep, setCurrentStep] = useState(1); 
+          
           const [isFlipped, setIsFlipped] = useState(false);
-          
-          // State cho Trắc nghiệm
           const [quizOptions, setQuizOptions] = useState([]);
-          const [selectedQuizAnswer, setSelectedQuizAnswer] = useState(null);
-          
-          // State cho Gõ từ
-          const [typeInput, setTypeInput] = useState('');
-          const [typeFeedback, setTypeFeedback] = useState(null);
+          const [quizResult, setQuizResult] = useState(null); // 'correct', 'incorrect'
+          const [typeInput, setTypeInput] = useState("");
+          const [typeResult, setTypeResult] = useState(null); // 'correct', 'incorrect'
+          const [hasRecorded, setHasRecorded] = useState(false);
 
           const currentItem = vocabularyData[currentIndex];
 
-          // Hàm sinh 4 đáp án ngẫu nhiên cho màn hình Trắc nghiệm
+          // Tạo đáp án cho Trắc nghiệm khi nhảy sang bước 2
           useEffect(() => {
-            if (activeMode === 'quiz') {
-                setSelectedQuizAnswer(null);
+            if (currentStep === 2) {
                 let options = [currentItem];
                 let pool = vocabularyData.filter(item => item.id !== currentItem.id);
-                // Xáo trộn pool
                 pool.sort(() => 0.5 - Math.random());
-                // Lấy 3 đáp án sai
                 options = options.concat(pool.slice(0, 3));
-                // Xáo trộn 4 đáp án
                 options.sort(() => 0.5 - Math.random());
                 setQuizOptions(options);
             }
-          }, [currentIndex, activeMode]);
+          }, [currentStep, currentIndex]);
 
-          // Hàm phát âm
           const playAudio = (text, rate = 1.0) => {
             if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
               window.speechSynthesis.cancel();
@@ -180,34 +177,57 @@
             }
           };
 
+          // Kiểm tra xem nút "Tiếp tục" đã được mở khóa chưa
+          const isNextEnabled = () => {
+              if (currentStep === 1) return isFlipped;
+              if (currentStep === 2) return quizResult === 'correct';
+              if (currentStep === 3) return typeResult === 'correct';
+              if (currentStep === 4) return hasRecorded;
+              return false;
+          };
+
+          // Xử lý nút Chuyển bước / Chuyển từ
           const handleNext = () => {
-            setIsFlipped(false);
-            setSelectedQuizAnswer(null);
-            setTypeInput('');
-            setTypeFeedback(null);
-            setCurrentIndex((prev) => (prev + 1) % vocabularyData.length);
+              if (currentStep < 4) {
+                  setCurrentStep(prev => prev + 1);
+              } else {
+                  // Sang từ vựng mới, reset toàn bộ trạng thái
+                  setCurrentIndex((prev) => (prev + 1) % vocabularyData.length);
+                  setCurrentStep(1);
+                  setIsFlipped(false);
+                  setQuizResult(null);
+                  setTypeInput("");
+                  setTypeResult(null);
+                  setHasRecorded(false);
+              }
           };
 
-          const handleModeChange = (mode) => {
-            setActiveMode(mode);
-            setIsFlipped(false);
-            setTypeInput('');
-            setTypeFeedback(null);
-          };
-
-          const checkTypeAnswer = () => {
-             const cleanWord = currentItem.word.replace(/[\.\?]/g, '').toLowerCase().trim();
-             const cleanInput = typeInput.replace(/[\.\?]/g, '').toLowerCase().trim();
+          const handleTypeCheck = () => {
+             const cleanWord = currentItem.word.replace(/[\.\(\)\?]/g, '').toLowerCase().trim();
+             const cleanInput = typeInput.replace(/[\.\(\)\?]/g, '').toLowerCase().trim();
              if (cleanInput === cleanWord || cleanInput === currentItem.word.toLowerCase().trim()) {
-                 setTypeFeedback('correct');
+                 setTypeResult('correct');
              } else {
-                 setTypeFeedback('incorrect');
+                 setTypeResult('incorrect');
              }
+          };
+
+          // Giao diện cho các Tab Sub-nav
+          const renderTab = (stepNumber, icon, label) => {
+              let statusClass = "locked"; // Mặc định khóa
+              if (currentStep === stepNumber) statusClass = "active";
+              else if (currentStep > stepNumber) statusClass = "completed";
+              
+              return (
+                  <div className={`mode-tab ${statusClass}`}>
+                      {statusClass === 'completed' ? '✅' : icon} {label}
+                  </div>
+              );
           };
 
           return (
             <div className="container">
-              {/* TOP NAVIGATION (Tabs tĩnh) */}
+              {/* TOP NAVIGATION */}
               <div className="top-nav">
                   <div className="nav-pill active">1. Flashcard</div>
                   <div className="nav-pill">2. Dictation</div>
@@ -217,38 +237,30 @@
                   <div className="nav-pill">6. Game</div>
               </div>
 
-              {/* SUB NAVIGATION & PROGRESS */}
+              {/* TRẠNG THÁI TIẾN ĐỘ BƯỚC */}
               <div className="sub-nav-container">
                   <div className="progress-bar">
-                      {[1,2,3,4].map((seg, i) => (
-                          <div key={i} className={`progress-segment ${i === 0 ? 'active' : ''}`}></div>
+                      {[1,2,3,4].map((step) => (
+                          <div key={step} className={`progress-segment ${currentStep >= step ? 'active' : ''}`}></div>
                       ))}
                   </div>
                   <div className="mode-nav">
                       <div className="mode-tabs">
-                          <button className={`mode-tab ${activeMode === 'flip' ? 'active' : ''}`} onClick={() => handleModeChange('flip')}>
-                              🃏 Lật thẻ
-                          </button>
-                          <button className={`mode-tab ${activeMode === 'quiz' ? 'active' : ''}`} onClick={() => handleModeChange('quiz')}>
-                              📝 Trắc nghiệm
-                          </button>
-                          <button className={`mode-tab ${activeMode === 'type' ? 'active' : ''}`} onClick={() => handleModeChange('type')}>
-                              ⌨️ Gõ từ
-                          </button>
-                          <button className={`mode-tab ${activeMode === 'speak' ? 'active' : ''}`} onClick={() => handleModeChange('speak')}>
-                              🔊 Phát âm
-                          </button>
+                          {renderTab(1, "🃏", "Lật thẻ")}
+                          {renderTab(2, "📝", "Trắc nghiệm")}
+                          {renderTab(3, "⌨️", "Gõ từ")}
+                          {renderTab(4, "🔊", "Phát âm")}
                       </div>
-                      <div style={{fontWeight: 'bold', color: '#64748b'}}>
-                          {currentIndex + 1}/{vocabularyData.length}
+                      <div style={{fontWeight: 'bold', color: '#64748b', fontSize: '18px'}}>
+                          {currentIndex + 1} / {vocabularyData.length}
                       </div>
                   </div>
               </div>
 
-              {/* CARD AREA - THAY ĐỔI THEO MODE */}
+              {/* VÙNG THẺ HỌC */}
               
-              {/* MODE 1: LẬT THẺ */}
-              {activeMode === 'flip' && (
+              {/* BƯỚC 1: LẬT THẺ */}
+              {currentStep === 1 && (
                   <div className={`card-area ${isFlipped ? 'flipped' : ''}`}>
                       {!isFlipped ? (
                           <>
@@ -271,43 +283,39 @@
                   </div>
               )}
 
-              {/* MODE 2: TRẮC NGHIỆM */}
-              {activeMode === 'quiz' && (
+              {/* BƯỚC 2: TRẮC NGHIỆM */}
+              {currentStep === 2 && (
                   <div className="card-area">
-                      <div className="quiz-title">Chọn nghĩa đúng nhất:</div>
+                      <div className="quiz-title">Chọn nghĩa đúng nhất cho từ dưới đây:</div>
                       <div className="word-large">{currentItem.word}</div>
                       
                       <div className="quiz-grid">
                           {quizOptions.map((opt, i) => {
-                              let optionClass = 'quiz-option';
-                              if (selectedQuizAnswer) {
-                                  if (opt.id === currentItem.id) optionClass += ' correct';
-                                  else if (selectedQuizAnswer === opt.id) optionClass += ' incorrect';
-                              }
+                              let optClass = 'quiz-option';
+                              if (quizResult && opt.id === currentItem.id) optClass += ' correct';
+                              else if (quizResult === 'incorrect' && opt.id !== currentItem.id) optClass += ' incorrect'; // Chỉ hiện đỏ nếu click sai
+                              
                               return (
                                   <div 
                                       key={i} 
-                                      className={optionClass}
-                                      onClick={() => !selectedQuizAnswer && setSelectedQuizAnswer(opt.id)}
+                                      className={optClass}
+                                      onClick={() => {
+                                          if (opt.id === currentItem.id) setQuizResult('correct');
+                                          else setQuizResult('incorrect');
+                                      }}
                                   >
                                       {opt.vi}
                                   </div>
                               );
                           })}
                       </div>
-                      
-                      {selectedQuizAnswer && selectedQuizAnswer === currentItem.id && (
-                          <div className="feedback-bar feedback-success">
-                              ✅ Tuyệt vời!
-                          </div>
-                      )}
                   </div>
               )}
 
-              {/* MODE 3: GÕ TỪ */}
-              {activeMode === 'type' && (
+              {/* BƯỚC 3: GÕ TỪ */}
+              {currentStep === 3 && (
                   <div className="card-area">
-                      <div className="quiz-title" style={{marginBottom: '5px'}}>Nghe và gõ lại từ vựng:</div>
+                      <div className="quiz-title">Nghe và gõ lại từ vựng chính xác:</div>
                       <div className="word-large" style={{color: '#0ea5e9'}}>{currentItem.vi}</div>
                       <br/>
                       <button className="btn-audio-blue" onClick={() => playAudio(currentItem.word)}>
@@ -321,17 +329,18 @@
                               placeholder="Gõ tiếng Anh..." 
                               value={typeInput}
                               onChange={(e) => setTypeInput(e.target.value)}
-                              onKeyDown={(e) => e.key === 'Enter' && checkTypeAnswer()}
+                              onKeyDown={(e) => e.key === 'Enter' && handleTypeCheck()}
                           />
-                          <button className="btn-check" onClick={checkTypeAnswer}>Check</button>
+                          <button className="btn-check" onClick={handleTypeCheck}>Check</button>
                       </div>
-                      {typeFeedback === 'correct' && <div style={{color: '#10b981', marginTop: '15px', fontWeight: 'bold'}}>✅ Chính xác!</div>}
-                      {typeFeedback === 'incorrect' && <div style={{color: '#ef4444', marginTop: '15px', fontWeight: 'bold'}}>❌ Hãy nghe kỹ lại nhé!</div>}
+                      
+                      {typeResult === 'correct' && <div style={{color: '#10b981', marginTop: '15px', fontWeight: 'bold'}}>✅ Chính xác!</div>}
+                      {typeResult === 'incorrect' && <div style={{color: '#ef4444', marginTop: '15px', fontWeight: 'bold'}}>❌ Sai rồi, hãy thử lại!</div>}
                   </div>
               )}
 
-              {/* MODE 4: PHÁT ÂM */}
-              {activeMode === 'speak' && (
+              {/* BƯỚC 4: PHÁT ÂM */}
+              {currentStep === 4 && (
                   <div className="card-area">
                       <div className="word-large">{currentItem.word}</div>
                       <div className="ipa-text">{currentItem.ipa}</div>
@@ -339,43 +348,43 @@
                       
                       <div className="section-label">① Lắng nghe giọng chuẩn</div>
                       <div className="speed-controls">
-                          <button className="btn-audio-blue" style={{background: '#e0f2fe', color: '#0284c7'}} onClick={() => playAudio(currentItem.word, 0.7)}>
-                              🐢 0.7x
+                          <button className="btn-audio-blue" onClick={() => playAudio(currentItem.word, 0.7)}>
+                              🐢 Đọc chậm (0.7x)
                           </button>
                           <button className="btn-audio-pink" onClick={() => playAudio(currentItem.word, 1.0)}>
-                              🔊 1.0x
+                              🔊 Tốc độ chuẩn
                           </button>
                       </div>
                       
                       <div className="divider"></div>
                       
                       <div className="section-label">② Ghi âm giọng của bạn</div>
-                      <button className="btn-record" onClick={() => alert('Trình duyệt cần cấp quyền Micro để thu âm. (Tính năng mô phỏng UI)')}>
-                          🎤 Bấm để nói
+                      <button 
+                          className={`btn-record ${hasRecorded ? 'recorded' : ''}`}
+                          onClick={() => {
+                              playAudio("Recording simulated"); 
+                              setHasRecorded(true);
+                          }}
+                      >
+                          {hasRecorded ? '✅ Đã ghi âm tốt' : '🎤 Bấm để nói (Mô phỏng)'}
                       </button>
                   </div>
               )}
 
-              {/* BOTTOM NAVIGATION BUTTON */}
-              <button className="btn-next" onClick={handleNext}>
-                  Tiếp theo →
+              {/* NÚT CHUYỂN BƯỚC / TỪ */}
+              <button 
+                  className="btn-next" 
+                  onClick={handleNext}
+                  disabled={!isNextEnabled()}
+              >
+                  {currentStep < 4 ? 'Tiếp tục →' : 'Tuyệt vời! Qua từ tiếp theo ➔'}
               </button>
 
-              {/* PAGINATION */}
+              {/* PAGINATION Ở DƯỚI (Mô phỏng tiến trình tổng thể) */}
               <div className="pagination">
                   {vocabularyData.map((_, index) => (
-                      <div 
-                          key={index} 
-                          className={`page-dot ${index === currentIndex ? 'active' : ''}`}
-                          onClick={() => {
-                              setCurrentIndex(index);
-                              setIsFlipped(false);
-                              setSelectedQuizAnswer(null);
-                              setTypeInput('');
-                              setTypeFeedback(null);
-                          }}
-                      >
-                          {index + 1}
+                      <div key={index} className={`page-dot ${index === currentIndex ? 'active' : (index < currentIndex ? 'completed' : '')}`} style={index < currentIndex ? {background: '#ecfdf5', borderColor: '#10b981', color: '#10b981'} : {}}>
+                          {index < currentIndex ? '✓' : index + 1}
                       </div>
                   ))}
               </div>
