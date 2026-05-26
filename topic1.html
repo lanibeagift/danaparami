@@ -1,0 +1,211 @@
+import React, { useState } from 'react';
+
+// Dữ liệu từ vựng đầy đủ trích xuất từ đơn đăng ký
+const vocabularyData = [
+  // Nhóm 1: Personal Details
+  { id: 1, word: "Location", ipa: "/ləʊˈkeɪʃən/", vi: "Địa điểm", example: "Location" },
+  { id: 2, word: "Gender", ipa: "/ˈdʒendər/", vi: "Giới tính", example: "Gender/ Giới tính Age M F" },
+  { id: 3, word: "Occupation", ipa: "/ˌɒkjʊˈpeɪʃən/", vi: "Nghề nghiệp", example: "Occupation | Nghề nghiệp" },
+  { id: 4, word: "Attach a recent photograph", ipa: "/əˈtætʃ ə ˈriːsnt ˈfəʊtəɡrɑːf/", vi: "Đính kèm một bức ảnh gần đây", example: "Please attach a recent photograph" },
+  { id: 5, word: "Essential for identification", ipa: "/ɪˈsenʃl fər aɪˌdentɪfɪˈkeɪʃn/", vi: "Cần thiết để nhận dạng", example: "Essential for identification by the conducting teacher." },
+  
+  // Nhóm 2: Meditation Experience & Course Info
+  { id: 6, word: "Intensive practice", ipa: "/ɪnˈtensɪv ˈpræktɪs/", vi: "Thực hành chuyên sâu", example: "The Special 10-Day course, Long Courses of 20 days or more and the Teachers' Self-Course are opportunities for deep, intensive practice of Vipassana meditation." },
+  { id: 7, word: "Committed fully and exclusively", ipa: "/kəˈmɪtɪd ˈfʊli ənd ɪksˈkluːsɪvli/", vi: "Cam kết hoàn toàn và duy nhất", example: "Are you committed fully and exclusively to the practice of Vipassana meditation as taught by S.N." },
+  { id: 8, word: "Authorized assistant teachers", ipa: "/ˈɔːθəraɪzd əˈsɪstənt ˈtiːtʃərz/", vi: "Các vị phụ giáo được ủy quyền", example: "Goenka and his authorized assistant teachers?" },
+  { id: 9, word: "Two one-hour sittings", ipa: "/tuː wʌn-ˈaʊər ˈsɪtɪŋz/", vi: "Hai thời thiền một giờ", example: "Regular daily practice of Vipassana meditation is defined as two one-hour sittings (morning and evening) each day." },
+  { id: 10, word: "Energy based healing techniques", ipa: "/ˈenərdʒi beɪst ˈhiːlɪŋ tekˈniːks/", vi: "Kỹ thuật chữa bệnh dựa trên năng lượng", example: "trying other meditation techniques or so-called energy based healing techniques e.g." },
+  { id: 11, word: "Courses sat as student", ipa: "/ˈkɔːsɪz sæt əz ˈstjuːdnt/", vi: "Khóa thiền ngồi như là một thiền sinh", example: "Course experience. Details of courses sat as student:" },
+
+  // Nhóm 3: The Five Precepts
+  { id: 12, word: "Five Precepts", ipa: "/faɪv ˈpriːsepts/", vi: "Năm Giới", example: "Part of the practice is maintaining the Five Precepts in daily life, that is:" },
+  { id: 13, word: "Abstain from", ipa: "/əbˈsteɪn frəm/", vi: "Tránh, kiêng", example: "To abstain from intentional killing of any living creature;" },
+  { id: 14, word: "Intentional killing", ipa: "/ɪnˈtenʃənl ˈkɪlɪŋ/", vi: "Cố ý giết hại", example: "To abstain from intentional killing of any living creature;" },
+  { id: 15, word: "Stealing", ipa: "/ˈstiːlɪŋ/", vi: "Trộm cắp", example: "To abstain from stealing;" },
+  { id: 16, word: "Sexual misconduct", ipa: "/ˈsekʃuəl mɪsˈkɒndʌkt/", vi: "Tà dâm / Tình dục sai trái", example: "To abstain from sexual misconduct, i.e., to be in a life-long committed relationship with one" },
+  { id: 17, word: "Wrong speech", ipa: "/rɒŋ spiːtʃ/", vi: "Nói dối / Lời nói sai trái", example: "To abstain from wrong speech;" },
+  { id: 18, word: "Intoxicants", ipa: "/ɪnˈtɒksɪkənts/", vi: "Các chất say", example: "To abstain completely from alcohol, drugs and intoxicants" },
+  { id: 19, word: "Celibate", ipa: "/ˈselɪbət/", vi: "Độc thân", example: "person, or to be completely celibate *" },
+
+  // Nhóm 4: Relationships
+  { id: 20, word: "Life-long committed relationship", ipa: "/laɪf-lɒŋ kəˈmɪtɪd rɪˈleɪʃnʃɪp/", vi: "Mối quan hệ cam kết lâu dài", example: "person, or to be completely celibate * (to be in a life-long committed relationship)" },
+  { id: 21, word: "Spouse", ipa: "/spaʊs/", vi: "Người phối ngẫu (vợ/chồng)", example: "Spouse's name: Tên người phôi ngâu (vợ/chồng)" },
+  { id: 22, word: "Harmonious", ipa: "/hɑːrˈməʊniəs/", vi: "Hòa hợp", example: "Are your relations harmonious?" },
+  { id: 23, word: "In favor of", ipa: "/ɪn ˈfeɪvər əv/", vi: "Ủng hộ", example: "Is your spouse in favor of you taking the course?" },
+
+  // Nhóm 5: Health & Other Issues
+  { id: 24, word: "Confidential", ipa: "/ˌkɒnfɪˈdenʃl/", vi: "Bí mật", example: "All information will be treated as confidential." },
+  { id: 25, word: "Deliberately concealed", ipa: "/dɪˈlɪbərətli kənˈsiːld/", vi: "Cố tình che giấu", example: "Some with serious difficulties deliberately concealed" },
+  { id: 26, word: "Mental difficulties", ipa: "/ˈmentl ˈdɪfɪkəltiz/", vi: "Khó khăn về tinh thần", example: "8. Do you now have or have you had in the past any mental difficulties?" },
+  { id: 27, word: "Chronic health conditions", ipa: "/ˈkrɒnɪk helθ kənˈdɪʃnz/", vi: "Tình trạng sức khỏe mãn tính", example: "Do you now have, or have you had, any chronic health conditions, injuries," },
+  { id: 28, word: "Recent surgeries", ipa: "/ˈriːsnt ˈsɜːrdʒəriz/", vi: "Ca phẫu thuật gần đây", example: "major illnesses, and/or recent surgeries? If yes please give details with dates." },
+  { id: 29, word: "Medication (prescribed or otherwise)", ipa: "/ˌmedɪˈkeɪʃn (prɪˈskraɪbd ɔːr ˈʌðərwaɪz)/", vi: "Thuốc (theo toa hoặc cách khác)", example: "Are you presently taking any medication (prescribed or otherwise, e.g. herbal, natural)?" },
+  { id: 30, word: "Dosages", ipa: "/ˈdəʊsɪdʒɪz/", vi: "Liều lượng", example: "If yes, please give details and dosages." },
+  { id: 31, word: "Personal tragedy", ipa: "/ˈpɜːrsənl ˈtrædʒədi/", vi: "Bi kịch cá nhân", example: "Have you had any personal tragedy in the past year, e.g. death of a near relative, etc?" },
+  { id: 32, word: "Refused admission", ipa: "/rɪˈfjuːzd ədˈmɪʃn/", vi: "Bị từ chối nhận vào khóa thiền", example: "Have you ever been refused admission to a course or had to leave a course for any reason?" },
+
+  // Nhóm 6: Yêu cầu Hành chính
+  { id: 33, word: "Current and accurate", ipa: "/ˈkɜːrənt ənd ˈækjərət/", vi: "Cập nhật và chính xác", example: "Qualifications for the course must be current and accurate at the time the course begins." },
+  { id: 34, word: "Guarantee admission", ipa: "/ˌɡærənˈtiː ədˈmɪʃn/", vi: "Đảm bảo được nhận vào khóa", example: "Please understand that having the minimum qualifications does not guarantee admission." },
+  { id: 35, word: "Vouching for", ipa: "/ˈvaʊtʃɪŋ fɔːr/", vi: "Đảm bảo/bảo lãnh cho", example: "By recommending this applicant you are personally vouching for his/her suitability" }
+];
+
+const Topic1App = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [typingInput, setTypingInput] = useState("");
+  const [feedback, setFeedback] = useState("");
+  
+  const currentCard = vocabularyData[currentIndex];
+
+  // Hàm phát âm thanh (Web Speech API)
+  const playAudio = (text) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.85; // Tốc độ đọc 85% để dễ nghe
+    window.speechSynthesis.speak(utterance);
+  };
+
+  // Xử lý lật thẻ
+  const handleFlip = () => setIsFlipped(!isFlipped);
+
+  // Xử lý bài tập gõ lại từ
+  const handleTypeCheck = () => {
+    // Loại bỏ dấu ngoặc đơn và nội dung bên trong để dễ so sánh (ví dụ: Medication)
+    const cleanWord = currentCard.word.replace(/\s*\(.*?\)\s*/g, '').toLowerCase().trim();
+    const cleanInput = typingInput.toLowerCase().trim();
+    
+    if (cleanInput === cleanWord || cleanInput === currentCard.word.toLowerCase().trim()) {
+      setFeedback("Chính xác! 🎉");
+    } else {
+      setFeedback("Chưa đúng, hãy nghe và thử lại nhé!");
+    }
+  };
+
+  // Chuyển từ tiếp theo
+  const nextCard = () => {
+    setIsFlipped(false);
+    setTypingInput("");
+    setFeedback("");
+    setCurrentIndex((prev) => (prev + 1) % vocabularyData.length);
+  };
+
+  // Quay lại từ trước
+  const prevCard = () => {
+    setIsFlipped(false);
+    setTypingInput("");
+    setFeedback("");
+    setCurrentIndex((prev) => (prev - 1 + vocabularyData.length) % vocabularyData.length);
+  };
+
+  return (
+    <div style={{ maxWidth: '650px', margin: '0 auto', padding: '20px', fontFamily: 'sans-serif', backgroundColor: '#f9fafb', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+      <h2 style={{ textAlign: 'center', color: '#2c3e50' }}>Topic 1: Application Form Vocabulary</h2>
+      <p style={{ textAlign: 'center', color: '#7f8c8d' }}>Từ {currentIndex + 1} / {vocabularyData.length}</p>
+      
+      {/* Tính năng 1: Flashcard */}
+      <div 
+        style={{ 
+          backgroundColor: '#fff',
+          border: '2px solid #e0e0e0', 
+          padding: '40px 20px', 
+          borderRadius: '12px', 
+          textAlign: 'center', 
+          minHeight: '220px',
+          cursor: 'pointer',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          transition: 'transform 0.3s ease'
+        }} 
+        onClick={handleFlip}
+      >
+        {!isFlipped ? (
+          <div>
+            <h3 style={{ fontSize: '28px', margin: '0 0 10px 0', color: '#2980b9' }}>{currentCard.word}</h3>
+            <p style={{ color: '#7f8c8d', fontSize: '18px', margin: '0 0 15px 0' }}>{currentCard.ipa}</p>
+            <p style={{ fontSize: '14px', color: '#bdc3c7' }}>(Chạm để xem nghĩa)</p>
+          </div>
+        ) : (
+          <div>
+            <h3 style={{ fontSize: '24px', color: '#c0392b', margin: '0 0 15px 0' }}>{currentCard.vi}</h3>
+            <div style={{ backgroundColor: '#fdf2e9', padding: '15px', borderRadius: '8px', borderLeft: '4px solid #e67e22', textAlign: 'left' }}>
+              <p style={{ margin: 0, color: '#34495e', fontSize: '16px', fontStyle: 'italic' }}>
+                <strong>Ví dụ:</strong> "{currentCard.example}"
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div style={{ marginTop: '20px', display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <button 
+          onClick={(e) => { e.stopPropagation(); playAudio(currentCard.word); }}
+          style={{ padding: '10px 20px', backgroundColor: '#e8f4fd', border: '1px solid #3498db', color: '#2980b9', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
+        >
+          🔊 Nghe từ vựng
+        </button>
+        <button 
+          onClick={(e) => { e.stopPropagation(); playAudio(currentCard.example); }}
+          style={{ padding: '10px 20px', backgroundColor: '#eefaf5', border: '1px solid #2ecc71', color: '#27ae60', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
+        >
+          🔊 Nghe câu ví dụ
+        </button>
+      </div>
+
+      <hr style={{ margin: '30px 0', borderTop: '1px solid #eee' }} />
+
+      {/* Tính năng 2: Nghe & Gõ lại */}
+      <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '12px', border: '1px solid #eee' }}>
+        <h3 style={{ marginTop: 0, color: '#2c3e50', fontSize: '18px' }}>Luyện tập: Nghe và Gõ lại từ/cụm từ</h3>
+        <p style={{ fontSize: '14px', color: '#7f8c8d', marginBottom: '15px' }}>Bấm biểu tượng loa, sau đó gõ lại chính xác từ bạn nghe được.</p>
+        
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button 
+            onClick={() => playAudio(currentCard.word)} 
+            style={{ padding: '10px 15px', backgroundColor: '#f1f2f6', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '16px' }}
+            title="Nghe lại"
+          >
+            🎧
+          </button>
+          <input 
+            type="text" 
+            value={typingInput} 
+            onChange={(e) => setTypingInput(e.target.value)} 
+            placeholder="Gõ từ tiếng Anh vào đây..."
+            style={{ flex: 1, padding: '10px 15px', borderRadius: '8px', border: '1px solid #ccc', fontSize: '16px' }}
+          />
+          <button 
+            onClick={handleTypeCheck} 
+            style={{ padding: '10px 20px', backgroundColor: '#34495e', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
+          >
+            Kiểm tra
+          </button>
+        </div>
+        {feedback && (
+          <p style={{ marginTop: '10px', fontWeight: 'bold', color: feedback.includes("Chính xác") ? '#27ae60' : '#e74c3c' }}>
+            {feedback}
+          </p>
+        )}
+      </div>
+
+      {/* Điều hướng */}
+      <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-between' }}>
+        <button 
+          onClick={prevCard} 
+          style={{ padding: '12px 25px', backgroundColor: '#95a5a6', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
+        >
+          ⬅️ Quay lại
+        </button>
+        <button 
+          onClick={nextCard} 
+          style={{ padding: '12px 25px', backgroundColor: '#3498db', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
+        >
+          Từ tiếp theo ➡️
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Topic1App;
