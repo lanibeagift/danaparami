@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+"use client";
+import React, { useState, useEffect } from 'react';
 
 // Dữ liệu từ vựng đầy đủ trích xuất từ đơn đăng ký
 const vocabularyData = [
@@ -55,23 +56,33 @@ const Topic1App = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [typingInput, setTypingInput] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Đảm bảo component chỉ render các tính năng client-side sau khi đã mount xong
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   
   const currentCard = vocabularyData[currentIndex];
 
-  // Hàm phát âm thanh (Web Speech API)
+  // Hàm phát âm thanh an toàn
   const playAudio = (text) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    utterance.rate = 0.85; // Tốc độ đọc 85% để dễ nghe
-    window.speechSynthesis.speak(utterance);
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      // Hủy các giọng đọc trước đó nếu người dùng bấm liên tục
+      window.speechSynthesis.cancel();
+      
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.85; // Tốc độ đọc chậm
+      window.speechSynthesis.speak(utterance);
+    } else {
+      console.warn("Trình duyệt của bạn không hỗ trợ tính năng đọc văn bản (Web Speech API).");
+    }
   };
 
-  // Xử lý lật thẻ
   const handleFlip = () => setIsFlipped(!isFlipped);
 
-  // Xử lý bài tập gõ lại từ
   const handleTypeCheck = () => {
-    // Loại bỏ dấu ngoặc đơn và nội dung bên trong để dễ so sánh (ví dụ: Medication)
     const cleanWord = currentCard.word.replace(/\s*\(.*?\)\s*/g, '').toLowerCase().trim();
     const cleanInput = typingInput.toLowerCase().trim();
     
@@ -82,7 +93,6 @@ const Topic1App = () => {
     }
   };
 
-  // Chuyển từ tiếp theo
   const nextCard = () => {
     setIsFlipped(false);
     setTypingInput("");
@@ -90,13 +100,15 @@ const Topic1App = () => {
     setCurrentIndex((prev) => (prev + 1) % vocabularyData.length);
   };
 
-  // Quay lại từ trước
   const prevCard = () => {
     setIsFlipped(false);
     setTypingInput("");
     setFeedback("");
     setCurrentIndex((prev) => (prev - 1 + vocabularyData.length) % vocabularyData.length);
   };
+
+  // Tránh lỗi hydration mismatch trên Next.js
+  if (!isMounted) return null;
 
   return (
     <div style={{ maxWidth: '650px', margin: '0 auto', padding: '20px', fontFamily: 'sans-serif', backgroundColor: '#f9fafb', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
