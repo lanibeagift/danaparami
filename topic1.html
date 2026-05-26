@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Topic 1 - Loving English</title>
+    <title>Topic 1 - Loving English Application Form</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -19,9 +19,10 @@
         .container { max-width: 800px; margin: 0 auto; }
         
         /* Top Nav */
-        .top-nav { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
-        .nav-pill { padding: 10px 20px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; cursor: pointer; font-weight: 600; color: #64748b; font-size: 14px; }
-        .nav-pill.active { background-color: #e0f2fe; color: #0284c7; border-color: #bae6fd; }
+        .top-nav { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+        .nav-pill { padding: 12px 25px; border-radius: 10px; border: 2px solid #e2e8f0; background: #fff; cursor: pointer; font-weight: bold; color: #64748b; font-size: 16px; transition: all 0.2s; }
+        .nav-pill:hover { border-color: #bae6fd; }
+        .nav-pill.active { background-color: #0ea5e9; color: #fff; border-color: #0ea5e9; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3); }
 
         /* Sub Nav Container */
         .sub-nav-container { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); margin-bottom: 20px; border: 1px solid #f1f5f9; }
@@ -32,7 +33,7 @@
         .mode-nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .mode-tabs { display: flex; gap: 10px; }
         
-        /* Nút Step (Đã xử lý trạng thái Lock/Unlock) */
+        /* Nút Step */
         .mode-tab { padding: 8px 16px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; font-size: 14px; color: #64748b; display: flex; align-items: center; gap: 6px; font-weight: 600; transition: all 0.2s;}
         .mode-tab.active { background-color: #f0f9ff; color: #0284c7; border-color: #bae6fd; }
         .mode-tab.completed { background-color: #f8fafc; color: #10b981; border-color: #a7f3d0; }
@@ -43,7 +44,7 @@
         .card-area.flipped { background-color: #fff1f2; border-color: #ffe4e6; }
         
         /* Typography */
-        .word-large { font-size: 32px; font-weight: bold; margin-bottom: 10px; color: #0f172a; }
+        .word-large { font-size: 32px; font-weight: bold; margin-bottom: 10px; color: #0f172a; line-height: 1.4; }
         .word-red { color: #f43f5e; }
         .ipa-text { color: #94a3b8; font-family: monospace; font-size: 18px; margin-bottom: 20px; }
         .vi-text { font-size: 20px; font-weight: bold; color: #334155; margin-bottom: 15px; }
@@ -52,13 +53,14 @@
         /* Buttons */
         .btn-flip { color: #0ea5e9; font-weight: bold; cursor: pointer; font-size: 16px; border: none; background: none; padding: 10px; }
         .btn-audio-pink { background-color: #ffe4e6; color: #e11d48; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
-        .btn-audio-blue { background-color: #e0f2fe; color: #0284c7; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-audio-blue { background-color: #e0f2fe; color: #0284c7; border: none; padding: 12px 24px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s;}
+        .btn-audio-blue:hover { background-color: #bae6fd; }
         
         .btn-next { background-color: #f43f5e; color: white; width: 100%; border: none; padding: 18px; border-radius: 16px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 10px rgba(244, 63, 94, 0.2); }
         .btn-next:hover:not(:disabled) { background-color: #e11d48; }
         .btn-next:disabled { background-color: #cbd5e1; cursor: not-allowed; box-shadow: none; opacity: 0.7; }
         
-        /* Quiz */
+        /* Quiz & Type */
         .quiz-title { font-size: 16px; font-weight: bold; color: #64748b; margin-bottom: 15px; }
         .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; margin-top: 20px; }
         @media (max-width: 600px) { .quiz-grid { grid-template-columns: 1fr; } }
@@ -67,21 +69,25 @@
         .quiz-option.correct { border-color: #10b981; background: #ecfdf5; color: #047857; }
         .quiz-option.incorrect { border-color: #ef4444; background: #fef2f2; color: #b91c1c; }
         
-        /* Type */
         .type-input-group { display: flex; width: 100%; max-width: 500px; gap: 10px; margin-top: 20px; }
         .type-input { flex: 1; border: 2px solid #bae6fd; border-radius: 12px; padding: 15px; font-size: 16px; outline: none; }
         .type-input:focus { border-color: #0ea5e9; }
         .btn-check { background-color: #0ea5e9; color: white; border: none; padding: 0 30px; border-radius: 12px; font-weight: bold; cursor: pointer; }
         
-        /* Pronounce */
+        /* Roleplay Specific */
+        .rp-textarea { width: 100%; height: 120px; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; font-size: 18px; font-family: inherit; outline: none; resize: none; transition: border-color 0.2s; margin-top: 25px; margin-bottom: 15px;}
+        .rp-textarea:focus { border-color: #14b8a6; }
+        .btn-record { background-color: #14b8a6; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 16px; transition: all 0.2s; }
+        .btn-record:hover { background-color: #0d9488; }
+        .btn-record.recording { background-color: #ef4444; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        
         .speed-controls { display: flex; gap: 15px; margin-top: 15px; margin-bottom: 30px; }
-        .btn-record { background-color: #0ea5e9; color: white; border: none; padding: 15px 40px; border-radius: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-record.recorded { background-color: #10b981; }
         .divider { width: 100%; height: 1px; border-top: 1px dashed #cbd5e1; margin: 30px 0; }
         
         /* Pagination */
         .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 20px; flex-wrap: wrap;}
-        .page-dot { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center; color: #94a3b8; font-size: 12px; background: #fff; }
+        .page-dot { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center; color: #94a3b8; font-size: 12px; background: #fff; cursor: default; }
         .page-dot.active { background-color: #e0f2fe; color: #0284c7; border-color: #bae6fd; font-weight: bold; }
     </style>
 </head>
@@ -91,6 +97,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
+        // DỮ LIỆU TỪ VỰNG (Đã xóa Nhóm 6)
         const vocabularyData = [
           // Nhóm 1: Personal Details
           { id: 1, word: "Location", ipa: "/ləʊˈkeɪʃən/", vi: "Địa điểm", example: "Location" },
@@ -132,32 +139,44 @@
           { id: 29, word: "Medication", ipa: "/ˌmedɪˈkeɪʃn/", vi: "Thuốc (theo toa hoặc cách khác)", example: "Are you presently taking any medication (prescribed or otherwise, e.g. herbal, natural)?" },
           { id: 30, word: "Dosages", ipa: "/ˈdəʊsɪdʒɪz/", vi: "Liều lượng", example: "If yes, please give details and dosages." },
           { id: 31, word: "Personal tragedy", ipa: "/ˈpɜːrsənl ˈtrædʒədi/", vi: "Bi kịch cá nhân", example: "Have you had any personal tragedy in the past year, e.g. death of a near relative, etc?" },
-          { id: 32, word: "Refused admission", ipa: "/rɪˈfjuːzd ədˈmɪʃn/", vi: "Bị từ chối nhận vào khóa thiền", example: "Have you ever been refused admission to a course or had to leave a course for any reason?" },
+          { id: 32, word: "Refused admission", ipa: "/rɪˈfjuːzd ədˈmɪʃn/", vi: "Bị từ chối nhận vào khóa thiền", example: "Have you ever been refused admission to a course or had to leave a course for any reason?" }
+        ];
 
-          // Nhóm 6: Administration
-          { id: 33, word: "Current and accurate", ipa: "/ˈkɜːrənt ənd ˈækjərət/", vi: "Cập nhật và chính xác", example: "Qualifications for the course must be current and accurate at the time the course begins." },
-          { id: 34, word: "Guarantee admission", ipa: "/ˌɡærənˈtiː ədˈmɪʃn/", vi: "Đảm bảo được nhận vào khóa", example: "Please understand that having the minimum qualifications does not guarantee admission." },
-          { id: 35, word: "Vouching for", ipa: "/ˈvaʊtʃɪŋ fɔːr/", vi: "Đảm bảo/bảo lãnh cho", example: "By recommending this applicant you are personally vouching for his/her suitability" }
+        // DỮ LIỆU ROLE-PLAY PHỎNG VẤN
+        const roleplayQuestions = [
+            { id: 1, en: "Are you committed fully and exclusively to the practice of Vipassana meditation?", vi: "Quý vị có cam kết hoàn toàn và duy nhất với việc thực hành thiền Vipassana không?" },
+            { id: 2, en: "Do you now have or have you had in the past any mental difficulties?", vi: "Hiện tại quý vị có đang hoặc đã từng gặp khó khăn gì về tinh thần không?" },
+            { id: 3, en: "Are you presently taking any medication?", vi: "Hiện tại quý vị có đang dùng bất kỳ loại thuốc nào không?" },
+            { id: 4, en: "Have you had any personal tragedy in the past year?", vi: "Quý vị có gặp bi kịch cá nhân nào trong năm qua không?" },
+            { id: 5, en: "Are your relations harmonious?", vi: "Mối quan hệ của quý vị có hòa hợp hay không?" },
+            { id: 6, en: "Is your spouse in favor of you taking the course?", vi: "Vợ/chồng của quý vị có ủng hộ việc quý vị tham gia khóa thiền không?" }
         ];
 
         const Topic1App = () => {
+          // Main Tab State
+          const [activeMainTab, setActiveMainTab] = useState('vocabulary'); // 'vocabulary' hoặc 'roleplay'
+
+          // Vocabulary States
           const [currentIndex, setCurrentIndex] = useState(0);
-          
-          // Trạng thái các bước: 1 (Flip), 2 (Quiz), 3 (Type), 4 (Speak)
           const [currentStep, setCurrentStep] = useState(1); 
-          
           const [isFlipped, setIsFlipped] = useState(false);
           const [quizOptions, setQuizOptions] = useState([]);
-          const [quizResult, setQuizResult] = useState(null); // 'correct', 'incorrect'
+          const [quizResult, setQuizResult] = useState(null); 
           const [typeInput, setTypeInput] = useState("");
-          const [typeResult, setTypeResult] = useState(null); // 'correct', 'incorrect'
+          const [typeResult, setTypeResult] = useState(null); 
           const [hasRecorded, setHasRecorded] = useState(false);
 
-          const currentItem = vocabularyData[currentIndex];
+          // Roleplay States
+          const [rpIndex, setRpIndex] = useState(0);
+          const [rpAnswer, setRpAnswer] = useState("");
+          const [isRecordingRp, setIsRecordingRp] = useState(false);
+          const [showHint, setShowHint] = useState(false);
 
-          // Tạo đáp án cho Trắc nghiệm khi nhảy sang bước 2
+          const currentItem = vocabularyData[currentIndex];
+          const currentRpQuestion = roleplayQuestions[rpIndex];
+
           useEffect(() => {
-            if (currentStep === 2) {
+            if (activeMainTab === 'vocabulary' && currentStep === 2) {
                 let options = [currentItem];
                 let pool = vocabularyData.filter(item => item.id !== currentItem.id);
                 pool.sort(() => 0.5 - Math.random());
@@ -165,7 +184,7 @@
                 options.sort(() => 0.5 - Math.random());
                 setQuizOptions(options);
             }
-          }, [currentStep, currentIndex]);
+          }, [currentStep, currentIndex, activeMainTab]);
 
           const playAudio = (text, rate = 1.0) => {
             if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -177,7 +196,7 @@
             }
           };
 
-          // Kiểm tra xem nút "Tiếp tục" đã được mở khóa chưa
+          // --- LOGIC CHO TAB VOCABULARY ---
           const isNextEnabled = () => {
               if (currentStep === 1) return isFlipped;
               if (currentStep === 2) return quizResult === 'correct';
@@ -186,12 +205,10 @@
               return false;
           };
 
-          // Xử lý nút Chuyển bước / Chuyển từ
           const handleNext = () => {
               if (currentStep < 4) {
                   setCurrentStep(prev => prev + 1);
               } else {
-                  // Sang từ vựng mới, reset toàn bộ trạng thái
                   setCurrentIndex((prev) => (prev + 1) % vocabularyData.length);
                   setCurrentStep(1);
                   setIsFlipped(false);
@@ -212,9 +229,8 @@
              }
           };
 
-          // Giao diện cho các Tab Sub-nav
           const renderTab = (stepNumber, icon, label) => {
-              let statusClass = "locked"; // Mặc định khóa
+              let statusClass = "locked";
               if (currentStep === stepNumber) statusClass = "active";
               else if (currentStep > stepNumber) statusClass = "completed";
               
@@ -225,164 +241,269 @@
               );
           };
 
+          // --- LOGIC CHO TAB ROLEPLAY ---
+          const handleRpRecord = () => {
+              if (isRecordingRp) return;
+              setIsRecordingRp(true);
+              setRpAnswer(""); // Clear khung text khi bắt đầu nói
+              
+              // Giả lập nhận diện giọng nói (Speech-to-text) sau 2.5 giây
+              setTimeout(() => {
+                  setIsRecordingRp(false);
+                  setRpAnswer("Yes, I do. / No, I don't.");
+              }, 2500);
+          };
+
+          const handleRpNext = () => {
+              if (rpIndex < roleplayQuestions.length - 1) {
+                  setRpIndex(prev => prev + 1);
+                  setRpAnswer("");
+                  setShowHint(false);
+              } else {
+                  alert("Chúc mừng bạn đã hoàn thành phần phỏng vấn giả định!");
+                  setRpIndex(0);
+                  setRpAnswer("");
+                  setShowHint(false);
+              }
+          };
+
           return (
             <div className="container">
-              {/* TOP NAVIGATION */}
+              {/* TOP NAVIGATION CHÍNH */}
               <div className="top-nav">
-                  <div className="nav-pill active">1. Flashcard</div>
+                  <button 
+                      className={`nav-pill ${activeMainTab === 'vocabulary' ? 'active' : ''}`}
+                      onClick={() => setActiveMainTab('vocabulary')}
+                  >
+                      📚 1. Học Từ Vựng
+                  </button>
+                  <button 
+                      className={`nav-pill ${activeMainTab === 'roleplay' ? 'active' : ''}`}
+                      onClick={() => setActiveMainTab('roleplay')}
+                  >
+                      🎙️ 2. Role-play Phỏng Vấn
+                  </button>
               </div>
 
-              {/* TRẠNG THÁI TIẾN ĐỘ BƯỚC */}
-              <div className="sub-nav-container">
-                  <div className="progress-bar">
-                      {[1,2,3,4].map((step) => (
-                          <div key={step} className={`progress-segment ${currentStep >= step ? 'active' : ''}`}></div>
-                      ))}
-                  </div>
-                  <div className="mode-nav">
-                      <div className="mode-tabs">
-                          {renderTab(1, "🃏", "Lật thẻ")}
-                          {renderTab(2, "📝", "Trắc nghiệm")}
-                          {renderTab(3, "⌨️", "Gõ từ")}
-                          {renderTab(4, "🔊", "Phát âm")}
+              {/* =========================================
+                  GIAO DIỆN HỌC TỪ VỰNG 
+                  ========================================= */}
+              {activeMainTab === 'vocabulary' && (
+                  <>
+                      {/* TRẠNG THÁI TIẾN ĐỘ BƯỚC */}
+                      <div className="sub-nav-container">
+                          <div className="progress-bar">
+                              {[1,2,3,4].map((step) => (
+                                  <div key={step} className={`progress-segment ${currentStep >= step ? 'active' : ''}`}></div>
+                              ))}
+                          </div>
+                          <div className="mode-nav">
+                              <div className="mode-tabs">
+                                  {renderTab(1, "🃏", "Lật thẻ")}
+                                  {renderTab(2, "📝", "Trắc nghiệm")}
+                                  {renderTab(3, "⌨️", "Gõ từ")}
+                                  {renderTab(4, "🔊", "Phát âm")}
+                              </div>
+                              <div style={{fontWeight: 'bold', color: '#64748b', fontSize: '18px'}}>
+                                  {currentIndex + 1} / {vocabularyData.length}
+                              </div>
+                          </div>
                       </div>
-                      <div style={{fontWeight: 'bold', color: '#64748b', fontSize: '18px'}}>
-                          {currentIndex + 1} / {vocabularyData.length}
-                      </div>
-                  </div>
-              </div>
 
-              {/* VÙNG THẺ HỌC */}
-              
-              {/* BƯỚC 1: LẬT THẺ */}
-              {currentStep === 1 && (
-                  <div className={`card-area ${isFlipped ? 'flipped' : ''}`}>
-                      {!isFlipped ? (
-                          <>
+                      {/* BƯỚC 1: LẬT THẺ */}
+                      {currentStep === 1 && (
+                          <div className={`card-area ${isFlipped ? 'flipped' : ''}`}>
+                              {!isFlipped ? (
+                                  <>
+                                      <div className="word-large">{currentItem.word}</div>
+                                      <div className="ipa-text">{currentItem.ipa}</div>
+                                      <button className="btn-flip" onClick={() => setIsFlipped(true)}>
+                                          Bấm để lật thẻ 👆
+                                      </button>
+                                  </>
+                              ) : (
+                                  <>
+                                      <div className="word-large word-red">{currentItem.word}</div>
+                                      <div className="vi-text">{currentItem.vi}</div>
+                                      <div className="example-text">"{currentItem.example}"</div>
+                                      <button className="btn-audio-pink" onClick={() => playAudio(currentItem.word)}>
+                                          🔊 Nghe phát âm
+                                      </button>
+                                  </>
+                              )}
+                          </div>
+                      )}
+
+                      {/* BƯỚC 2: TRẮC NGHIỆM */}
+                      {currentStep === 2 && (
+                          <div className="card-area">
+                              <div className="quiz-title">Chọn nghĩa đúng nhất cho từ dưới đây:</div>
+                              <div className="word-large">{currentItem.word}</div>
+                              
+                              <div className="quiz-grid">
+                                  {quizOptions.map((opt, i) => {
+                                      let optClass = 'quiz-option';
+                                      if (quizResult && opt.id === currentItem.id) optClass += ' correct';
+                                      else if (quizResult === 'incorrect' && opt.id !== currentItem.id) optClass += ' incorrect';
+                                      
+                                      return (
+                                          <div 
+                                              key={i} 
+                                              className={optClass}
+                                              onClick={() => {
+                                                  if (opt.id === currentItem.id) setQuizResult('correct');
+                                                  else setQuizResult('incorrect');
+                                              }}
+                                          >
+                                              {opt.vi}
+                                          </div>
+                                      );
+                                  })}
+                              </div>
+                          </div>
+                      )}
+
+                      {/* BƯỚC 3: GÕ TỪ */}
+                      {currentStep === 3 && (
+                          <div className="card-area">
+                              <div className="quiz-title">Nghe và gõ lại từ vựng chính xác:</div>
+                              <div className="word-large" style={{color: '#0ea5e9'}}>{currentItem.vi}</div>
+                              <br/>
+                              <button className="btn-audio-blue" onClick={() => playAudio(currentItem.word)}>
+                                  🔊 Nghe đọc
+                              </button>
+                              
+                              <div className="type-input-group">
+                                  <input 
+                                      type="text" 
+                                      className="type-input" 
+                                      placeholder="Gõ tiếng Anh..." 
+                                      value={typeInput}
+                                      onChange={(e) => setTypeInput(e.target.value)}
+                                      onKeyDown={(e) => e.key === 'Enter' && handleTypeCheck()}
+                                  />
+                                  <button className="btn-check" onClick={handleTypeCheck}>Check</button>
+                              </div>
+                              
+                              {typeResult === 'correct' && <div style={{color: '#10b981', marginTop: '15px', fontWeight: 'bold'}}>✅ Chính xác!</div>}
+                              {typeResult === 'incorrect' && <div style={{color: '#ef4444', marginTop: '15px', fontWeight: 'bold'}}>❌ Sai rồi, hãy thử lại!</div>}
+                          </div>
+                      )}
+
+                      {/* BƯỚC 4: PHÁT ÂM */}
+                      {currentStep === 4 && (
+                          <div className="card-area">
                               <div className="word-large">{currentItem.word}</div>
                               <div className="ipa-text">{currentItem.ipa}</div>
-                              <button className="btn-flip" onClick={() => setIsFlipped(true)}>
-                                  Bấm để lật thẻ 👆
-                              </button>
-                          </>
-                      ) : (
-                          <>
-                              <div className="word-large word-red">{currentItem.word}</div>
-                              <div className="vi-text">{currentItem.vi}</div>
-                              <div className="example-text">"{currentItem.example}"</div>
-                              <button className="btn-audio-pink" onClick={() => playAudio(currentItem.word)}>
-                                  🔊 Nghe phát âm
-                              </button>
-                          </>
-                      )}
-                  </div>
-              )}
-
-              {/* BƯỚC 2: TRẮC NGHIỆM */}
-              {currentStep === 2 && (
-                  <div className="card-area">
-                      <div className="quiz-title">Chọn nghĩa đúng nhất cho từ dưới đây:</div>
-                      <div className="word-large">{currentItem.word}</div>
-                      
-                      <div className="quiz-grid">
-                          {quizOptions.map((opt, i) => {
-                              let optClass = 'quiz-option';
-                              if (quizResult && opt.id === currentItem.id) optClass += ' correct';
-                              else if (quizResult === 'incorrect' && opt.id !== currentItem.id) optClass += ' incorrect'; // Chỉ hiện đỏ nếu click sai
+                              <div className="vi-text word-red" style={{marginBottom: '30px'}}>{currentItem.vi}</div>
                               
-                              return (
-                                  <div 
-                                      key={i} 
-                                      className={optClass}
-                                      onClick={() => {
-                                          if (opt.id === currentItem.id) setQuizResult('correct');
-                                          else setQuizResult('incorrect');
-                                      }}
-                                  >
-                                      {opt.vi}
-                                  </div>
-                              );
-                          })}
-                      </div>
-                  </div>
-              )}
+                              <div className="section-label">① Lắng nghe giọng chuẩn</div>
+                              <div className="speed-controls">
+                                  <button className="btn-audio-blue" onClick={() => playAudio(currentItem.word, 0.7)}>
+                                      🐢 Đọc chậm (0.7x)
+                                  </button>
+                                  <button className="btn-audio-pink" onClick={() => playAudio(currentItem.word, 1.0)}>
+                                      🔊 Tốc độ chuẩn
+                                  </button>
+                              </div>
+                              
+                              <div className="divider"></div>
+                              
+                              <div className="section-label">② Ghi âm giọng của bạn</div>
+                              <button 
+                                  className={`btn-record ${hasRecorded ? 'recorded' : ''}`}
+                                  onClick={() => {
+                                      playAudio("Recording simulated"); 
+                                      setHasRecorded(true);
+                                  }}
+                              >
+                                  {hasRecorded ? '✅ Đã ghi âm tốt' : '🎤 Bấm để nói (Mô phỏng)'}
+                              </button>
+                          </div>
+                      )}
 
-              {/* BƯỚC 3: GÕ TỪ */}
-              {currentStep === 3 && (
-                  <div className="card-area">
-                      <div className="quiz-title">Nghe và gõ lại từ vựng chính xác:</div>
-                      <div className="word-large" style={{color: '#0ea5e9'}}>{currentItem.vi}</div>
-                      <br/>
-                      <button className="btn-audio-blue" onClick={() => playAudio(currentItem.word)}>
-                          🔊 Nghe đọc
-                      </button>
-                      
-                      <div className="type-input-group">
-                          <input 
-                              type="text" 
-                              className="type-input" 
-                              placeholder="Gõ tiếng Anh..." 
-                              value={typeInput}
-                              onChange={(e) => setTypeInput(e.target.value)}
-                              onKeyDown={(e) => e.key === 'Enter' && handleTypeCheck()}
-                          />
-                          <button className="btn-check" onClick={handleTypeCheck}>Check</button>
-                      </div>
-                      
-                      {typeResult === 'correct' && <div style={{color: '#10b981', marginTop: '15px', fontWeight: 'bold'}}>✅ Chính xác!</div>}
-                      {typeResult === 'incorrect' && <div style={{color: '#ef4444', marginTop: '15px', fontWeight: 'bold'}}>❌ Sai rồi, hãy thử lại!</div>}
-                  </div>
-              )}
-
-              {/* BƯỚC 4: PHÁT ÂM */}
-              {currentStep === 4 && (
-                  <div className="card-area">
-                      <div className="word-large">{currentItem.word}</div>
-                      <div className="ipa-text">{currentItem.ipa}</div>
-                      <div className="vi-text word-red" style={{marginBottom: '30px'}}>{currentItem.vi}</div>
-                      
-                      <div className="section-label">① Lắng nghe giọng chuẩn</div>
-                      <div className="speed-controls">
-                          <button className="btn-audio-blue" onClick={() => playAudio(currentItem.word, 0.7)}>
-                              🐢 Đọc chậm (0.7x)
-                          </button>
-                          <button className="btn-audio-pink" onClick={() => playAudio(currentItem.word, 1.0)}>
-                              🔊 Tốc độ chuẩn
-                          </button>
-                      </div>
-                      
-                      <div className="divider"></div>
-                      
-                      <div className="section-label">② Ghi âm giọng của bạn</div>
+                      {/* NÚT CHUYỂN BƯỚC / TỪ */}
                       <button 
-                          className={`btn-record ${hasRecorded ? 'recorded' : ''}`}
-                          onClick={() => {
-                              playAudio("Recording simulated"); 
-                              setHasRecorded(true);
-                          }}
+                          className="btn-next" 
+                          onClick={handleNext}
+                          disabled={!isNextEnabled()}
                       >
-                          {hasRecorded ? '✅ Đã ghi âm tốt' : '🎤 Bấm để nói (Mô phỏng)'}
+                          {currentStep < 4 ? 'Tiếp tục →' : 'Tuyệt vời! Qua từ tiếp theo ➔'}
                       </button>
-                  </div>
+
+                      {/* PAGINATION */}
+                      <div className="pagination">
+                          {vocabularyData.map((_, index) => (
+                              <div key={index} className={`page-dot ${index === currentIndex ? 'active' : (index < currentIndex ? 'completed' : '')}`} style={index < currentIndex ? {background: '#ecfdf5', borderColor: '#10b981', color: '#10b981'} : {}}>
+                                  {index < currentIndex ? '✓' : index + 1}
+                              </div>
+                          ))}
+                      </div>
+                  </>
               )}
 
-              {/* NÚT CHUYỂN BƯỚC / TỪ */}
-              <button 
-                  className="btn-next" 
-                  onClick={handleNext}
-                  disabled={!isNextEnabled()}
-              >
-                  {currentStep < 4 ? 'Tiếp tục →' : 'Tuyệt vời! Qua từ tiếp theo ➔'}
-              </button>
-
-              {/* PAGINATION Ở DƯỚI (Mô phỏng tiến trình tổng thể) */}
-              <div className="pagination">
-                  {vocabularyData.map((_, index) => (
-                      <div key={index} className={`page-dot ${index === currentIndex ? 'active' : (index < currentIndex ? 'completed' : '')}`} style={index < currentIndex ? {background: '#ecfdf5', borderColor: '#10b981', color: '#10b981'} : {}}>
-                          {index < currentIndex ? '✓' : index + 1}
+              {/* =========================================
+                  GIAO DIỆN ROLE-PLAY 
+                  ========================================= */}
+              {activeMainTab === 'roleplay' && (
+                  <div className="card-area" style={{minHeight: '400px', justifyContent: 'flex-start'}}>
+                      <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '20px', alignItems: 'center'}}>
+                          <div style={{fontWeight: 'bold', color: '#14b8a6', fontSize: '18px'}}>🎙️ Luyện tập Điền đơn</div>
+                          <div style={{color: '#94a3b8', fontWeight: 'bold'}}>Câu {rpIndex + 1} / {roleplayQuestions.length}</div>
                       </div>
-                  ))}
-              </div>
+
+                      {/* Question */}
+                      <div className="word-large" style={{color: '#0f172a', fontSize: '28px'}}>{currentRpQuestion.en}</div>
+                      
+                      <div style={{display: 'flex', gap: '15px', marginTop: '15px'}}>
+                          <button className="btn-audio-blue" onClick={() => playAudio(currentRpQuestion.en, 0.9)}>
+                              🔊 Nghe câu hỏi
+                          </button>
+                          <button 
+                              style={{background: 'none', border: 'none', color: '#94a3b8', textDecoration: 'underline', cursor: 'pointer'}}
+                              onClick={() => setShowHint(!showHint)}
+                          >
+                              {showHint ? 'Ẩn dịch nghĩa' : 'Hiện dịch nghĩa'}
+                          </button>
+                      </div>
+
+                      {showHint && (
+                          <div style={{marginTop: '15px', padding: '10px 15px', backgroundColor: '#f1f5f9', borderRadius: '8px', color: '#475569', fontStyle: 'italic', width: '100%'}}>
+                              {currentRpQuestion.vi}
+                          </div>
+                      )}
+
+                      <div className="divider" style={{margin: '20px 0'}}></div>
+
+                      {/* Answer Area */}
+                      <div style={{width: '100%', textAlign: 'left', fontWeight: 'bold', color: '#64748b'}}>Phản hồi của bạn:</div>
+                      
+                      <textarea 
+                          className="rp-textarea"
+                          placeholder="Gõ câu trả lời bằng tiếng Anh, hoặc bấm nút Ghi âm bên dưới..."
+                          value={rpAnswer}
+                          onChange={(e) => setRpAnswer(e.target.value)}
+                      ></textarea>
+
+                      <div style={{display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px'}}>
+                          <button 
+                              className={`btn-record ${isRecordingRp ? 'recording' : ''}`} 
+                              onClick={handleRpRecord}
+                          >
+                              {isRecordingRp ? '🔴 Đang nghe...' : '🎤 Bấm để nói'}
+                          </button>
+                          
+                          <button 
+                              className="btn-next" 
+                              style={{width: 'auto', padding: '12px 30px', margin: 0, fontSize: '16px'}}
+                              onClick={handleRpNext}
+                              disabled={rpAnswer.trim() === ''}
+                          >
+                              {rpIndex < roleplayQuestions.length - 1 ? 'Câu tiếp theo →' : 'Hoàn thành 🎉'}
+                          </button>
+                      </div>
+                  </div>
+              )}
 
             </div>
           );
