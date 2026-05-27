@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Topic 1 - Loving English Application Form</title>
+    <title>Topic 1 - Loving English Full Curriculum</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -16,86 +16,67 @@
             padding: 20px;
             color: #334155;
         }
-        .container { max-width: 800px; margin: 0 auto; }
+        .container { max-width: 850px; margin: 0 auto; }
         
-        /* Top Nav */
+        /* Navigation */
         .top-nav { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .nav-pill { padding: 12px 25px; border-radius: 10px; border: 2px solid #e2e8f0; background: #fff; cursor: pointer; font-weight: bold; color: #64748b; font-size: 16px; transition: all 0.2s; }
-        .nav-pill:hover { border-color: #bae6fd; }
         .nav-pill.active { background-color: #0ea5e9; color: #fff; border-color: #0ea5e9; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3); }
 
-        /* Sub Nav */
         .sub-nav-container { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); margin-bottom: 20px; border: 1px solid #f1f5f9; }
         .progress-bar { display: flex; gap: 5px; margin-bottom: 20px; }
-        .progress-segment { height: 4px; flex: 1; border-radius: 2px; background: #e2e8f0; transition: background 0.3s; }
+        .progress-segment { height: 4px; flex: 1; border-radius: 2px; background: #e2e8f0; transition: background 0.3s;}
         .progress-segment.active { background: #f43f5e; }
-        .mode-nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .mode-tabs { display: flex; gap: 10px; }
-        .mode-tab { padding: 8px 16px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; font-size: 14px; color: #64748b; display: flex; align-items: center; gap: 6px; font-weight: 600; transition: all 0.2s;}
+        
+        .mode-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+        .mode-tab { padding: 8px 14px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; font-size: 13px; color: #64748b; display: flex; align-items: center; gap: 5px; font-weight: 600; }
         .mode-tab.active { background-color: #f0f9ff; color: #0284c7; border-color: #bae6fd; }
         .mode-tab.completed { background-color: #f8fafc; color: #10b981; border-color: #a7f3d0; }
-        .mode-tab.locked { opacity: 0.5; cursor: not-allowed; background-color: #f1f5f9; }
+        .mode-tab.locked { opacity: 0.4; background-color: #f1f5f9; cursor: not-allowed; }
 
-        /* Card Area */
-        .card-area { background: #fff; border-radius: 16px; padding: 40px; min-height: 300px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin-bottom: 20px; transition: all 0.3s;}
+        /* Areas */
+        .card-area { background: #fff; border-radius: 16px; padding: 40px; min-height: 350px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin-bottom: 20px; transition: all 0.3s;}
         .card-area.flipped { background-color: #f0fdf4; border-color: #bbf7d0; }
         
         /* Typography */
-        .word-large { font-size: 32px; font-weight: bold; margin-bottom: 10px; color: #0f172a; line-height: 1.4; }
-        .word-red { color: #f43f5e; }
-        .ipa-text { color: #94a3b8; font-family: monospace; font-size: 22px; margin-bottom: 20px; background: #f1f5f9; padding: 5px 15px; border-radius: 8px;}
+        .word-large { font-size: 32px; font-weight: bold; color: #0f172a; line-height: 1.4; margin-bottom: 10px; }
+        .ipa-text { color: #0284c7; font-family: monospace; font-size: 24px; margin-bottom: 20px; background: #f0f9ff; padding: 5px 15px; border-radius: 8px;}
         .vi-text { font-size: 24px; font-weight: bold; color: #047857; margin-bottom: 15px; }
-        .example-text { font-size: 16px; color: #64748b; font-style: italic; margin-bottom: 25px; padding: 0 20px; }
+        .example-text { font-size: 16px; color: #64748b; font-style: italic; margin-bottom: 25px; max-width: 90%; }
         
         /* Buttons */
-        .btn-flip { color: #0ea5e9; font-weight: bold; cursor: pointer; font-size: 16px; border: none; background: #f0f9ff; padding: 10px 20px; border-radius: 20px; margin-top: 15px; transition: background 0.2s;}
-        .btn-flip:hover { background: #e0f2fe; }
-        .btn-audio-pink { background-color: #ffe4e6; color: #e11d48; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
-        .btn-audio-blue { background-color: #e0f2fe; color: #0284c7; border: none; padding: 12px 24px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s;}
-        .btn-audio-blue:hover { background-color: #bae6fd; }
+        .btn-audio-pink { background-color: #ffe4e6; color: #e11d48; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-audio-blue { background-color: #e0f2fe; color: #0284c7; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-flip { color: #0ea5e9; font-weight: bold; cursor: pointer; background: #f0f9ff; border: none; padding: 10px 20px; border-radius: 20px; margin-top: 15px; }
         
         .btn-next { background-color: #f43f5e; color: white; width: 100%; border: none; padding: 18px; border-radius: 16px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 10px rgba(244, 63, 94, 0.2); }
-        .btn-next:hover:not(:disabled) { background-color: #e11d48; transform: translateY(-2px); }
-        .btn-next:disabled { background-color: #cbd5e1; cursor: not-allowed; box-shadow: none; opacity: 0.7; }
+        .btn-next:disabled { background-color: #cbd5e1; cursor: not-allowed; box-shadow: none; }
         
-        /* Grid Options */
-        .quiz-title { font-size: 16px; font-weight: bold; color: #64748b; margin-bottom: 25px; }
-        .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
-        @media (max-width: 600px) { .quiz-grid { grid-template-columns: 1fr; } }
-        .quiz-option { border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; background: #fff; cursor: pointer; color: #64748b; font-weight: 500; transition: all 0.2s; }
-        .quiz-option:hover { border-color: #cbd5e1; background: #f8fafc; }
-        .quiz-option.correct { border-color: #10b981; background: #ecfdf5; color: #047857; font-weight: bold;}
+        .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-top: 10px; }
+        .quiz-option { border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; background: #fff; cursor: pointer; font-weight: 500; color: #475569; }
+        .quiz-option.correct { border-color: #10b981; background: #ecfdf5; color: #047857; font-weight: bold; }
         .quiz-option.incorrect { border-color: #ef4444; background: #fef2f2; color: #b91c1c; }
         
         .type-input-group { display: flex; width: 100%; max-width: 500px; gap: 10px; margin-top: 25px; }
         .type-input { flex: 1; border: 2px solid #bae6fd; border-radius: 12px; padding: 15px; font-size: 18px; outline: none; text-align: center; }
-        .type-input:focus { border-color: #0ea5e9; }
-        .btn-check { background-color: #0ea5e9; color: white; border: none; padding: 0 30px; border-radius: 12px; font-weight: bold; cursor: pointer; }
         
-        /* Micro & Audio */
-        .rp-textarea { width: 100%; height: 120px; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; font-size: 18px; font-family: inherit; outline: none; resize: none; transition: border-color 0.2s; margin-top: 25px; margin-bottom: 15px;}
-        .rp-textarea:focus { border-color: #14b8a6; }
-        
-        .btn-record { background-color: #14b8a6; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; transition: all 0.2s; }
-        .btn-record:hover { background-color: #0d9488; }
+        /* Recording */
+        .btn-record { background-color: #14b8a6; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-record.recording { background-color: #ef4444; animation: pulse 1.5s infinite; }
-        .btn-record.recorded { background-color: #f59e0b; color: white; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
         
-        .audio-player-container { margin-top: 20px; width: 100%; display: flex; justify-content: center; }
-        audio { height: 45px; border-radius: 20px; outline: none; width: 100%; max-width: 400px;}
+        .audio-player { margin-top: 20px; width: 100%; max-width: 400px; height: 40px; }
         
-        .speed-controls { display: flex; gap: 15px; margin-top: 15px; margin-bottom: 30px; }
-        .divider { width: 100%; height: 1px; border-top: 1px dashed #cbd5e1; margin: 30px 0; }
+        .speed-controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        .divider { width: 100%; height: 1px; border-top: 1px dashed #cbd5e1; margin: 20px 0; }
         
-        /* Final Step Buttons */
-        .action-btns { display: flex; gap: 15px; width: 100%; max-width: 500px; margin-top: 20px;}
-        .btn-retry { flex: 1; padding: 15px; border-radius: 12px; border: 2px solid #cbd5e1; background: #fff; color: #64748b; font-weight: bold; cursor: pointer; font-size: 16px; }
-        .btn-retry:hover { background: #f1f5f9; }
+        .final-choice-box { display: flex; gap: 15px; width: 100%; max-width: 500px; margin-top: 20px; }
+        .btn-retry { flex: 1; padding: 15px; border-radius: 12px; border: 2px solid #cbd5e1; background: #fff; color: #64748b; font-weight: bold; cursor: pointer; }
         
-        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 20px; flex-wrap: wrap;}
-        .page-dot { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center; color: #94a3b8; font-size: 12px; background: #fff; cursor: default; }
+        .pagination { display: flex; justify-content: center; gap: 6px; margin-top: 20px; flex-wrap: wrap;}
+        .page-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center; color: #94a3b8; font-size: 11px; background: #fff; }
         .page-dot.active { background-color: #e0f2fe; color: #0284c7; border-color: #bae6fd; font-weight: bold; }
+        .rp-textarea { width: 100%; height: 100px; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; font-size: 17px; outline: none; margin: 20px 0; }
     </style>
 </head>
 <body>
@@ -104,470 +85,292 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // DỮ LIỆU TỪ VỰNG (Đã bỏ Nhóm 6 - Tổng 32 cụm từ)
+        // DỮ LIỆU TỪ VỰNG TỪ FILE CSV
         const vocabularyData = [
-          { id: 1, word: "Location", ipa: "/ləʊˈkeɪʃən/", vi: "Địa điểm", example: "Location" },
-          { id: 2, word: "Gender", ipa: "/ˈdʒendər/", vi: "Giới tính", example: "Gender/ Giới tính Age M F" },
-          { id: 3, word: "Occupation", ipa: "/ˌɒkjʊˈpeɪʃən/", vi: "Nghề nghiệp", example: "Occupation | Nghề nghiệp" },
-          { id: 4, word: "Attach a recent photograph", ipa: "/əˈtætʃ ə ˈriːsnt ˈfəʊtəɡrɑːf/", vi: "Đính kèm một bức ảnh gần đây", example: "Please attach a recent photograph" },
-          { id: 5, word: "Essential for identification", ipa: "/ɪˈsenʃl fər aɪˌdentɪfɪˈkeɪʃn/", vi: "Cần thiết để nhận dạng", example: "Essential for identification by the conducting teacher." },
-          { id: 6, word: "Intensive practice", ipa: "/ɪnˈtensɪv ˈpræktɪs/", vi: "Thực hành chuyên sâu", example: "The Special 10-Day course, Long Courses of 20 days or more are opportunities for deep, intensive practice of Vipassana meditation." },
-          { id: 7, word: "Committed fully and exclusively", ipa: "/kəˈmɪtɪd ˈfʊli ənd ɪksˈkluːsɪvli/", vi: "Cam kết hoàn toàn và duy nhất", example: "Are you committed fully and exclusively to the practice of Vipassana meditation as taught by S.N. Goenka" },
-          { id: 8, word: "Authorized assistant teachers", ipa: "/ˈɔːθəraɪzd əˈsɪstənt ˈtiːtʃərz/", vi: "Các vị phụ giáo được ủy quyền", example: "Goenka and his authorized assistant teachers?" },
-          { id: 9, word: "Two one-hour sittings", ipa: "/tuː wʌn-ˈaʊər ˈsɪtɪŋz/", vi: "Hai thời thiền một giờ", example: "Regular daily practice of Vipassana meditation is defined as two one-hour sittings (morning and evening) each day." },
-          { id: 10, word: "Energy based healing techniques", ipa: "/ˈenərdʒi beɪst ˈhiːlɪŋ tekˈniːks/", vi: "Kỹ thuật chữa bệnh dựa trên năng lượng", example: "trying other meditation techniques or so-called energy based healing techniques e.g." },
-          { id: 11, word: "Courses sat as student", ipa: "/ˈkɔːsɪz sæt əz ˈstjuːdnt/", vi: "Khóa thiền ngồi như là một thiền sinh", example: "Course experience. Details of courses sat as student:" },
-          { id: 12, word: "Five Precepts", ipa: "/faɪv ˈpriːsepts/", vi: "Năm Giới", example: "Part of the practice is maintaining the Five Precepts in daily life, that is:" },
-          { id: 13, word: "Abstain from", ipa: "/əbˈsteɪn frəm/", vi: "Tránh, kiêng", example: "To abstain from intentional killing of any living creature;" },
-          { id: 14, word: "Intentional killing", ipa: "/ɪnˈtenʃənl ˈkɪlɪŋ/", vi: "Cố ý giết hại", example: "To abstain from intentional killing of any living creature;" },
-          { id: 15, word: "Stealing", ipa: "/ˈstiːlɪŋ/", vi: "Trộm cắp", example: "To abstain from stealing;" },
-          { id: 16, word: "Sexual misconduct", ipa: "/ˈsekʃuəl mɪsˈkɒndʌkt/", vi: "Tà dâm / Tình dục sai trái", example: "To abstain from sexual misconduct, i.e., to be in a life-long committed relationship with one" },
-          { id: 17, word: "Wrong speech", ipa: "/rɒŋ spiːtʃ/", vi: "Nói dối / Lời nói sai trái", example: "To abstain from wrong speech;" },
-          { id: 18, word: "Intoxicants", ipa: "/ɪnˈtɒksɪkənts/", vi: "Các chất say", example: "To abstain completely from alcohol, drugs and intoxicants" },
-          { id: 19, word: "Celibate", ipa: "/ˈselɪbət/", vi: "Độc thân", example: "person, or to be completely celibate *" },
-          { id: 20, word: "Life-long committed relationship", ipa: "/laɪf-lɒŋ kəˈmɪtɪd rɪˈleɪʃnʃɪp/", vi: "Mối quan hệ cam kết lâu dài", example: "person, or to be completely celibate * (to be in a life-long committed relationship)" },
-          { id: 21, word: "Spouse", ipa: "/spaʊs/", vi: "Người phối ngẫu (vợ/chồng)", example: "Spouse's name: Tên người phôi ngâu (vợ/chồng)" },
-          { id: 22, word: "Harmonious", ipa: "/hɑːrˈməʊniəs/", vi: "Hòa hợp", example: "Are your relations harmonious?" },
-          { id: 23, word: "In favor of", ipa: "/ɪn ˈfeɪvər əv/", vi: "Ủng hộ", example: "Is your spouse in favor of you taking the course?" },
-          { id: 24, word: "Confidential", ipa: "/ˌkɒnfɪˈdenʃl/", vi: "Bí mật", example: "All information will be treated as confidential." },
-          { id: 25, word: "Deliberately concealed", ipa: "/dɪˈlɪbərətli kənˈsiːld/", vi: "Cố tình che giấu", example: "Some with serious difficulties deliberately concealed" },
-          { id: 26, word: "Mental difficulties", ipa: "/ˈmentl ˈdɪfɪkəltiz/", vi: "Khó khăn về tinh thần", example: "8. Do you now have or have you had in the past any mental difficulties?" },
-          { id: 27, word: "Chronic health conditions", ipa: "/ˈkrɒnɪk helθ kənˈdɪʃnz/", vi: "Tình trạng sức khỏe mãn tính", example: "Do you now have, or have you had, any chronic health conditions, injuries," },
-          { id: 28, word: "Recent surgeries", ipa: "/ˈriːsnt ˈsɜːrdʒəriz/", vi: "Ca phẫu thuật gần đây", example: "major illnesses, and/or recent surgeries? If yes please give details with dates." },
-          { id: 29, word: "Medication", ipa: "/ˌmedɪˈkeɪʃn/", vi: "Thuốc (theo toa hoặc cách khác)", example: "Are you presently taking any medication (prescribed or otherwise, e.g. herbal, natural)?" },
-          { id: 30, word: "Dosages", ipa: "/ˈdəʊsɪdʒɪz/", vi: "Liều lượng", example: "If yes, please give details and dosages." },
-          { id: 31, word: "Personal tragedy", ipa: "/ˈpɜːrsənl ˈtrædʒədi/", vi: "Bi kịch cá nhân", example: "Have you had any personal tragedy in the past year, e.g. death of a near relative, etc?" },
-          { id: 32, word: "Refused admission", ipa: "/rɪˈfjuːzd ədˈmɪʃn/", vi: "Bị từ chối nhận vào khóa thiền", example: "Have you ever been refused admission to a course or had to leave a course for any reason?" }
+            { id: 1, word: "Centre Name", ipa: "/ˈsentər neɪm/", vi: "Tên trung tâm", example: "Please write down the centre name on the form." },
+            { id: 2, word: "Course Type", ipa: "/kɔːrs taɪp/", vi: "Loại khóa", example: "What course type are you applying for?" },
+            { id: 3, word: "Course Date", ipa: "/kɔːrs deɪt/", vi: "Thời gian của khóa/lịch khóa", example: "The exact course date will be announced soon." },
+            { id: 4, word: "Full Name", ipa: "/fʊl neɪm/", vi: "Họ tên đầy đủ", example: "Please provide your full name as it appears on your ID." },
+            { id: 5, word: "Address", ipa: "/əˈdres/", vi: "Địa chỉ", example: "Please enter your current residential address." },
+            { id: 6, word: "Date of birth (DOB)", ipa: "/deɪt əv bɜːrθ/", vi: "Ngày tháng năm sinh", example: "Your date of birth (DOB) is required for registration." },
+            { id: 7, word: "Age", ipa: "/eɪdʒ/", vi: "Tuổi", example: "The minimum age for participants is 18" },
+            { id: 8, word: "Gender", ipa: "/ˈdʒendər/", vi: "Giới tính", example: "Please specify your gender in the application." },
+            { id: 9, word: "Education", ipa: "/ˌedʒuˈkeɪʃn/", vi: "Trình độ học vấn", example: "Please provide details about your highest level of education." },
+            { id: 10, word: "Phone", ipa: "/fəʊn/", vi: "Điện thoại", example: "Please leave your phone number so we can contact you." },
+            { id: 11, word: "Occupation", ipa: "/ˌɒkjʊˈpeɪʃən/", vi: "Nghề nghiệp", example: "What is your current occupation?" },
+            { id: 12, word: "Designation", ipa: "/ˌdezɪɡˈneɪʃn/", vi: "Chức danh", example: "Please state your official designation at the company." },
+            { id: 13, word: "Company Name", ipa: "/ˈkʌmpəni neɪm/", vi: "Tên công ty", example: "Enter your current company name." },
+            { id: 14, word: "Assistant Teachers Only", ipa: "/əˈsɪstənt ˈtiːtʃərz ˈəʊnli/", vi: "Chỉ dành cho các phụ giáo", example: "This section is intended for Assistant Teachers only." },
+            { id: 15, word: "Year of Appointment", ipa: "/jɪər əv əˈpɔɪntmənt/", vi: "Năm được bổ nhiệm", example: "Please indicate your year of appointment." },
+            { id: 16, word: "Passport number", ipa: "/ˈpæspɔːrt ˈnʌmbər/", vi: "Số hộ chiếu", example: "A valid passport number is required for international students." },
+            { id: 17, word: "Attach a recent photograph", ipa: "/əˈtætʃ ə ˈriːsnt ˈfəʊtəɡrɑːf/", vi: "Đính kèm một bức ảnh gần đây", example: "Please attach a recent photograph." },
+            { id: 18, word: "Essential for identification", ipa: "/ɪˈsenʃl fər aɪˌdentɪfɪˈkeɪʃn/", vi: "Cần thiết để nhận dạng", example: "Essential for identification by the conducting teacher." },
+            { id: 19, word: "Emergency Contact Info", ipa: "/ɪˈmɜːrdʒənsi ˈkɒntækt ˈɪnfəʊ/", vi: "Thông tin liên lạc khẩn cấp", example: "Please provide your emergency contact info." },
+            { id: 20, word: "Relationship", ipa: "/rɪˈleɪʃnʃɪp/", vi: "Mối quan hệ", example: "What is your relationship with the emergency contact person?" },
+            { id: 21, word: "Mobile No", ipa: "/ˈməʊbaɪl ˈnʌmbər/", vi: "Số điện thoại", example: "Please write down your mobile no." },
+            { id: 22, word: "Practice Details", ipa: "/ˈpræktɪs ˈdiːteɪlz/", vi: "Chi tiết thực hành", example: "Please fill in your meditation practice details." },
+            { id: 23, word: "Intensive practice", ipa: "/ɪnˈtensɪv ˈpræktɪs/", vi: "Thực hành chuyên sâu", example: "The Special 10-Day course, Long Courses of 20 days or more are opportunities for deep, intensive practice of Vipassana meditation." },
+            { id: 24, word: "Committed fully and exclusively", ipa: "/kəˈmɪtɪd ˈfʊli ənd ɪksˈkluːsɪvli/", vi: "Cam kết hoàn toàn và duy nhất", example: "Are you committed fully and exclusively to the practice of Vipassana Meditation as taught by S. N. Goenka and his authorized assistant teachers?" },
+            { id: 25, word: "Authorized assistant teachers", ipa: "/ˈɔːθəraɪzd əˈsɪstənt ˈtiːtʃərz/", vi: "Các vị phụ giáo được ủy quyền", example: "Are you committed fully and exclusively to the practice of Vipassana Meditation as taught by S. N. Goenka and his authorized assistant teachers?" },
+            { id: 26, word: "Two one-hour sittings", ipa: "/tuː wʌn-ˈaʊər ˈsɪtɪŋz/", vi: "Hai thời thiền, mỗi thời một giờ", example: "Regular daily practice of Vipassana meditation is defined as two one-hour sittings (morning and evening) each day." },
+            { id: 27, word: "Energy based healing techniques", ipa: "/ˈenərdʒi beɪst ˈhiːlɪŋ tekˈniːks/", vi: "Kỹ thuật chữa bệnh dựa trên năng lượng", example: "trying other meditation techniques or so-called energy based healing techniques e.g." },
+            { id: 28, word: "Courses sat as student", ipa: "/ˈkɔːsɪz sæt əz ˈstjuːdnt/", vi: "Khóa thiền ngồi như là một thiền sinh", example: "Course experience: Details of courses sat as student." },
+            { id: 29, word: "Five Precepts", ipa: "/faɪv ˈpriːsepts/", vi: "Năm Giới", example: "Part of the practice is maintaining the Five Precepts in daily life, that is:" },
+            { id: 30, word: "Abstain from", ipa: "/əbˈsteɪn frəm/", vi: "Tránh, kiêng", example: "To abstain from intentional killing of any living creature." },
+            { id: 31, word: "Intentional killing", ipa: "/ɪnˈtenʃənl ˈkɪlɪŋ/", vi: "Cố ý giết hại", example: "To abstain from intentional killing of any living creature." },
+            { id: 32, word: "Stealing", ipa: "/ˈstiːlɪŋ/", vi: "Trộm cắp", example: "To abstain from stealing." },
+            { id: 33, word: "Sexual misconduct", ipa: "/ˈsekʃuəl mɪsˈkɒndʌkt/", vi: "Tà dâm / Tình dục sai trái", example: "To abstain from sexual misconduct, i.e., to be in a life-long committed relationship with one person, or to be completely celibate." },
+            { id: 34, word: "Wrong speech", ipa: "/rɒŋ spiːtʃ/", vi: "Nói dối / Lời nói sai trái", example: "To abstain from wrong speech." },
+            { id: 35, word: "Intoxicants", ipa: "/ɪnˈtɒksɪkənts/", vi: "Các chất say", example: "To abstain completely from alcohol, drugs and intoxicants." },
+            { id: 36, word: "Celibate", ipa: "/ˈselɪbət/", vi: "Độc thân", example: "To be completely celibate." },
+            { id: 37, word: "Life-long committed relationship", ipa: "/laɪf-lɒŋ kəˈmɪtɪd rɪˈleɪʃnʃɪp/", vi: "Mối quan hệ cam kết lâu dài", example: "To be in a life-long committed relationship." },
+            { id: 38, word: "Spouse", ipa: "/spaʊs/", vi: "Người phối ngẫu (vợ/chồng)", example: "Spouse's name: Tên người phối ngẫu (chồng/vợ)." },
+            { id: 39, word: "Harmonious", ipa: "/hɑːrˈməʊniəs/", vi: "Hòa hợp", example: "Are your relations harmonious?" },
+            { id: 40, word: "In favor of", ipa: "/ɪn ˈfeɪvər əv/", vi: "Ủng hộ", example: "Is your spouse in favor of you taking the course?" },
+            { id: 41, word: "Confidential", ipa: "/ˌkɒnfɪˈdenʃl/", vi: "Bí mật", example: "All information will be treated as confidential." },
+            { id: 42, word: "Deliberately concealed", ipa: "/dɪˈlɪbərətli kənˈsiːld/", vi: "Cố tình che giấu", example: "Some with serious difficulties deliberately concealed." },
+            { id: 43, word: "Mental difficulties", ipa: "/ˈmentl ˈdɪfɪkəltiz/", vi: "Khó khăn về tinh thần", example: "Do you now have or have you had in the past any mental difficulties?" },
+            { id: 44, word: "Chronic health conditions", ipa: "/ˈkrɒnɪk helθ kənˈdɪʃnz/", vi: "Tình trạng sức khỏe mãn tính", example: "Do you now have, or have you had, any chronic health conditions, injuries, major illnesses, and/or recent surgeries?" },
+            { id: 45, word: "Recent surgeries", ipa: "/ˈriːsnt ˈsɜːrdʒəriz/", vi: "Ca phẫu thuật gần đây", example: "Do you now have, or have you had, any chronic health conditions, injuries, major illnesses, and/or recent surgeries?" },
+            { id: 46, word: "Medication", ipa: "/ˌmedɪˈkeɪʃn/", vi: "Thuốc", example: "Are you presently taking any medication (prescribed or otherwise, e.g. herbal, natural)?" },
+            { id: 47, word: "Dosages", ipa: "/ˈdəʊsɪdʒɪz/", vi: "Liều lượng", example: "If yes, please give details and dosages." },
+            { id: 48, word: "Personal tragedy", ipa: "/ˈpɜːrsənl ˈtrædʒədi/", vi: "Bi kịch cá nhân", example: "Have you had any personal tragedy in the past year, e.g. death of a near relative, etc?" },
+            { id: 49, word: "Refused admission", ipa: "/rɪˈfjuːzd ədˈmɪʃn/", vi: "Bị từ chối nhận vào khóa thiền", example: "Have you ever been refused admission to a course or had to leave a course for any reason?" }
         ];
 
-        // 13 CÂU HỎI TỪ ĐƠN PDF
+        // DỮ LIỆU 24 CÂU HỎI ROLEPLAY TỪ FILE CSV
         const roleplayQuestions = [
-            { id: 1, en: "Are you committed fully and exclusively to the practice of Vipassana meditation as taught by S.N. Goenka and his authorized assistant teachers?", vi: "Quý vị có cam kết hoàn toàn và duy nhất với việc thực hành thiền Vipassana được giảng dạy bởi Thiền sư S.N. Goenka và các vị phụ giáo được Thầy ủy quyền không?" },
-            { id: 2, en: "In the past two years have you been involved exclusively with Vipassana meditation without going to any other spiritual/meditation teachers or trying other meditation techniques?", vi: "Trong hai năm vừa qua, quý vị có chuyên tâm thực hành thiền Vipassana mà không thử phương pháp thiền khác hay kỹ thuật chữa bệnh dựa trên năng lượng không?" },
-            { id: 3, en: "For how many years have you been practicing Vipassana regularly (i.e., two one-hour sittings daily)?", vi: "Quý vị đã thực hành Vipassana thường xuyên được bao nhiêu năm rồi (tức là hai lần ngồi một giờ mỗi ngày)?" },
-            { id: 4, en: "During the past year, have you maintained the Five Precepts as described above without breaking them in any major way?", vi: "Trong năm vừa qua, quý vị có duy trì Năm Giới mà không vi phạm nghiêm trọng không?" },
-            { id: 5, en: "Do you meet all the requirements for the course you are applying to based on the information in the chart?", vi: "Quý vị có đáp ứng tất cả các yêu cầu cho khóa thiền mà quý vị đang đăng ký dựa trên thông tin biểu đồ không?" },
-            { id: 6, en: "Are you in a relationship or have you been in the past year?", vi: "Trong quá khứ hay hiện tại quý vị có đang trong một mối quan hệ không?" },
-            { id: 7, en: "Is your spouse in favor of you taking the course?", vi: "Vợ/chồng của quý vị có ủng hộ việc quý vị tham gia khóa thiền không?" },
-            { id: 8, en: "Do you now have or have you had in the past any mental difficulties?", vi: "Hiện tại quý vị có đang hoặc đã từng gặp khó khăn gì về tinh thần không?" },
-            { id: 9, en: "Do you now have, or have you had, any chronic health conditions, injuries, major illnesses, and/or recent surgeries?", vi: "Hiện tại quý vị có đang hoặc đã từng mắc tình trạng sức khỏe mãn tính, chấn thương hay phẫu thuật gần đây không?" },
-            { id: 10, en: "Are you presently taking any medication (prescribed or otherwise)?", vi: "Hiện tại quý vị có đang dùng bất kỳ loại thuốc nào không?" },
-            { id: 11, en: "Have you had any personal tragedy in the past year, e.g. death of a near relative, etc?", vi: "Quý vị có gặp bi kịch cá nhân nào trong năm qua không?" },
-            { id: 12, en: "Have you ever been refused admission to a course or had to leave a course for any reason?", vi: "Quý vị đã bao giờ bị từ chối nhận vào khóa thiền hoặc phải rời khỏi khóa thiền vì bất kỳ lý do gì chưa?" },
-            { id: 13, en: "When do you intend to arrive at the center?", vi: "Khi nào quý vị dự định đến trung tâm?" }
+            { id: 1, en: "Are you committed fully and exclusively to the practice of Vipassana meditation as taught by S.N. Goenka and his authorized assistant teachers?", vi: "Quý vị có cam kết hoàn toàn và duy nhất với việc thực hành thiền Vipassana được giảng dạy bởi Thiền sư S.N. Goenka và các vị phụ giáo được Thầy ủy quyền?" },
+            { id: 2, en: "In the past two years have you been involved exclusively with Vipassana meditation as taught by S.N. Goenka and his authorized assistant teachers without going to any other spiritual/meditation teachers or trying other meditation techniques or so-called energy based healing techniques e.g. Reiki, Qi Qong, Pranic healing?", vi: "Trong vòng hai năm qua, quý vị có chuyên tâm thực hành thiền Vipassana được giảng dạy bởi Thiền sư S.N. Goenka và các vị phụ giáo được Thầy ủy quyền mà không cần đến gặp bất kỳ vị thầy thiền định/tâm linh nào khác hoặc thử phương pháp thiền khác hay còn gọi là kỹ thuật chữa bệnh dựa trên năng lượng, ví dụ: Reiki, Qi Qong/khí công, chữa lành bằng năng lượng?" },
+            { id: 3, en: "For how many years have you been practicing Vipassana regularly (i.e., two one-hour sittings daily)?", vi: "Quý vị đã thực hành Vipassana thường xuyên được bao nhiêu năm rồi (tức là hai thời thiền, mỗi thời 1 giờ mỗi ngày)?" },
+            { id: 4, en: "During the past year, have you maintained the Five Precepts as described above without breaking them in any major way?", vi: "Trong vòng 1 năm qua, quý vị có duy trì Năm Giới như mô tả ở trên mà không vi phạm nghiêm trọng không?" },
+            { id: 5, en: "During the past year have you abstained from sexual misconduct as described above **", vi: "Trong vòng 1 năm qua quý vị có tránh tà dâm/tình dục sai trái như miêu tả trên **" },
+            { id: 6, en: "During the past year have you abstained from all alcohol, drugs and intoxicants, i.e., have you not used any of them at all?", vi: "Trong vòng 1 năm qua quý vị có kiêng rượu, ma túy và chất gây say, tức là quý vị chưa từng sử dụng bất kỳ chất nào trong số chúng phải không?" },
+            { id: 7, en: "Do you meet all the requirements for the course you are applying to based on the information in the chart above? [If no, please explain.]", vi: "Quý vị có đáp ứng tất cả các yêu cầu cho khóa thiền mà quý vị đang đăng ký dựa trên thông tin trong biểu đồ trên không? [Nếu không, vui lòng giải thích.]" },
+            { id: 8, en: "Are you in a relationship or have you been in the past year?", vi: "Hiện tại hay trong vòng 1 năm qua quý vị có đang trong một mối quan hệ tình cảm không?" },
+            { id: 9, en: "If yes, is it a life-long committed relationship?", vi: "Nếu có, đó có phải mối quan hệ cam kết lâu dài?" },
+            { id: 10, en: "Are your relations harmonious?", vi: "Mối quan hệ của quý vị có hòa hợp hay không?" },
+            { id: 11, en: "Is your spouse in favor of you taking the course?", vi: "Chồng/Vợ của quý vị có ủng hộ việc quý vị tham gia khóa thiền không?" },
+            { id: 12, en: "Is your spouse a Vipassana meditator in this tradition?", vi: "Chồng/Vợ của quý vị có phải là thiền sinh Vipassana trong truyền thống này hay không?" },
+            { id: 13, en: "Is your spouse practicing any other meditation technique besides Vipassana as taught by S.N. Goenka?", vi: "Chồng/Vợ của quý vị có đang thực hành phương pháp thiền khác ngoài thiền Vipassana được giảng dạy bởi thiền sư S.N. Goenka không?" },
+            { id: 14, en: "Do you now have or have you had in the past any mental difficulties? If yes, please give details with dates.", vi: "Hiện tại quý vị có đang hoặc đã từng gặp khó khăn gì về tinh thần không? Nếu có, vui lòng cho biết chi tiết về ngày tháng." },
+            { id: 15, en: "Do you now have, or have you had, any chronic health conditions, injuries, major illnesses, and/or recent surgeries? If yes please give details with dates.", vi: "Hiện tại, quý vị có đang hoặc đã từng mắc bất kỳ tình trạng sức khỏe mãn tính, chấn thương, bệnh nặng và/hoặc ca phẫu thuật nào gần đây không? Nếu có xin vui lòng cho biết chi tiết với ngày tháng." },
+            { id: 16, en: "Are you presently taking any medication (prescribed or otherwise, e.g. herbal, natural)? If yes, please give details and dosages.", vi: "Hiện tại quý vị có đang dùng bất kỳ loại thuốc nào (theo toa hoặc cách khác, ví dụ: thảo dược, tự nhiên) không? Nếu có, xin vui lòng cho biết chi tiết và liều lượng." },
+            { id: 17, en: "Have you ever been refused admission to a course or had to leave a course for any reason? If yes, please give details.", vi: "Quý vị đã bao giờ bị từ chối nhận vào khóa thiền hoặc phải rời khỏi khóa thiền vì bất kỳ lý do gì chưa? Nếu có, xin vui lòng cho biết chi tiết." },
+            { id: 18, en: "Have you ever had difficulties during a course and been asked by the conducting teacher to stop/reduce meditating during the course for some time? If yes, please give details.", vi: "Quý vị đã bao giờ gặp khó khăn trong một khóa thiền và được vị phụ giáo hướng dẫn khóa yêu cầu dừng/giảm bớt việc hành thiền một thời gian trong suốt khóa chưa? Nếu có, xin vui lòng cho biết chi tiết." },
+            { id: 19, en: "Have you had any personal tragedy in the past year, e.g. death of a near relative, etc? If yes, please give details, including dates.", vi: "Quý vị có gặp bi kịch cá nhân nào trong năm qua không, ví dụ: sự qua đời của một người thân, v.v? Nếu có, xin vui lòng cho biết chi tiết, bao gồm ngày tháng." },
+            { id: 20, en: "Any particular difficulties you tend to encounter during courses?", vi: "Quý vị có gặp khó khăn đặc biệt nào trong suốt các khóa thiền không?" },
+            { id: 21, en: "Any special requirements for this course? Please explain:", vi: "Bất kỳ yêu cầu đặc biệt nào cho khóa thiền này? Vui lòng giải thích:" },
+            { id: 22, en: "Please list all the languages you know well:", vi: "Liệt kê tất cả ngôn ngữ quý vị thông thạo:" },
+            { id: 23, en: "Any additional information you wish to provide:", vi: "Quý vị muốn bổ sung thêm thông tin nào không?" },
+            { id: 24, en: "When do you intend to arrive at the center?", vi: "Khi nào quý vị dự định đến trung tâm?" }
         ];
 
         const Topic1App = () => {
-          const [activeMainTab, setActiveMainTab] = useState('vocabulary');
+          const [activeTab, setActiveTab] = useState('vocabulary');
 
-          // Vocab States (Step 1 -> Step 5)
-          const [currentIndex, setCurrentIndex] = useState(0);
-          const [currentStep, setCurrentStep] = useState(1); 
-          const [isFlipped, setIsFlipped] = useState(false);
-          const [quizOptions, setQuizOptions] = useState([]);
-          const [quizResult, setQuizResult] = useState(null); 
-          const [typeInput, setTypeInput] = useState("");
-          const [typeResult, setTypeResult] = useState(null); 
+          // Vocab states
+          const [idx, setIdx] = useState(0);
+          const [step, setStep] = useState(1); 
+          const [flipped, setFlipped] = useState(false);
+          const [qOptions, setQOptions] = useState([]);
+          const [qRes, setQRes] = useState(null);
+          const [typeIn, setTypeIn] = useState("");
+          const [typeRes, setTypeRes] = useState(null);
 
-          // Recording States (Chung)
-          const [isRecording, setIsRecording] = useState(false);
-          const [audioURL, setAudioURL] = useState(null);
-          const mediaRecorderRef = useRef(null);
+          // Mic States
+          const [rec, setRec] = useState(false);
+          const [audioUrl, setAudioUrl] = useState(null);
+          const recorderRef = useRef(null);
 
           // Roleplay States
-          const [rpIndex, setRpIndex] = useState(0);
-          const [rpAnswer, setRpAnswer] = useState("");
-          const [showHint, setShowHint] = useState(false);
+          const [rpIdx, setRpIdx] = useState(0);
+          const [rpAns, setRpAns] = useState("");
+          const [showVi, setShowVi] = useState(false);
 
-          const currentItem = vocabularyData[currentIndex];
-          const currentRpQuestion = roleplayQuestions[rpIndex];
+          const cur = vocabularyData[idx];
+          const curRp = roleplayQuestions[rpIdx];
 
-          // Setup Quiz Options
           useEffect(() => {
-            if (activeMainTab === 'vocabulary' && currentStep === 2) {
-                let options = [currentItem];
-                let pool = vocabularyData.filter(item => item.id !== currentItem.id);
-                pool.sort(() => 0.5 - Math.random());
-                options = options.concat(pool.slice(0, 3));
-                options.sort(() => 0.5 - Math.random());
-                setQuizOptions(options);
+            if (activeTab === 'vocabulary' && step === 2) {
+                let opts = [cur];
+                let pool = vocabularyData.filter(v => v.id !== cur.id).sort(() => 0.5 - Math.random());
+                opts = opts.concat(pool.slice(0, 3)).sort(() => 0.5 - Math.random());
+                setQOptions(opts);
             }
-          }, [currentStep, currentIndex, activeMainTab]);
+          }, [step, idx, activeTab]);
 
-          // Phát âm (Speech Synthesis)
-          const playAudio = (text, rate = 1.0) => {
-            if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-              window.speechSynthesis.cancel();
-              const utterance = new SpeechSynthesisUtterance(text);
-              utterance.lang = 'en-US';
-              utterance.rate = rate; 
-              window.speechSynthesis.speak(utterance);
-            }
+          const play = (txt, rate = 1.0) => {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(txt);
+            u.lang = 'en-US'; u.rate = rate;
+            window.speechSynthesis.speak(u);
           };
 
-          // Ghi âm (Web Audio API)
-          const startRecording = async () => {
+          // Ghi âm thực tế
+          const startRec = async () => {
               try {
-                  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                  mediaRecorderRef.current = new MediaRecorder(stream);
+                  const s = await navigator.mediaDevices.getUserMedia({ audio: true });
+                  recorderRef.current = new MediaRecorder(s);
                   const chunks = [];
-                  
-                  mediaRecorderRef.current.ondataavailable = e => chunks.push(e.data);
-                  mediaRecorderRef.current.onstop = () => {
+                  recorderRef.current.ondataavailable = e => chunks.push(e.data);
+                  recorderRef.current.onstop = () => {
                       const blob = new Blob(chunks, { type: 'audio/webm' });
-                      const url = URL.createObjectURL(blob);
-                      setAudioURL(url);
+                      setAudioUrl(URL.createObjectURL(blob));
                   };
-                  
-                  mediaRecorderRef.current.start();
-                  setIsRecording(true);
-                  setAudioURL(null);
-              } catch (err) {
-                  alert("Trình duyệt không được cấp quyền sử dụng Micro. Vui lòng cho phép Micro trong cài đặt trình duyệt nhé!");
+                  recorderRef.current.start(); setRec(true); setAudioUrl(null);
+              } catch (e) { alert("Vui lòng cấp quyền Micro để sử dụng tính năng thu âm!"); }
+          };
+
+          const stopRec = () => {
+              if (recorderRef.current && recorderRef.current.state !== 'inactive') {
+                  recorderRef.current.stop();
+                  recorderRef.current.stream.getTracks().forEach(t => t.stop());
               }
+              setRec(false);
           };
 
-          const stopRecording = () => {
-              if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
-                  mediaRecorderRef.current.stop();
-                  mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
-              }
-              setIsRecording(false);
+          const resetWord = () => {
+              setStep(1); setFlipped(false); setQRes(null); setTypeIn(""); setTypeRes(null); setAudioUrl(null);
           };
 
-          const toggleRecording = () => {
-              if (isRecording) stopRecording();
-              else startRecording();
+          const handleNextStep = () => { if (step < 5) setStep(step + 1); };
+
+          const checkType = () => {
+             const clean = cur.word.replace(/[\.\(\)\?\;\,]/g, '').toLowerCase().trim();
+             if (typeIn.toLowerCase().trim() === clean || typeIn.toLowerCase().trim() === cur.word.toLowerCase()) setTypeRes('ok');
+             else setTypeRes('no');
           };
 
-          const resetRecordingState = () => {
-              if (isRecording) stopRecording();
-              setAudioURL(null);
-          };
-
-          // Điều hướng Học từ vựng
-          const handleNextStep = () => {
-              if (currentStep < 5) {
-                  setCurrentStep(prev => prev + 1);
-              }
-          };
-
-          const handleRelearn = () => {
-              setCurrentStep(1);
-              setIsFlipped(false);
-              setQuizResult(null);
-              setTypeInput("");
-              setTypeResult(null);
-              resetRecordingState();
-          };
-
-          const handleNextWord = () => {
-              if (currentIndex < vocabularyData.length - 1) {
-                  setCurrentIndex((prev) => prev + 1);
-                  handleRelearn();
-              } else {
-                  alert("Chúc mừng! Bạn đã hoàn thành toàn bộ danh sách từ vựng Topic 1 🎉");
-                  setCurrentIndex(0);
-                  handleRelearn();
-              }
-          };
-
-          const handleTypeCheck = () => {
-             const cleanWord = currentItem.word.replace(/[\.\(\)\?\;\,]/g, '').toLowerCase().trim();
-             const cleanInput = typeInput.replace(/[\.\(\)\?\;\,]/g, '').toLowerCase().trim();
-             if (cleanInput === cleanWord || cleanInput === currentItem.word.toLowerCase().trim()) {
-                 setTypeResult('correct');
-             } else {
-                 setTypeResult('incorrect');
-             }
-          };
-
-          const renderTab = (stepNumber, icon, label) => {
-              let statusClass = "locked";
-              if (currentStep === stepNumber || (currentStep === 5 && stepNumber === 4)) statusClass = "active";
-              else if (currentStep > stepNumber) statusClass = "completed";
-              
-              return (
-                  <div className={`mode-tab ${statusClass}`}>
-                      {statusClass === 'completed' ? '✅' : icon} {label}
-                  </div>
-              );
-          };
-
-          // Điều hướng Roleplay
-          const handleRpNext = () => {
-              if (rpIndex < roleplayQuestions.length - 1) {
-                  setRpIndex(prev => prev + 1);
-                  setRpAnswer("");
-                  setShowHint(false);
-                  resetRecordingState();
-              } else {
-                  alert("Tuyệt vời! Bạn đã hoàn thành phần phỏng vấn giả định!");
-                  setRpIndex(0);
-                  setRpAnswer("");
-                  setShowHint(false);
-                  resetRecordingState();
-              }
-          };
-
-          const handleTabSwitch = (tab) => {
-              setActiveMainTab(tab);
-              resetRecordingState();
+          const renderTabStatus = (sNum, icon, lab) => {
+              let cls = "locked";
+              if (step === sNum || (step === 5 && sNum === 4)) cls = "active";
+              else if (step > sNum) cls = "completed";
+              return <div className={`mode-tab ${cls}`}>{cls === 'completed' ? '✅' : icon} {lab}</div>;
           };
 
           return (
             <div className="container">
-              {/* TOP NAVIGATION */}
               <div className="top-nav">
-                  <button className={`nav-pill ${activeMainTab === 'vocabulary' ? 'active' : ''}`} onClick={() => handleTabSwitch('vocabulary')}>
-                      📚 1. Học Từ Vựng
-                  </button>
-                  <button className={`nav-pill ${activeMainTab === 'roleplay' ? 'active' : ''}`} onClick={() => handleTabSwitch('roleplay')}>
-                      🎙️ 2. Role-play Phỏng Vấn
-                  </button>
+                  <button className={`nav-pill ${activeTab === 'vocabulary' ? 'active' : ''}`} onClick={() => {setActiveTab('vocabulary'); stopRec();}}>📚 1. Học Từ Vựng</button>
+                  <button className={`nav-pill ${activeTab === 'roleplay' ? 'active' : ''}`} onClick={() => {setActiveTab('roleplay'); stopRec();}}>🎙️ 2. Role-play Phỏng Vấn</button>
               </div>
 
-              {/* ==================== GIAO DIỆN HỌC TỪ VỰNG ==================== */}
-              {activeMainTab === 'vocabulary' && (
+              {activeTab === 'vocabulary' && (
                   <>
                       <div className="sub-nav-container">
                           <div className="progress-bar">
-                              {[1,2,3,4].map((step) => (
-                                  <div key={step} className={`progress-segment ${currentStep >= step ? 'active' : ''}`}></div>
-                              ))}
+                              {[1,2,3,4].map(s => <div key={s} className={`progress-segment ${step >= s ? 'active' : ''}`}></div>)}
                           </div>
                           <div className="mode-nav">
                               <div className="mode-tabs">
-                                  {renderTab(1, "🃏", "Lật thẻ")}
-                                  {renderTab(2, "📝", "Trắc nghiệm")}
-                                  {renderTab(3, "⌨️", "Gõ từ")}
-                                  {renderTab(4, "🔊", "Phát âm")}
+                                  {renderTabStatus(1, "🃏", "Lật thẻ")}
+                                  {renderTabStatus(2, "📝", "Trắc nghiệm")}
+                                  {renderTabStatus(3, "⌨️", "Gõ từ")}
+                                  {renderTabStatus(4, "🔊", "Phát âm")}
                               </div>
-                              <div style={{fontWeight: 'bold', color: '#64748b', fontSize: '18px'}}>
-                                  {currentIndex + 1} / {vocabularyData.length}
-                              </div>
+                              <div style={{fontWeight: 'bold', color: '#64748b'}}>{idx + 1} / {vocabularyData.length}</div>
                           </div>
                       </div>
 
-                      {/* STEP 1: LẬT THẺ (Chỉ có Từ / Audio / IPA -> Nghĩa) */}
-                      {currentStep === 1 && (
-                          <div className={`card-area ${isFlipped ? 'flipped' : ''}`}>
-                              {!isFlipped ? (
+                      <div className={`card-area ${flipped ? 'flipped' : ''}`}>
+                          {step === 1 && (
+                              !flipped ? (
                                   <>
-                                      <div className="word-large">{currentItem.word}</div>
-                                      <div className="ipa-text">{currentItem.ipa}</div>
-                                      <button className="btn-audio-pink" onClick={() => playAudio(currentItem.word)}>
-                                          🔊 Nghe phát âm
-                                      </button>
-                                      <button className="btn-flip" onClick={() => setIsFlipped(true)}>
-                                          Xem nghĩa tiếng Việt 👉
-                                      </button>
+                                      <div className="word-large">{cur.word}</div>
+                                      <div className="ipa-text">{cur.ipa}</div>
+                                      <button className="btn-audio-pink" onClick={() => play(cur.word)}>🔊 Nghe máy đọc</button>
+                                      <button className="btn-flip" onClick={() => setFlipped(true)}>Xem nghĩa 👉</button>
                                   </>
                               ) : (
                                   <>
-                                      <div className="vi-text">{currentItem.vi}</div>
-                                      <div className="example-text">"{currentItem.example}"</div>
-                                      <button className="btn-flip" onClick={() => setIsFlipped(false)}>
-                                          👈 Quay lại thẻ tiếng Anh
-                                      </button>
+                                      <div className="vi-text">{cur.vi}</div>
+                                      <div className="example-text">"{cur.example}"</div>
+                                      <button className="btn-flip" onClick={() => setFlipped(false)}>👈 Quay lại thẻ Tiếng Anh</button>
                                   </>
-                              )}
-                          </div>
-                      )}
+                              )
+                          )}
 
-                      {/* STEP 2: TRẮC NGHIỆM */}
-                      {currentStep === 2 && (
-                          <div className="card-area">
-                              <div className="quiz-title">Chọn nghĩa đúng nhất cho từ dưới đây:</div>
-                              <div className="word-large">{currentItem.word}</div>
-                              
-                              <div className="quiz-grid">
-                                  {quizOptions.map((opt, i) => {
-                                      let optClass = 'quiz-option';
-                                      if (quizResult && opt.id === currentItem.id) optClass += ' correct';
-                                      else if (quizResult === 'incorrect' && opt.id !== currentItem.id) optClass += ' incorrect';
-                                      
-                                      return (
-                                          <div key={i} className={optClass} onClick={() => {
-                                                  if (opt.id === currentItem.id) setQuizResult('correct');
-                                                  else setQuizResult('incorrect');
-                                              }}>
-                                              {opt.vi}
-                                          </div>
-                                      );
-                                  })}
-                              </div>
-                          </div>
-                      )}
-
-                      {/* STEP 3: GÕ TỪ (Hoàn toàn ẩn Nghĩa và Từ) */}
-                      {currentStep === 3 && (
-                          <div className="card-area">
-                              <div className="quiz-title" style={{fontSize: '20px', color: '#0f172a'}}>Lắng nghe và gõ lại từ vựng chính xác</div>
-                              
-                              <button className="btn-audio-blue" onClick={() => playAudio(currentItem.word)} style={{padding: '15px 30px', fontSize: '18px'}}>
-                                  🔊 Bấm để nghe
-                              </button>
-                              
-                              <div className="type-input-group">
-                                  <input 
-                                      type="text" 
-                                      className="type-input" 
-                                      placeholder="Gõ tiếng Anh vào đây..." 
-                                      value={typeInput}
-                                      onChange={(e) => setTypeInput(e.target.value)}
-                                      onKeyDown={(e) => e.key === 'Enter' && handleTypeCheck()}
-                                  />
-                                  <button className="btn-check" onClick={handleTypeCheck}>Kiểm tra</button>
-                              </div>
-                              
-                              {typeResult === 'correct' && <div style={{color: '#10b981', marginTop: '15px', fontWeight: 'bold'}}>✅ Tuyệt vời! Bạn gõ đúng rồi.</div>}
-                              {typeResult === 'incorrect' && <div style={{color: '#ef4444', marginTop: '15px', fontWeight: 'bold'}}>❌ Chưa chính xác, hãy nghe lại nhé!</div>}
-                          </div>
-                      )}
-
-                      {/* STEP 4: PHÁT ÂM (Hoàn toàn ẩn Nghĩa và Từ) */}
-                      {currentStep === 4 && (
-                          <div className="card-area">
-                              <div className="quiz-title" style={{fontSize: '20px', color: '#0f172a', marginBottom: '10px'}}>Lắng nghe IPA và tự phát âm lại</div>
-                              <div className="ipa-text" style={{fontSize: '28px', color: '#0284c7', background: 'none'}}>{currentItem.ipa}</div>
-                              
-                              <div className="speed-controls" style={{marginTop: 0}}>
-                                  <button className="btn-audio-blue" onClick={() => playAudio(currentItem.word, 0.7)}>
-                                      🐢 Đọc chậm (0.7x)
-                                  </button>
-                                  <button className="btn-audio-pink" onClick={() => playAudio(currentItem.word, 1.0)}>
-                                      🔊 Đọc chuẩn (1.0x)
-                                  </button>
-                              </div>
-                              
-                              <div className="divider" style={{margin: '15px 0'}}></div>
-                              
-                              <div className="quiz-title" style={{marginBottom: '15px'}}>Ghi âm giọng của bạn:</div>
-                              <button 
-                                  className={`btn-record ${isRecording ? 'recording' : ''} ${!isRecording && audioURL ? 'recorded' : ''}`}
-                                  onClick={toggleRecording}
-                              >
-                                  {isRecording ? '⏹️ Đang thu âm... Bấm để DỪNG' : (audioURL ? '🔄 Thu âm lại' : '🎤 Bấm để thu âm')}
-                              </button>
-
-                              {audioURL && (
-                                  <div className="audio-player-container">
-                                      <audio src={audioURL} controls />
+                          {step === 2 && (
+                              <>
+                                  <div className="quiz-title">Chọn nghĩa đúng nhất:</div>
+                                  <div className="word-large">{cur.word}</div>
+                                  <div className="quiz-grid">
+                                      {qOptions.map((o, i) => (
+                                          <div key={i} className={`quiz-option ${qRes && o.id === cur.id ? 'correct' : (qRes === 'no' && o.id !== cur.id ? 'incorrect' : '')}`} onClick={() => setQRes(o.id === cur.id ? 'ok' : 'no')}>{o.vi}</div>
+                                      ))}
                                   </div>
-                              )}
-                          </div>
+                              </>
+                          )}
+
+                          {step === 3 && (
+                              <>
+                                  <div className="quiz-title" style={{fontSize: '20px'}}>Nghe và gõ lại từ vựng chính xác:</div>
+                                  <button className="btn-audio-blue" onClick={() => play(cur.word)}>🔊 Bấm để nghe</button>
+                                  <div className="type-input-group">
+                                      <input className="type-input" placeholder="Gõ tiếng Anh..." value={typeIn} onChange={e => setTypeIn(e.target.value)} onKeyDown={e => e.key === 'Enter' && checkType()} />
+                                      <button className="btn-check" onClick={checkType}>Kiểm tra</button>
+                                  </div>
+                                  {typeRes === 'ok' && <div style={{color: '#10b981', marginTop: '15px', fontWeight: 'bold'}}>✅ Chính xác tuyệt đối!</div>}
+                              </>
+                          )}
+
+                          {step === 4 && (
+                              <>
+                                  <div className="ipa-text" style={{fontSize: '32px'}}>{cur.ipa}</div>
+                                  <div className="speed-controls">
+                                      <button className="btn-audio-blue" onClick={() => play(cur.word, 0.7)}>🐢 0.7x</button>
+                                      <button className="btn-audio-pink" onClick={() => play(cur.word, 1.0)}>🔊 1.0x</button>
+                                  </div>
+                                  <div className="divider"></div>
+                                  <button className={`btn-record ${rec ? 'recording' : ''}`} onClick={rec ? stopRec : startRec}>{rec ? '⏹️ DỪNG THU' : '🎤 BẤM ĐỂ THU ÂM'}</button>
+                                  {audioUrl && <audio className="audio-player" src={audioUrl} controls />}
+                              </>
+                          )}
+
+                          {step === 5 && (
+                              <>
+                                  <h2 style={{color: '#047857'}}>🎉 Hoàn thành cụm từ:</h2>
+                                  <div className="word-large">{cur.word}</div>
+                                  <div className="vi-text" style={{fontWeight: 'normal'}}>{cur.vi}</div>
+                                  <div className="final-choice-box">
+                                      <button className="btn-retry" onClick={resetWord}>🔄 Học lại từ này</button>
+                                      <button className="btn-next" onClick={() => { if (idx < vocabularyData.length-1) { setIdx(idx+1); resetWord(); } else alert("Bạn đã học xong toàn bộ từ vựng! 🎉"); }}>{idx < vocabularyData.length-1 ? 'Từ tiếp theo ➔' : 'HOÀN THÀNH 🏆'}</button>
+                                  </div>
+                              </>
+                          )}
+                      </div>
+
+                      {step < 5 && (
+                          <button className="btn-next" onClick={handleNextStep} disabled={(step===1 && !flipped) || (step===2 && qRes!=='ok') || (step===3 && typeRes!=='ok') || (step===4 && !audioUrl)}>Tiếp tục →</button>
                       )}
 
-                      {/* STEP 5: MÀN HÌNH CHỐT TỪ */}
-                      {currentStep === 5 && (
-                          <div className="card-area" style={{backgroundColor: '#f0fdf4', borderColor: '#bbf7d0'}}>
-                              <h2 style={{color: '#047857', marginBottom: '10px'}}>🎉 Bạn đã học xong cụm từ:</h2>
-                              <div className="word-large" style={{color: '#0f172a'}}>{currentItem.word}</div>
-                              <div className="vi-text" style={{fontSize: '20px', fontWeight: 'normal'}}>{currentItem.vi}</div>
-                              
-                              <div className="action-btns">
-                                  <button className="btn-retry" onClick={handleRelearn}>
-                                      🔄 Học lại từ này
-                                  </button>
-                                  <button className="btn-next" onClick={handleNextWord} style={{flex: 1, margin: 0}}>
-                                      {currentIndex < vocabularyData.length - 1 ? 'Qua từ tiếp theo ➔' : 'Hoàn thành khóa học 🏆'}
-                                  </button>
-                              </div>
-                          </div>
-                      )}
-
-                      {/* NÚT TIẾP TỤC (Ẩn ở Step 5) */}
-                      {currentStep < 5 && (
-                          <button 
-                              className="btn-next" 
-                              onClick={handleNextStep}
-                              disabled={
-                                  (currentStep === 1 && !isFlipped) ||
-                                  (currentStep === 2 && quizResult !== 'correct') ||
-                                  (currentStep === 3 && typeResult !== 'correct') ||
-                                  (currentStep === 4 && audioURL === null)
-                              }
-                          >
-                              {currentStep < 4 ? 'Tiếp tục →' : 'Hoàn thành từ này ➔'}
-                          </button>
-                      )}
-
-                      {/* BỘ ĐẾM TRẠNG THÁI */}
                       <div className="pagination">
-                          {vocabularyData.map((_, index) => (
-                              <div key={index} className={`page-dot ${index === currentIndex ? 'active' : (index < currentIndex ? 'completed' : '')}`} style={index < currentIndex ? {background: '#ecfdf5', borderColor: '#10b981', color: '#10b981'} : {}}>
-                                  {index < currentIndex ? '✓' : index + 1}
-                              </div>
-                          ))}
+                          {vocabularyData.map((_, i) => <div key={i} className={`page-dot ${i === idx ? 'active' : ''}`}>{i < idx ? '✓' : i + 1}</div>)}
                       </div>
                   </>
               )}
 
-              {/* ==================== GIAO DIỆN ROLE-PLAY ==================== */}
-              {activeMainTab === 'roleplay' && (
-                  <div className="card-area" style={{minHeight: '400px', justifyContent: 'flex-start'}}>
-                      <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '20px', alignItems: 'center'}}>
-                          <div style={{fontWeight: 'bold', color: '#14b8a6', fontSize: '18px'}}>🎙️ Luyện tập Phỏng vấn thực tế</div>
-                          <div style={{color: '#94a3b8', fontWeight: 'bold'}}>Câu {rpIndex + 1} / {roleplayQuestions.length}</div>
+              {activeTab === 'roleplay' && (
+                  <div className="card-area" style={{justifyContent: 'flex-start'}}>
+                      <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '20px'}}>
+                          <div style={{fontWeight: 'bold', color: '#14b8a6', fontSize: '18px'}}>🎙️ Luyện phỏng vấn thực tế</div>
+                          <div style={{color: '#94a3b8', fontWeight: 'bold', fontSize: '16px'}}>{rpIdx + 1} / {roleplayQuestions.length}</div>
                       </div>
-
-                      <div className="word-large" style={{color: '#0f172a', fontSize: '28px'}}>{currentRpQuestion.en}</div>
-                      
-                      <div style={{display: 'flex', gap: '15px', marginTop: '15px'}}>
-                          <button className="btn-audio-blue" onClick={() => playAudio(currentRpQuestion.en, 0.9)}>
-                              🔊 Nghe câu hỏi
-                          </button>
-                          <button 
-                              style={{background: 'none', border: 'none', color: '#94a3b8', textDecoration: 'underline', cursor: 'pointer'}}
-                              onClick={() => setShowHint(!showHint)}
-                          >
-                              {showHint ? 'Ẩn gợi ý' : 'Hiện gợi ý tiếng Việt'}
-                          </button>
+                      <div className="word-large" style={{fontSize: '26px'}}>{curRp.en}</div>
+                      <div style={{display: 'flex', gap: '15px', marginTop: '10px'}}>
+                          <button className="btn-audio-blue" onClick={() => play(curRp.en, 0.9)}>🔊 Nghe câu hỏi</button>
+                          <button style={{background: 'none', border: 'none', color: '#94a3b8', textDecoration: 'underline', cursor: 'pointer', fontSize: '15px'}} onClick={() => setShowVi(!showVi)}>{showVi ? 'Ẩn dịch tiếng Việt' : 'Hiện dịch tiếng Việt'}</button>
                       </div>
-
-                      {showHint && (
-                          <div style={{marginTop: '15px', padding: '10px 15px', backgroundColor: '#f1f5f9', borderRadius: '8px', color: '#475569', fontStyle: 'italic', width: '100%'}}>
-                              {currentRpQuestion.vi}
-                          </div>
-                      )}
-
-                      <div className="divider" style={{margin: '20px 0'}}></div>
-
-                      <div style={{width: '100%', textAlign: 'left', fontWeight: 'bold', color: '#64748b'}}>Trả lời ban tổ chức (Gõ hoặc Thu âm):</div>
-                      
-                      <textarea 
-                          className="rp-textarea"
-                          placeholder="Gõ câu trả lời của bạn bằng tiếng Anh..."
-                          value={rpAnswer}
-                          onChange={(e) => setRpAnswer(e.target.value)}
-                      ></textarea>
-
-                      <div style={{display: 'flex', flexDirection: 'column', width: '100%', gap: '15px'}}>
-                          <div style={{display: 'flex', gap: '15px', alignItems: 'center', width: '100%', flexWrap: 'wrap'}}>
-                              <button 
-                                  className={`btn-record ${isRecording ? 'recording' : ''} ${!isRecording && audioURL ? 'recorded' : ''}`}
-                                  onClick={toggleRecording}
-                                  style={{flexShrink: 0}}
-                              >
-                                  {isRecording ? '⏹️ Bấm để DỪNG thu' : (audioURL ? '🔄 Thu âm lại' : '🎤 Bấm để thu lời nói')}
-                              </button>
-                              
-                              {audioURL && <audio src={audioURL} controls style={{flex: 1, minWidth: '200px'}} />}
-                          </div>
-
-                          <button 
-                              className="btn-next" 
-                              style={{padding: '15px', marginTop: '10px', fontSize: '16px'}}
-                              onClick={handleRpNext}
-                              disabled={rpAnswer.trim() === '' && !audioURL}
-                          >
-                              {rpIndex < roleplayQuestions.length - 1 ? 'Chuyển sang câu tiếp theo →' : 'Hoàn thành bài tập 🎉'}
-                          </button>
+                      {showVi && <div style={{marginTop: '15px', color: '#475569', fontStyle: 'italic', backgroundColor: '#f1f5f9', padding: '10px 15px', borderRadius: '8px', width: '100%'}}>{curRp.vi}</div>}
+                      <textarea className="rp-textarea" placeholder="Gõ câu trả lời của bạn..." value={rpAns} onChange={e => setRpAns(e.target.value)} />
+                      <div style={{display: 'flex', gap: '10px', width: '100%', alignItems: 'center'}}>
+                          <button className={`btn-record ${rec ? 'recording' : ''}`} onClick={rec ? stopRec : startRec}>{rec ? '⏹️ DỪNG' : '🎤 THU ÂM TRẢ LỜI'}</button>
+                          {audioUrl && <audio style={{flex: 1, height: '40px', maxWidth: '300px'}} src={audioUrl} controls />}
                       </div>
+                      <button className="btn-next" style={{marginTop: '30px'}} onClick={() => { if (rpIdx < roleplayQuestions.length-1) { setRpIdx(rpIdx+1); setRpAns(""); setShowVi(false); setAudioUrl(null); } else alert("Chúc mừng! Bạn đã hoàn thành xuất sắc bài phỏng vấn! 🎉"); }} disabled={!rpAns && !audioUrl}>Câu tiếp theo →</button>
                   </div>
               )}
-
             </div>
           );
         };
