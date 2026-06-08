@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic 2 - Loving English Full Curriculum</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        /* Chống bôi đen văn bản */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            color: #334155;
+        }
+
+        .container { max-width: 850px; margin: 0 auto; }
+        
+        /* Header */
+        .header-title {
+            text-align: center;
+            color: #0ea5e9;
+            margin-bottom: 25px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        .top-nav { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+        .nav-pill { padding: 12px 25px; border-radius: 10px; border: 2px solid #e2e8f0; background: #fff; cursor: pointer; font-weight: bold; color: #64748b; font-size: 16px; transition: all 0.2s; }
+        .nav-pill.active { background-color: #0ea5e9; color: #fff; border-color: #0ea5e9; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3); }
+
+        .sub-nav-container { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); margin-bottom: 20px; border: 1px solid #f1f5f9; }
+        .progress-bar { display: flex; gap: 5px; margin-bottom: 20px; }
+        .progress-segment { height: 4px; flex: 1; border-radius: 2px; background: #e2e8f0; transition: background 0.3s;}
+        .progress-segment.active { background: #f43f5e; }
+        
+        .mode-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+        .mode-tab { padding: 8px 14px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; font-size: 13px; color: #64748b; display: flex; align-items: center; gap: 5px; font-weight: 600; }
+        .mode-tab.active { background-color: #f0f9ff; color: #0284c7; border-color: #bae6fd; }
+        .mode-tab.completed { background-color: #f8fafc; color: #10b981; border-color: #a7f3d0; }
+        .mode-tab.locked { opacity: 0.4; background-color: #f1f5f9; cursor: not-allowed; }
+
+        .mode-nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+
+        /* Areas */
+        .card-area { background: #fff; border-radius: 16px; padding: 40px; min-height: 350px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin-bottom: 20px; transition: all 0.3s;}
+        .card-area.flipped { background-color: #f0fdf4; border-color: #bbf7d0; }
+        
+        /* Email Area Specifics */
+        .email-container { width: 100%; text-align: left; }
+        .email-template-box { background: #f8fafc; border-left: 4px solid #0ea5e9; padding: 20px; border-radius: 8px; margin-bottom: 20px; font-family: monospace; font-size: 15px; color: #334155; line-height: 1.6; white-space: pre-wrap; }
+        .email-vi-text { font-style: italic; color: #64748b; font-size: 14px; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #cbd5e1; }
+        .email-textarea { width: 100%; height: 200px; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; font-size: 15px; font-family: 'Segoe UI', sans-serif; outline: none; resize: vertical; box-sizing: border-box; }
+        .email-textarea:focus { border-color: #0ea5e9; }
+        .btn-send-email { background-color: #10b981; color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; transition: all 0.2s;}
+        .btn-send-email:hover { background-color: #059669; }
+
+        /* Typography */
+        .word-large { font-size: 32px; font-weight: bold; color: #0f172a; line-height: 1.4; margin-bottom: 10px; }
+        .ipa-text { color: #0284c7; font-family: monospace; font-size: 24px; margin-bottom: 20px; background: #f0f9ff; padding: 5px 15px; border-radius: 8px;}
+        .vi-text { font-size: 24px; font-weight: bold; color: #047857; margin-bottom: 15px; }
+        .example-text { font-size: 16px; color: #64748b; font-style: italic; margin-bottom: 25px; max-width: 90%; }
+        
+        /* Buttons */
+        .btn-audio-pink { background-color: #ffe4e6; color: #e11d48; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-audio-blue { background-color: #e0f2fe; color: #0284c7; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-flip { color: #0ea5e9; font-weight: bold; cursor: pointer; background: #f0f9ff; border: none; padding: 10px 20px; border-radius: 20px; margin-top: 15px; }
+        
+        .btn-next { background-color: #f43f5e; color: white; width: 100%; border: none; padding: 18px; border-radius: 16px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 10px rgba(244, 63, 94, 0.2); }
+        .btn-next:disabled { background-color: #cbd5e1; cursor: not-allowed; box-shadow: none; }
+        
+        .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-top: 10px; }
+        .quiz-option { border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; background: #fff; cursor: pointer; font-weight: 500; color: #475569; }
+        .quiz-option.correct { border-color: #10b981; background: #ecfdf5; color: #047857; font-weight: bold; }
+        .quiz-option.incorrect { border-color: #ef4444; background: #fef2f2; color: #b91c1c; }
+        
+        .type-input-group { display: flex; width: 100%; max-width: 500px; gap: 10px; margin-top: 25px; }
+        .type-input { flex: 1; border: 2px solid #bae6fd; border-radius: 12px; padding: 15px; font-size: 18px; outline: none; text-align: center; }
+        .btn-check { background-color: #0ea5e9; color: white; border: none; padding: 0 20px; border-radius: 12px; font-weight: bold; cursor: pointer; }
+        
+        /* Recording */
+        .btn-record { background-color: #14b8a6; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-record.recording { background-color: #ef4444; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        
+        .audio-player { margin-top: 20px; width: 100%; max-width: 400px; height: 40px; }
+        
+        .speed-controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        .divider { width: 100%; height: 1px; border-top: 1px dashed #cbd5e1; margin: 20px 0; }
+        
+        .final-choice-box { display: flex; gap: 15px; width: 100%; max-width: 500px; margin-top: 20px; }
+        .btn-retry { flex: 1; padding: 15px; border-radius: 12px; border: 2px solid #cbd5e1; background: #fff; color: #64748b; font-weight: bold; cursor: pointer; }
+        
+        /* Pagination */
+        .pagination { display: flex; justify-content: center; gap: 6px; margin-top: 20px; flex-wrap: wrap;}
+        .page-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center; color: #94a3b8; font-size: 11px; background: #fff; cursor: pointer; transition: all 0.2s; }
+        .page-dot:hover { border-color: #bae6fd; color: #0284c7; }
+        .page-dot.active { background-color: #e0f2fe; color: #0284c7; border-color: #bae6fd; font-weight: bold; }
+    </style>
+
+    <script>
+        // Chống click chuột phải
+        document.addEventListener('contextmenu', event => event.preventDefault());
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // DANH SÁCH 50 TỪ VỰNG TOPIC 2
+        const vocabularyData = [
+            { id: 1, word: "Participate", ipa: "/pɑːrˈtɪsɪpeɪt/", vi: "Tham gia", example: "We are happy to accept your application to participate in the 30 Day Course to be held from 08-11-2025 to 09-12-2025 at Dhamma Kamala Vipassana Meditation Center." },
+            { id: 2, word: "Chartered bus service", ipa: "/ˈtʃɑːrtərd bʌs ˈsɜːrvɪs/", vi: "Dịch vụ xe buýt đưa đón/thuê bao", example: "A Chartered bus service is available for accepted students who need to travel to and fro between the Center and a Temple named Wat Phra Sri Mahathat Woramahawihan at Phahon Yothin Road, Bangkok(designated pick up/ drop off point)." },
+            { id: 3, word: "Fare", ipa: "/fer/", vi: "Giá vé, cước phí", example: "The fare for each way is THB250 and students are advised to prepare exact amounts before boarding the chartered bus." },
+            { id: 4, word: "Exact amounts", ipa: "/ɪɡˈzækt əˈmaʊnts/", vi: "Số tiền chính xác", example: "The fare for each way is THB250 and students are advised to prepare exact amounts before boarding the chartered bus." },
+            { id: 5, word: "Extreme traffic conditions", ipa: "/ɪkˈstriːm ˈtræfɪk kənˈdɪʃnz/", vi: "Điều kiện giao thông khắc nghiệt/kẹt xe", example: "*Students should take note that extreme traffic conditions may cause considerable hours of delays, therefore much caution should be considered for schedules pertaining to flight and/ or other transportation/ meeting arrangements." },
+            { id: 6, word: "Pertaining to", ipa: "/pərˈteɪnɪŋ tu/", vi: "Liên quan đến", example: "*Students should take note that extreme traffic conditions may cause considerable hours of delays, therefore much caution should be considered for schedules pertaining to flight and/ or other transportation/ meeting arrangements." },
+            { id: 7, word: "Obtain", ipa: "/əbˈteɪn/", vi: "Xin cấp, đạt được", example: "Foreign students entering Thailand are responsible in obtaining the relevant visas for the duration of their stay, whether through the relevant websites or the Thai Embassy in their respective country of residence." },
+            { id: 8, word: "Comply with", ipa: "/kəmˈplaɪ wɪθ/", vi: "Tuân thủ", example: "**In collecting your personal information for the purpose of processing your application, the Center has to comply with the Personal Data Protection Act B.E. 2562." },
+            { id: 9, word: "Deemed to", ipa: "/diːmd tu/", vi: "Được coi là, được mặc định là", example: "Students who proceed to attend the course will be deemed to have understood and accepted the Personal Data Protection Policy." },
+            { id: 10, word: "Upon receipt of", ipa: "/əˈpɑːn rɪˈsiːt əv/", vi: "Ngay khi nhận được", example: "Upon receipt of this Acceptance Email, Students are required to reply using this email within 30 days with the following:" },
+            { id: 11, word: "Reserve seats", ipa: "/rɪˈzɜːrv siːts/", vi: "Đặt chỗ ngồi", example: "2. If student intends to reserve seats for chartered bus service?" },
+            { id: 12, word: "Adhere to", ipa: "/ədˈhɪr tu/", vi: "Tuân thủ, tuân theo", example: "By attending the course, students would have deemed to agree to adhere to all guidelines and policies put forth by the Center." },
+            { id: 13, word: "Put forth", ipa: "/pʊt fɔːrθ/", vi: "Đưa ra, ban hành", example: "By attending the course, students would have deemed to agree to adhere to all guidelines and policies put forth by the Center." },
+            { id: 14, word: "Code of Discipline", ipa: "/koʊd əv ˈdɪsəplɪn/", vi: "Nội quy, quy tắc kỷ luật", example: "If you have not already done so, please read The Technique & Code of Discipline at https://www.thaidhamma.net/en/kamala/codeofdiscline.php ." },
+            { id: 15, word: "Refrain from", ipa: "/rɪˈfreɪn frəm/", vi: "Kiềm chế, tránh làm gì", example: "Students who are attending the Course with friends or family members, please understand that you will have to refrain from all forms of contact with each other during the entire course." },
+            { id: 16, word: "Orientation", ipa: "/ˌɔːriənˈteɪʃn/", vi: "Sự định hướng, phổ biến thông tin", example: "6pm – Course orientation." },
+            { id: 17, word: "Accommodation", ipa: "/əˌkɑːməˈdeɪʃn/", vi: "Chỗ ở", example: "Students are encouraged to arrive for registration between 10am to 4pm so they can get into their accommodation, unpack, settle in, and familiarize with the surroundings." },
+            { id: 18, word: "Familiarize with", ipa: "/fəˈmɪliəraɪz wɪθ/", vi: "Làm quen với", example: "Students are encouraged to arrive for registration between 10am to 4pm so they can get into their accommodation, unpack, settle in, and familiarize with the surroundings." },
+            { id: 19, word: "Ample time", ipa: "/ˈæmpl taɪm/", vi: "Thời gian dư dả, rộng rãi", example: "Kindly allow ample time to clean the room for students of the next Course before leaving the Center." },
+            { id: 20, word: "Make use of", ipa: "/meɪk juːs əv/", vi: "Tận dụng, sử dụng", example: "We would encourage foreign students who cannot speak the Thai Language to make use of our chartered bus service to avoid communication problems which may result in delayed arrivals or even getting lost." },
+            { id: 21, word: "Supported solely by", ipa: "/səˈpɔːrtɪd ˈsoʊlli baɪ/", vi: "Được hỗ trợ hoàn toàn/duy nhất bởi", example: "Courses are supported solely by the donations of past students, and accordingly, there are no fixed charges for them." },
+            { id: 22, word: "According to one's convenience", ipa: "/əˈkɔːrdɪŋ tu wʌnz kənˈviːniəns/", vi: "Tùy theo sự thuận tiện (của ai đó)", example: "At the end of the Course, students may make donations towards future courses according to their convenience (cash in any currency, credit card or telegraphic transfer); hence, the amount of money that students may be carrying will not affect their ability to participate in the Course." },
+            { id: 23, word: "Telegraphic transfer", ipa: "/ˌtelɪˈɡræfɪk ˈtrænsfɜːr/", vi: "Chuyển khoản điện tín/ngân hàng", example: "At the end of the Course, students may make donations towards future courses according to their convenience (cash in any currency, credit card or telegraphic transfer); hence, the amount of money that students may be carrying will not affect their ability to participate in the Course." },
+            { id: 24, word: "Do not hesitate", ipa: "/duː nɑːt ˈhezɪteɪt/", vi: "Đừng ngần ngại", example: "If you have any further questions, please do not hesitate to contact us by replying to this email." },
+            { id: 25, word: "Acceptance email", ipa: "/əkˈseptəns ˈiːmeɪl/", vi: "Thư chấp thuận", example: "Foreign students may use this Acceptance Email to apply for their relevant Visa for attending the Course." },
+            { id: 26, word: "To and fro", ipa: "/tu ənd froʊ/", vi: "Đi và về", example: "A Chartered bus service is available for accepted students who need to travel to and fro between the Center and a Temple named Wat Phra Sri Mahathat Woramahawihan at Phahon Yothin Road, Bangkok(designated pick up/ drop off point)." },
+            { id: 27, word: "Designated point", ipa: "/ˈdezɪɡneɪtɪd pɔɪnt/", vi: "Điểm được chỉ định", example: "A Chartered bus service is available for accepted students who need to travel to and fro between the Center and a Temple named Wat Phra Sri Mahathat Woramahawihan at Phahon Yothin Road, Bangkok(designated pick up/ drop off point)." },
+            { id: 28, word: "Boarding", ipa: "/ˈbɔːrdɪŋ/", vi: "Lên xe/tàu/máy bay", example: "The fare for each way is THB250 and students are advised to prepare exact amounts before boarding the chartered bus." },
+            { id: 29, word: "Considerable", ipa: "/kənˈsɪdərəbl/", vi: "Đáng kể, nhiều", example: "*Students should take note that extreme traffic conditions may cause considerable hours of delays, therefore much caution should be considered for schedules pertaining to flight and/ or other transportation/ meeting arrangements." },
+            { id: 30, word: "Caution", ipa: "/ˈkɔːʃn/", vi: "Sự cẩn trọng, chú ý", example: "*Students should take note that extreme traffic conditions may cause considerable hours of delays, therefore much caution should be considered for schedules pertaining to flight and/ or other transportation/ meeting arrangements." },
+            { id: 31, word: "Arrangements", ipa: "/əˈreɪndʒmənts/", vi: "Sự sắp xếp", example: "*Students should take note that extreme traffic conditions may cause considerable hours of delays, therefore much caution should be considered for schedules pertaining to flight and/ or other transportation/ meeting arrangements." },
+            { id: 32, word: "Duration of their stay", ipa: "/dʊˈreɪʃn əv ðer steɪ/", vi: "Khoảng thời gian lưu trú", example: "Foreign students entering Thailand are responsible in obtaining the relevant visas for the duration of their stay, whether through the relevant websites or the Thai Embassy in their respective country of residence." },
+            { id: 33, word: "Country of residence", ipa: "/ˈkʌntri əv ˈrezɪdəns/", vi: "Quốc gia nơi cư trú", example: "Foreign students entering Thailand are responsible in obtaining the relevant visas for the duration of their stay, whether through the relevant websites or the Thai Embassy in their respective country of residence." },
+            { id: 34, word: "Have difficulties with", ipa: "/hæv ˈdɪfɪkəltiz wɪθ/", vi: "Gặp khó khăn với", example: "Students who have difficulties with their Visa application may inform us for further assistance." },
+            { id: 35, word: "Further assistance", ipa: "/ˈfɜːrðər əˈsɪstəns/", vi: "Hỗ trợ thêm", example: "Students who have difficulties with their Visa application may inform us for further assistance." },
+            { id: 36, word: "Processing your application", ipa: "/ˈprɑːsesɪŋ jɔːr ˌæplɪˈkeɪʃn/", vi: "Xử lý đơn đăng ký của quý vị", example: "**In collecting your personal information for the purpose of processing your application, the Center has to comply with the Personal Data Protection Act B.E. 2562." },
+            { id: 37, word: "Attached", ipa: "/əˈtætʃt/", vi: "Được đính kèm", example: "Students are required to read the Personal Data Protection Policy attached in this confirmation email." },
+            { id: 38, word: "Proceed to", ipa: "/proʊˈsiːd tu/", vi: "Tiếp tục, tiến hành (làm gì)", example: "Students who proceed to attend the course will be deemed to have understood and accepted the Personal Data Protection Policy." },
+            { id: 39, word: "Intend to", ipa: "/ɪnˈtend tu/", vi: "Dự định", example: "2. If student intends to reserve seats for chartered bus service?" },
+            { id: 40, word: "Preference", ipa: "/ˈprefrəns/", vi: "Sự ưu tiên, sự lựa chọn", example: "Kindly indicate preference of both ways, or, if only 1 way is required, which way?" },
+            { id: 41, word: "Content and structure", ipa: "/ˈkɑːntent ənd ˈstrʌktʃər/", vi: "Nội dung và cấu trúc", example: "This document contains important information about the content, structure, and rules of the course." },
+            { id: 42, word: "Physical contact", ipa: "/ˈfɪzɪkl ˈkɑːntækt/", vi: "Tiếp xúc thân thể", example: "Couples, married or otherwise should not have any physical contact even after Course ends within the Center." },
+            { id: 43, word: "Separate courses", ipa: "/ˈseprət kɔːrsɪz/", vi: "Các khóa riêng biệt", example: "If student feels any difficulty adhering to such guidelines, the student should consider applying for separate Courses." },
+            { id: 44, word: "In advance", ipa: "/ɪn ədˈvæns/", vi: "Trước (về mặt thời gian)", example: "Students who will arrive past 5pm kindly inform us in advance." },
+            { id: 45, word: "Light meal", ipa: "/laɪt miːl/", vi: "Bữa ăn nhẹ", example: "5pm – Light meal will be provided." },
+            { id: 46, word: "Unpack", ipa: "/ˌʌnˈpæk/", vi: "Dỡ hành lý", example: "Students are encouraged to arrive for registration between 10am to 4pm so they can get into their accommodation, unpack, settle in, and familiarize with the surroundings." },
+            { id: 47, word: "Settle in", ipa: "/ˈsetl ɪn/", vi: "Ổn định chỗ ở", example: "Students are encouraged to arrive for registration between 10am to 4pm so they can get into their accommodation, unpack, settle in, and familiarize with the surroundings." },
+            { id: 48, word: "Expected to remain", ipa: "/ɪkˈspektɪd tu rɪˈmeɪn/", vi: "Bắt buộc/Được kỳ vọng phải ở lại", example: "All students are expected to remain until the end of the Course which is about 7am on the last day." },
+            { id: 49, word: "Fixed charges", ipa: "/fɪkst tʃɑːrdʒɪz/", vi: "Các khoản phí cố định", example: "Courses are supported solely by the donations of past students, and accordingly, there are no fixed charges for them." },
+            { id: 50, word: "Currency", ipa: "/ˈkɜːrənsi/", vi: "Tiền tệ", example: "At the end of the Course, students may make donations towards future courses according to their convenience (cash in any currency, credit card or telegraphic transfer); hence, the amount of money that students may be carrying will not affect their ability to participate in the Course." }
+        ];
+
+        // DANH SÁCH MẪU EMAIL (EMAIL TEMPLATES)
+        const emailTemplates = [
+            {
+                id: 1,
+                title: "1. Xác nhận tham gia & Có đi xe buýt",
+                en: "Dear Dhamma Kamala Center,\n\nThank you for the Acceptance Email.\nI am writing to confirm my participation in the upcoming Course.\n\nI would also like to reserve a seat for the chartered bus service for both ways.\n\nWith Metta,\n[Your Name]",
+                vi: "Kính gửi Trung tâm Dhamma Kamala,\nCảm ơn trung tâm về Thư chấp thuận.\nTôi viết email này để xác nhận việc tham gia Khóa thiền sắp tới.\n\nTôi cũng muốn đặt một chỗ cho dịch vụ xe buýt đưa đón cho cả hai chiều.\n\nTâm Từ,\n[Tên của bạn]"
+            },
+            {
+                id: 2,
+                title: "2. Xác nhận tham gia & Tự túc đi lại",
+                en: "Dear Dhamma Kamala Center,\n\nThank you for the Acceptance Email.\nI would like to confirm my participation in the upcoming Course.\n\nRegarding transportation, I will arrange it myself and do not need to use the chartered bus service.\n\nWith Metta,\n[Your Name]",
+                vi: "Kính gửi Trung tâm Dhamma Kamala,\nCảm ơn trung tâm về Thư chấp thuận.\nTôi xin xác nhận sự tham gia của mình trong Khóa thiền sắp tới.\n\nVề việc di chuyển, tôi sẽ tự túc và không cần sử dụng dịch vụ xe buýt của trung tâm.\n\nTâm Từ,\n[Tên của bạn]"
+            },
+            {
+                id: 3,
+                title: "3. Xin hủy đăng ký tham gia",
+                en: "Dear Dhamma Kamala Center,\n\nThank you for the Acceptance Email.\nUnfortunately, due to unforeseen circumstances, I will not be able to participate in the course. Please cancel my registration so my spot can be given to another student.\n\nI apologize for any inconvenience caused.\n\nWith Metta,\n[Your Name]",
+                vi: "Kính gửi Trung tâm Dhamma Kamala,\nCảm ơn trung tâm về Thư chấp thuận.\nThật không may, do những tình huống ngoài dự kiến, tôi sẽ không thể tham gia khóa thiền. Vui lòng hủy đăng ký của tôi để nhường chỗ cho thiền sinh khác.\n\nTôi xin lỗi vì bất kỳ sự bất tiện nào đã gây ra.\n\nTâm Từ,\n[Tên của bạn]"
+            }
+        ];
+
+        const Topic2App = () => {
+            const [activeTab, setActiveTab] = useState('vocabulary');
+
+            // --- States for Vocabulary ---
+            const [idx, setIdx] = useState(0);
+            const [step, setStep] = useState(1); 
+            const [flipped, setFlipped] = useState(false);
+            const [qOptions, setQOptions] = useState([]);
+            const [qRes, setQRes] = useState(null);
+            const [typeIn, setTypeIn] = useState("");
+            const [typeRes, setTypeRes] = useState(null);
+
+            // --- States for Mic (Vocab) ---
+            const [rec, setRec] = useState(false);
+            const [audioUrl, setAudioUrl] = useState(null);
+            const recorderRef = useRef(null);
+
+            // --- States for Email Practice ---
+            const [emailIdx, setEmailIdx] = useState(0);
+            const [emailDraft, setEmailDraft] = useState("");
+            const [showEmailVi, setShowEmailVi] = useState(false);
+
+            const cur = vocabularyData[idx];
+            const curEmail = emailTemplates[emailIdx];
+
+            useEffect(() => {
+                if (activeTab === 'vocabulary' && step === 2) {
+                    let opts = [cur];
+                    let pool = vocabularyData.filter(v => v.id !== cur.id).sort(() => 0.5 - Math.random());
+                    opts = opts.concat(pool.slice(0, 3)).sort(() => 0.5 - Math.random());
+                    setQOptions(opts);
+                }
+            }, [step, idx, activeTab]);
+
+            const play = (txt, rate = 1.0) => {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(txt);
+                u.lang = 'en-US'; u.rate = rate;
+                window.speechSynthesis.speak(u);
+            };
+
+            const startRec = async () => {
+                try {
+                    const s = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    recorderRef.current = new MediaRecorder(s);
+                    const chunks = [];
+                    recorderRef.current.ondataavailable = e => chunks.push(e.data);
+                    recorderRef.current.onstop = () => {
+                        const blob = new Blob(chunks, { type: 'audio/webm' });
+                        setAudioUrl(URL.createObjectURL(blob));
+                    };
+                    recorderRef.current.start(); setRec(true); setAudioUrl(null);
+                } catch (e) { alert("Vui lòng cấp quyền Micro để sử dụng tính năng thu âm!"); }
+            };
+
+            const stopRec = () => {
+                if (recorderRef.current && recorderRef.current.state !== 'inactive') {
+                    recorderRef.current.stop();
+                    recorderRef.current.stream.getTracks().forEach(t => t.stop());
+                }
+                setRec(false);
+            };
+
+            const resetWord = () => {
+                setStep(1); setFlipped(false); setQRes(null); setTypeIn(""); setTypeRes(null); setAudioUrl(null); stopRec();
+            };
+
+            const handleNextStep = () => { if (step < 5) setStep(step + 1); };
+
+            const checkType = () => {
+                const clean = cur.word.replace(/[\.\(\)\?\;\,]/g, '').toLowerCase().trim();
+                if (typeIn.toLowerCase().trim() === clean || typeIn.toLowerCase().trim() === cur.word.toLowerCase()) setTypeRes('ok');
+                else setTypeRes('no');
+            };
+
+            const renderTabStatus = (sNum, icon, lab) => {
+                let cls = "locked";
+                if (step === sNum || (step === 5 && sNum === 4)) cls = "active";
+                else if (step > sNum) cls = "completed";
+                return <div className={`mode-tab ${cls}`}>{cls === 'completed' ? '✅' : icon} {lab}</div>;
+            };
+
+            const handleSendEmail = () => {
+                if (emailDraft.trim().length < 20) {
+                    alert("Email của bạn có vẻ hơi ngắn. Hãy thực hành gõ đầy đủ nội dung nhé!");
+                } else {
+                    alert("Gửi email thành công! (Mô phỏng) 🎉\nBạn đã nắm được cách trả lời tình huống này.");
+                    setEmailDraft("");
+                }
+            };
+
+            return (
+                <div className="container">
+                    <div className="header-title">📚 Topic 2 - Vocabulary & Communication</div>
+
+                    {/* Main Navigation Tab */}
+                    <div className="top-nav">
+                        <button className={`nav-pill ${activeTab === 'vocabulary' ? 'active' : ''}`} onClick={() => {setActiveTab('vocabulary'); stopRec();}}>📚 1. Học Từ Vựng</button>
+                        <button className={`nav-pill ${activeTab === 'email' ? 'active' : ''}`} onClick={() => {setActiveTab('email'); stopRec();}}>📧 2. Thực Hành Trả Lời Email</button>
+                    </div>
+
+                    {activeTab === 'vocabulary' && (
+                        <>
+                            <div className="sub-nav-container">
+                                <div className="progress-bar">
+                                    {[1,2,3,4].map(s => <div key={s} className={`progress-segment ${step >= s ? 'active' : ''}`}></div>)}
+                                </div>
+                                <div className="mode-nav">
+                                    <div className="mode-tabs">
+                                        {renderTabStatus(1, "🃏", "Lật thẻ")}
+                                        {renderTabStatus(2, "📝", "Trắc nghiệm")}
+                                        {renderTabStatus(3, "⌨️", "Gõ từ")}
+                                        {renderTabStatus(4, "🔊", "Phát âm")}
+                                    </div>
+                                    <div style={{fontWeight: 'bold', color: '#64748b'}}>{idx + 1} / {vocabularyData.length}</div>
+                                </div>
+                            </div>
+
+                            <div className={`card-area ${flipped ? 'flipped' : ''}`}>
+                                {step === 1 && (
+                                    !flipped ? (
+                                        <>
+                                            <div className="word-large">{cur.word}</div>
+                                            <div className="ipa-text">{cur.ipa}</div>
+                                            <button className="btn-audio-pink" onClick={() => play(cur.word)}>🔊 Nghe máy đọc</button>
+                                            <button className="btn-flip" onClick={() => setFlipped(true)}>Xem nghĩa 👉</button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="vi-text">{cur.vi}</div>
+                                            <div className="example-text">"{cur.example}"</div>
+                                            <button className="btn-flip" onClick={() => setFlipped(false)}>👈 Quay lại thẻ Tiếng Anh</button>
+                                        </>
+                                    )
+                                )}
+
+                                {step === 2 && (
+                                    <>
+                                        <div className="quiz-title">Chọn nghĩa đúng nhất:</div>
+                                        <div className="word-large">{cur.word}</div>
+                                        <div className="quiz-grid">
+                                            {qOptions.map((o, i) => (
+                                                <div key={i} className={`quiz-option ${qRes && o.id === cur.id ? 'correct' : (qRes === 'no' && o.id !== cur.id ? 'incorrect' : '')}`} onClick={() => setQRes(o.id === cur.id ? 'ok' : 'no')}>{o.vi}</div>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+
+                                {step === 3 && (
+                                    <>
+                                        <div className="quiz-title" style={{fontSize: '20px'}}>Nghe và gõ lại từ vựng:</div>
+                                        <button className="btn-audio-blue" onClick={() => play(cur.word)}>🔊 Bấm để nghe</button>
+                                        <div className="type-input-group">
+                                            <input className="type-input" placeholder="Gõ tiếng Anh..." value={typeIn} onChange={e => setTypeIn(e.target.value)} onKeyDown={e => e.key === 'Enter' && checkType()} />
+                                            <button className="btn-check" onClick={checkType}>Check</button>
+                                        </div>
+                                        {typeRes === 'ok' && <div style={{color: '#10b981', marginTop: '10px', fontWeight: 'bold'}}>✅ Chính xác!</div>}
+                                        {typeRes === 'no' && <div style={{color: '#ef4444', marginTop: '10px', fontWeight: 'bold'}}>❌ Chưa chính xác, hãy thử lại!</div>}
+                                    </>
+                                )}
+
+                                {step === 4 && (
+                                    <>
+                                        <div className="ipa-text" style={{fontSize: '32px'}}>{cur.ipa}</div>
+                                        <div className="speed-controls">
+                                            <button className="btn-audio-blue" onClick={() => play(cur.word, 0.7)}>🐢 0.7x</button>
+                                            <button className="btn-audio-pink" onClick={() => play(cur.word, 1.0)}>🔊 1.0x</button>
+                                        </div>
+                                        <div className="divider"></div>
+                                        <button className={`btn-record ${rec ? 'recording' : ''}`} onClick={rec ? stopRec : startRec}>{rec ? '⏹️ DỪNG THU' : '🎤 BẤM THU ÂM'}</button>
+                                        {audioUrl && <audio className="audio-player" src={audioUrl} controls />}
+                                    </>
+                                )}
+
+                                {step === 5 && (
+                                    <>
+                                        <h2 style={{color: '#047857'}}>🎉 Hoàn thành cụm từ:</h2>
+                                        <div className="word-large">{cur.word}</div>
+                                        <div className="vi-text" style={{fontWeight: 'normal'}}>{cur.vi}</div>
+                                        <div className="final-choice-box">
+                                            <button className="btn-retry" onClick={resetWord}>🔄 Học lại</button>
+                                            <button className="btn-next" onClick={() => { if (idx < vocabularyData.length-1) { setIdx(idx+1); resetWord(); } else alert("Hoàn thành Topic 2! 🎉"); }}>{idx < vocabularyData.length-1 ? 'Từ tiếp theo ➔' : 'HOÀN THÀNH 🏆'}</button>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+
+                            {step < 5 && (
+                                <button className="btn-next" onClick={handleNextStep} disabled={(step===1 && !flipped) || (step===2 && qRes!=='ok') || (step===3 && typeRes!=='ok') || (step===4 && !audioUrl)}>Tiếp tục →</button>
+                            )}
+
+                            {/* Phân trang Từ Vựng */}
+                            <div className="pagination">
+                                {vocabularyData.map((_, i) => (
+                                    <div 
+                                        key={i} 
+                                        className={`page-dot ${i === idx ? 'active' : ''}`}
+                                        onClick={() => { setIdx(i); resetWord(); }}
+                                    >
+                                        {i + 1}
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
+
+                    {activeTab === 'email' && (
+                        <>
+                            <div className="sub-nav-container" style={{display: 'flex', gap: '10px', overflowX: 'auto'}}>
+                                {emailTemplates.map((tpl, i) => (
+                                    <button 
+                                        key={i}
+                                        className={`mode-tab ${emailIdx === i ? 'active' : ''}`}
+                                        onClick={() => {setEmailIdx(i); setShowEmailVi(false); setEmailDraft("");}}
+                                        style={{cursor: 'pointer'}}
+                                    >
+                                        {tpl.title}
+                                    </button>
+                                ))}
+                            </div>
+
+                            <div className="card-area" style={{justifyContent: 'flex-start', alignItems: 'stretch'}}>
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px'}}>
+                                    <h3 style={{margin: 0, color: '#0f172a'}}>📖 Mẫu tham khảo</h3>
+                                    <div style={{display: 'flex', gap: '10px'}}>
+                                        <button className="btn-audio-blue" style={{padding: '8px 15px', fontSize: '14px'}} onClick={() => play(curEmail.en)}>🔊 Nghe đọc</button>
+                                        <button className="btn-audio-pink" style={{padding: '8px 15px', fontSize: '14px'}} onClick={() => setShowEmailVi(!showEmailVi)}>{showEmailVi ? 'Ẩn dịch' : 'Hiện dịch'}</button>
+                                    </div>
+                                </div>
+
+                                <div className="email-template-box">
+                                    {curEmail.en}
+                                    {showEmailVi && <div className="email-vi-text">{curEmail.vi}</div>}
+                                </div>
+
+                                <div className="divider"></div>
+
+                                <h3 style={{color: '#0f172a', marginBottom: '15px'}}>⌨️ Thực hành gõ lại Email</h3>
+                                <p style={{fontSize: '14px', color: '#64748b', marginTop: 0}}>Hãy gõ lại đoạn email bằng tiếng Anh ở trên để ghi nhớ cấu trúc và cách dùng từ nhé. Thay [Your Name] bằng tên của bạn.</p>
+                                
+                                <textarea 
+                                    className="email-textarea" 
+                                    placeholder="Soạn email phản hồi của bạn tại đây..."
+                                    value={emailDraft}
+                                    onChange={(e) => setEmailDraft(e.target.value)}
+                                ></textarea>
+
+                                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                                    <button className="btn-send-email" onClick={handleSendEmail}>
+                                        📨 Gửi Email (Mô phỏng)
+                                    </button>
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Topic2App />);
+    </script>
+</body>
+</html>
