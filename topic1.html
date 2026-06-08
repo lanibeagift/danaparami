@@ -80,9 +80,12 @@
         .final-choice-box { display: flex; gap: 15px; width: 100%; max-width: 500px; margin-top: 20px; }
         .btn-retry { flex: 1; padding: 15px; border-radius: 12px; border: 2px solid #cbd5e1; background: #fff; color: #64748b; font-weight: bold; cursor: pointer; }
         
+        /* Updated Pagination for Clickability */
         .pagination { display: flex; justify-content: center; gap: 6px; margin-top: 20px; flex-wrap: wrap;}
-        .page-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center; color: #94a3b8; font-size: 11px; background: #fff; }
+        .page-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center; color: #94a3b8; font-size: 11px; background: #fff; cursor: pointer; transition: all 0.2s; }
+        .page-dot:hover { border-color: #bae6fd; color: #0284c7; }
         .page-dot.active { background-color: #e0f2fe; color: #0284c7; border-color: #bae6fd; font-weight: bold; }
+        
         .rp-textarea { width: 100%; height: 100px; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; font-size: 17px; outline: none; margin: 20px 0; }
     </style>
 
@@ -357,31 +360,61 @@
                           <button className="btn-next" onClick={handleNextStep} disabled={(step===1 && !flipped) || (step===2 && qRes!=='ok') || (step===3 && typeRes!=='ok') || (step===4 && !audioUrl)}>Tiếp tục →</button>
                       )}
 
+                      {/* Phân trang Từ Vựng: Học viên có thể click chọn tùy ý */}
                       <div className="pagination">
-                          {vocabularyData.map((_, i) => <div key={i} className={`page-dot ${i === idx ? 'active' : ''}`}>{i < idx ? '✓' : i + 1}</div>)}
+                          {vocabularyData.map((_, i) => (
+                              <div 
+                                  key={i} 
+                                  className={`page-dot ${i === idx ? 'active' : ''}`}
+                                  onClick={() => { setIdx(i); resetWord(); }}
+                              >
+                                  {i + 1}
+                              </div>
+                          ))}
                       </div>
                   </>
               )}
 
               {activeTab === 'roleplay' && (
-                  <div className="card-area" style={{justifyContent: 'flex-start'}}>
-                      <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '20px'}}>
-                          <div style={{fontWeight: 'bold', color: '#14b8a6'}}>🎙️ Luyện phỏng vấn thực tế</div>
-                          <div style={{color: '#94a3b8', fontWeight: 'bold'}}>{rpIdx + 1} / {roleplayQuestions.length}</div>
+                  <>
+                      <div className="card-area" style={{justifyContent: 'flex-start'}}>
+                          <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '20px'}}>
+                              <div style={{fontWeight: 'bold', color: '#14b8a6'}}>🎙️ Luyện phỏng vấn thực tế</div>
+                              <div style={{color: '#94a3b8', fontWeight: 'bold'}}>{rpIdx + 1} / {roleplayQuestions.length}</div>
+                          </div>
+                          <div className="word-large" style={{fontSize: '26px'}}>{curRp.en}</div>
+                          <div style={{display: 'flex', gap: '15px', marginTop: '10px'}}>
+                              <button className="btn-audio-blue" onClick={() => play(curRp.en, 0.9)}>🔊 Nghe câu hỏi</button>
+                              <button style={{background: 'none', border: 'none', color: '#94a3b8', textDecoration: 'underline', cursor: 'pointer'}} onClick={() => setShowVi(!showVi)}>{showVi ? 'Ẩn dịch' : 'Hiện dịch'}</button>
+                          </div>
+                          {showVi && <div style={{marginTop: '15px', color: '#475569', fontStyle: 'italic'}}>{curRp.vi}</div>}
+                          <textarea className="rp-textarea" placeholder="Gõ câu trả lời của bạn..." value={rpAns} onChange={e => setRpAns(e.target.value)} />
+                          <div style={{display: 'flex', gap: '10px', width: '100%'}}>
+                              <button className={`btn-record ${rec ? 'recording' : ''}`} onClick={rec ? stopRec : startRec}>{rec ? '⏹️ DỪNG' : '🎤 TRẢ LỜI'}</button>
+                              {audioUrl && <audio style={{flex: 1, height: '40px'}} src={audioUrl} controls />}
+                          </div>
+                          <button className="btn-next" style={{marginTop: '25px'}} onClick={() => { if (rpIdx < roleplayQuestions.length-1) { setRpIdx(rpIdx+1); setRpAns(""); setShowVi(false); setAudioUrl(null); } else alert("Hoàn thành bài phỏng vấn! 🎉"); }}>Câu tiếp theo →</button>
                       </div>
-                      <div className="word-large" style={{fontSize: '26px'}}>{curRp.en}</div>
-                      <div style={{display: 'flex', gap: '15px', marginTop: '10px'}}>
-                          <button className="btn-audio-blue" onClick={() => play(curRp.en, 0.9)}>🔊 Nghe câu hỏi</button>
-                          <button style={{background: 'none', border: 'none', color: '#94a3b8', textDecoration: 'underline', cursor: 'pointer'}} onClick={() => setShowVi(!showVi)}>{showVi ? 'Ẩn dịch' : 'Hiện dịch'}</button>
+
+                      {/* Phân trang Roleplay: Học viên có thể click chọn câu hỏi bất kỳ */}
+                      <div className="pagination">
+                          {roleplayQuestions.map((_, i) => (
+                              <div 
+                                  key={i} 
+                                  className={`page-dot ${i === rpIdx ? 'active' : ''}`}
+                                  onClick={() => { 
+                                      setRpIdx(i); 
+                                      setRpAns(""); 
+                                      setShowVi(false); 
+                                      setAudioUrl(null); 
+                                      stopRec();
+                                  }}
+                              >
+                                  {i + 1}
+                              </div>
+                          ))}
                       </div>
-                      {showVi && <div style={{marginTop: '15px', color: '#475569', fontStyle: 'italic'}}>{curRp.vi}</div>}
-                      <textarea className="rp-textarea" placeholder="Gõ câu trả lời của bạn..." value={rpAns} onChange={e => setRpAns(e.target.value)} />
-                      <div style={{display: 'flex', gap: '10px', width: '100%'}}>
-                          <button className={`btn-record ${rec ? 'recording' : ''}`} onClick={rec ? stopRec : startRec}>{rec ? '⏹️ DỪNG' : '🎤 TRẢ LỜI'}</button>
-                          {audioUrl && <audio style={{flex: 1, height: '40px'}} src={audioUrl} controls />}
-                      </div>
-                      <button className="btn-next" style={{marginTop: '25px'}} onClick={() => { if (rpIdx < roleplayQuestions.length-1) { setRpIdx(rpIdx+1); setRpAns(""); setShowVi(false); setAudioUrl(null); } else alert("Hoàn thành bài phỏng vấn! 🎉"); }} disabled={!rpAns && !audioUrl}>Câu tiếp theo →</button>
-                  </div>
+                  </>
               )}
             </div>
           );
