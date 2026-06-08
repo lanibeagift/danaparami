@@ -1,308 +1,435 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: { serif: ['Lora', 'serif'], sans: ['Inter', 'sans-serif'] },
-        colors: {
-          sand: { 50: '#FAF7F2', 100: '#F3EEE5', 200: '#E8DFD0', 300: '#D8CAB0' },
-          clay: { 500: '#A0784F', 600: '#8B6240', 700: '#6E4C30' },
-          moss: { 400: '#8FA37E', 500: '#6E8463', 600: '#54664C' },
-          ink:  { 700: '#3F3A33', 800: '#2C2925', 900: '#1C1A17' }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic 3 - At The Airport</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        /* Chống bôi đen văn bản */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            color: #334155;
         }
-      }
-    }
-  }
-</script>
-<title>Checking Questions - Category 03</title>
-<style>
-  body { background: #FAF7F2; color: #2C2925; font-family: 'Inter', sans-serif; }
-  .font-display { font-family: 'Lora', serif; }
-  .card-zen { background: #FFFFFF; border: 1px solid rgba(216, 202, 176, 0.55); box-shadow: 0 12px 30px -18px rgba(110, 76, 48, 0.18); }
-  .tab-active { border-bottom: 2px solid #6E8463; color: #6E8463; font-weight: 600; }
-  .tab-inactive { color: #A0784F; border-bottom: 2px solid transparent; }
-  .tab-inactive:hover { color: #6E8463; border-bottom: 2px solid rgba(110, 132, 99, 0.3); }
-  
-  .mic-active { animation: pulse-red 1.5s infinite; color: #ef4444 !important; border-color: #ef4444 !important; }
-  @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
-  
-  .fade-in-up { animation: fadeInUp 0.4s ease-out; }
-  @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-  .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #D8CAB0; border-radius: 10px; }
-  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-</style>
+        .container { max-width: 850px; margin: 0 auto; }
+        
+        /* Header */
+        .header-title {
+            text-align: center;
+            color: #0ea5e9;
+            margin-bottom: 25px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        .top-nav { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+        .nav-pill { padding: 12px 25px; border-radius: 10px; border: 2px solid #e2e8f0; background: #fff; cursor: pointer; font-weight: bold; color: #64748b; font-size: 16px; transition: all 0.2s; }
+        .nav-pill.active { background-color: #0ea5e9; color: #fff; border-color: #0ea5e9; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3); }
+
+        .sub-nav-container { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); margin-bottom: 20px; border: 1px solid #f1f5f9; }
+        .progress-bar { display: flex; gap: 5px; margin-bottom: 20px; }
+        .progress-segment { height: 4px; flex: 1; border-radius: 2px; background: #e2e8f0; transition: background 0.3s;}
+        .progress-segment.active { background: #f43f5e; }
+        
+        .mode-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+        .mode-tab { padding: 8px 14px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; font-size: 13px; color: #64748b; display: flex; align-items: center; gap: 5px; font-weight: 600; }
+        .mode-tab.active { background-color: #f0f9ff; color: #0284c7; border-color: #bae6fd; }
+        .mode-tab.completed { background-color: #f8fafc; color: #10b981; border-color: #a7f3d0; }
+        .mode-tab.locked { opacity: 0.4; background-color: #f1f5f9; cursor: not-allowed; }
+
+        .mode-nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+
+        /* Areas */
+        .card-area { background: #fff; border-radius: 16px; padding: 40px; min-height: 350px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin-bottom: 20px; transition: all 0.3s;}
+        .card-area.flipped { background-color: #f0fdf4; border-color: #bbf7d0; }
+        
+        /* Email/Communication Area Specifics */
+        .email-container { width: 100%; text-align: left; }
+        .email-template-box { background: #f8fafc; border-left: 4px solid #0ea5e9; padding: 20px; border-radius: 8px; margin-bottom: 20px; font-family: monospace; font-size: 15px; color: #334155; line-height: 1.6; white-space: pre-wrap; }
+        .email-vi-text { font-style: italic; color: #64748b; font-size: 14px; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #cbd5e1; }
+        .email-textarea { width: 100%; height: 200px; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; font-size: 15px; font-family: 'Segoe UI', sans-serif; outline: none; resize: vertical; box-sizing: border-box; }
+        .email-textarea:focus { border-color: #0ea5e9; }
+        .btn-send-email { background-color: #10b981; color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; transition: all 0.2s;}
+        .btn-send-email:hover { background-color: #059669; }
+
+        /* Typography */
+        .word-large { font-size: 32px; font-weight: bold; color: #0f172a; line-height: 1.4; margin-bottom: 10px; }
+        .ipa-text { color: #0284c7; font-family: monospace; font-size: 24px; margin-bottom: 20px; background: #f0f9ff; padding: 5px 15px; border-radius: 8px;}
+        .vi-text { font-size: 24px; font-weight: bold; color: #047857; margin-bottom: 15px; }
+        .example-text { font-size: 16px; color: #64748b; font-style: italic; margin-bottom: 25px; max-width: 90%; }
+        
+        /* Buttons */
+        .btn-audio-pink { background-color: #ffe4e6; color: #e11d48; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-audio-blue { background-color: #e0f2fe; color: #0284c7; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-flip { color: #0ea5e9; font-weight: bold; cursor: pointer; background: #f0f9ff; border: none; padding: 10px 20px; border-radius: 20px; margin-top: 15px; }
+        
+        .btn-next { background-color: #f43f5e; color: white; width: 100%; border: none; padding: 18px; border-radius: 16px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 10px rgba(244, 63, 94, 0.2); }
+        .btn-next:disabled { background-color: #cbd5e1; cursor: not-allowed; box-shadow: none; }
+        
+        .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-top: 10px; }
+        .quiz-option { border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; background: #fff; cursor: pointer; font-weight: 500; color: #475569; }
+        .quiz-option.correct { border-color: #10b981; background: #ecfdf5; color: #047857; font-weight: bold; }
+        .quiz-option.incorrect { border-color: #ef4444; background: #fef2f2; color: #b91c1c; }
+        
+        .type-input-group { display: flex; width: 100%; max-width: 500px; gap: 10px; margin-top: 25px; }
+        .type-input { flex: 1; border: 2px solid #bae6fd; border-radius: 12px; padding: 15px; font-size: 18px; outline: none; text-align: center; }
+        .btn-check { background-color: #0ea5e9; color: white; border: none; padding: 0 20px; border-radius: 12px; font-weight: bold; cursor: pointer; }
+        
+        /* Recording */
+        .btn-record { background-color: #14b8a6; color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-record.recording { background-color: #ef4444; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        
+        .audio-player { margin-top: 20px; width: 100%; max-width: 400px; height: 40px; }
+        
+        .speed-controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        .divider { width: 100%; height: 1px; border-top: 1px dashed #cbd5e1; margin: 20px 0; }
+        
+        .final-choice-box { display: flex; gap: 15px; width: 100%; max-width: 500px; margin-top: 20px; }
+        .btn-retry { flex: 1; padding: 15px; border-radius: 12px; border: 2px solid #cbd5e1; background: #fff; color: #64748b; font-weight: bold; cursor: pointer; }
+        
+        /* Pagination */
+        .pagination { display: flex; justify-content: center; gap: 6px; margin-top: 20px; flex-wrap: wrap;}
+        .page-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center; color: #94a3b8; font-size: 11px; background: #fff; cursor: pointer; transition: all 0.2s; }
+        .page-dot:hover { border-color: #bae6fd; color: #0284c7; }
+        .page-dot.active { background-color: #e0f2fe; color: #0284c7; border-color: #bae6fd; font-weight: bold; }
+    </style>
+
+    <script>
+        // Chống click chuột phải
+        document.addEventListener('contextmenu', event => event.preventDefault());
+    </script>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
+    <div id="root"></div>
 
-<header class="border-b border-sand-200/70 bg-sand-50/90 backdrop-blur-md sticky top-0 z-30">
-  <div class="max-w-5xl mx-auto px-5 py-4 flex items-center justify-between">
-    <div class="flex items-center gap-4">
-      <a href="index.html" class="p-2 hover:bg-sand-100 rounded-full transition-colors">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6E4C30" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      </a>
-      <div>
-        <div class="text-[10px] uppercase tracking-[0.2em] text-clay-600 font-medium">Category 03</div>
-        <div class="font-display text-lg font-medium leading-tight">Checking Questions</div>
-      </div>
-    </div>
-  </div>
-</header>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-<main class="flex-grow max-w-5xl mx-auto w-full px-5 py-8 flex flex-col">
-  <nav class="flex overflow-x-auto mb-8 border-b border-sand-200 custom-scrollbar" id="tabNav"></nav>
-  <div id="workspace" class="flex-grow flex flex-col justify-center"></div>
-</main>
+        // DANH SÁCH TỪ VỰNG TOPIC 3: AT THE AIRPORT
+        const vocabularyData = [
+            { id: 1, word: "Show your passport / ID", ipa: "/ʃoʊ jɔːr ˈpæspɔːrt / aɪ-diː/", vi: "Xuất trình hộ chiếu / giấy tờ tùy thân", example: "Please show your passport at the desk." },
+            { id: 2, word: "Check in luggage / baggage", ipa: "/tʃek ɪn ˈlʌɡɪdʒ / ˈbæɡɪdʒ/", vi: "Ký gửi hành lý", example: "I need to check in two suitcases." },
+            { id: 3, word: "Carry on a bag", ipa: "/ˈkæri ɑːn ə bæɡ/", vi: "Xách tay một túi/hành lý", example: "You can carry on one small bag." },
+            { id: 4, word: "Pay for overweight baggage", ipa: "/peɪ fɔːr ˌoʊvərˈweɪt ˈbæɡɪdʒ/", vi: "Trả phí hành lý quá cước", example: "If it's over 20kg, you must pay for overweight baggage." },
+            { id: 5, word: "Request an aisle / window seat", ipa: "/rɪˈkwest ən aɪl / ˈwɪndoʊ siːt/", vi: "Yêu cầu ghế cạnh lối đi / cửa sổ", example: "Can I request an aisle seat, please?" },
+            { id: 6, word: "Print the boarding pass", ipa: "/prɪnt ðə ˈbɔːrdɪŋ pæs/", vi: "In thẻ lên máy bay", example: "You can print your boarding pass at the kiosk." },
+            { id: 7, word: "Go through security", ipa: "/ɡoʊ θruː sɪˈkjʊrəti/", vi: "Đi qua trạm kiểm tra an ninh", example: "Everyone must go through security." },
+            { id: 8, word: "Take off shoes / belts / jackets", ipa: "/teɪk ɔːf ʃuːz / belts / ˈdʒækɪts/", vi: "Cởi giày / tháo thắt lưng / áo khoác", example: "Please take off your jacket and put it in the bin." },
+            { id: 9, word: "Empty your pockets", ipa: "/ˈempti jɔːr ˈpɑːkɪts/", vi: "Lấy hết đồ trong túi quần/áo ra", example: "Empty your pockets before walking through the scanner." },
+            { id: 10, word: "Put items in a bin / tray", ipa: "/pʊt ˈaɪtəmz ɪn ə bɪn / treɪ/", vi: "Đặt đồ đạc vào khay", example: "Put your laptop in a separate tray." },
+            { id: 11, word: "Set off the metal detector", ipa: "/set ɔːf ðə ˈmetl dɪˈtektər/", vi: "Làm máy dò kim loại kêu lên", example: "His keys set off the metal detector." },
+            { id: 12, word: "Check the departure board", ipa: "/tʃek ðə dɪˈpɑːrtʃər bɔːrd/", vi: "Kiểm tra bảng thông tin chuyến bay đi", example: "Let's check the departure board for our gate number." },
+            { id: 13, word: "Proceed to the gate", ipa: "/proʊˈsiːd tu ðə ɡeɪt/", vi: "Đi đến cổng lên máy bay", example: "Passengers should proceed to gate 5 now." },
+            { id: 14, word: "Board the plane / flight", ipa: "/bɔːrd ðə pleɪn / flaɪt/", vi: "Lên máy bay", example: "We will board the plane in 10 minutes." },
+            { id: 15, word: "Find your seat", ipa: "/faɪnd jɔːr siːt/", vi: "Tìm chỗ ngồi", example: "Let me help you find your seat." },
+            { id: 16, word: "Stow your carry-on luggage", ipa: "/stoʊ jɔːr ˈkæri ɑːn ˈlʌɡɪdʒ/", vi: "Cất gọn hành lý xách tay (lên khoang phía trên)", example: "Please stow your carry-on luggage in the overhead compartment." },
+            { id: 17, word: "Fasten your seatbelt", ipa: "/ˈfæsn jɔːr ˈsiːtbelt/", vi: "Thắt dây an toàn", example: "Please sit down and fasten your seatbelt." },
+            { id: 18, word: "Go through customs / immigration", ipa: "/ɡoʊ θruː ˈkʌstəmz / ˌɪmɪˈɡreɪʃn/", vi: "Đi qua trạm hải quan / nhập cảnh", example: "It took an hour to go through customs." },
+            { id: 19, word: "Fill out a customs form", ipa: "/fɪl aʊt ə ˈkʌstəmz fɔːrm/", vi: "Điền tờ khai hải quan", example: "Please fill out this customs form before landing." },
+            { id: 20, word: "Declare items / goods", ipa: "/dɪˈkler ˈaɪtəmz / ɡʊdz/", vi: "Khai báo hàng hóa", example: "Do you have any items to declare?" },
+            { id: 21, word: "Claim your baggage", ipa: "/kleɪm jɔːr ˈbæɡɪdʒ/", vi: "Lấy lại hành lý ký gửi", example: "You can claim your baggage at carousel number 4." }
+        ];
 
-<script>
-  // Dữ liệu câu trích xuất từ tài liệu Cate 3
-  const LESSON_DATA = [
-    { en: "Are you aware of the breathing? Are you aware of the in-going breath, out-going breath?", vn: "Quý vị có ý thức được hơi thở của mình không? Quý vị có ý thức được hơi thở đi vào, hơi thở đi ra không?" },
-    { en: "If the mind wanders away, how quickly can you bring it back to the breathing?", vn: "Nếu tâm bỏ đi lang thang, trong bao lâu quý vị có thể nhanh chóng mang tâm trở về quan sát hơi thở?" },
-    { en: "Do you feel any sensations in this area?", vn: "Quý vị có cảm nhận được cảm giác trong vùng này không?" },
-    { en: "What kind of sensations?", vn: "Là loại cảm giác gì?" },
-    { en: "Are you able to move your attention from head to feet to feel the sensations?", vn: "Quý vị có thể đưa sự chú tâm đi từ đầu đến chân để cảm nhận cảm giác không?" },
-    { en: "Can you observe the similar parts simultaneously and symmetrically, like both arms or both legs?", vn: "Quý vị có thể quan sát các phần trên cơ thể đối xứng nhau cùng 1 lúc, ví dụ như là cả 2 tay hay cả 2 chân?" },
-    { en: "Can you maintain the awareness of the natural breathing for at least one minute?", vn: "Quý vị có duy trì được sự ý thức về hơi thở trong ít nhất 1 phút không?" },
-    { en: "Do you work with the free flow or part by part?", vn: "Quý vị thực tập với luồng thông suốt hay quan sát từng phần cơ thể?" },
-    { en: "How is your equanimity? (or Are you equanimous?)", vn: "Sự bình tâm của quý vị ra sao? (Quý vị có bình tâm không?)" },
-    { en: "Sweep en masse", vn: "Quét một lượt khắp toàn thân" }
-  ];
+        // DANH SÁCH MẪU TÌNH HUỐNG (SITUATIONS)
+        const situationTemplates = [
+            {
+                id: 1,
+                title: "1. Mục đích & Thời gian lưu trú",
+                en: "Immigration Officer:\n- What is the purpose of your visit?\n- How long will you be staying?\n\nPassenger (You):\n- I’m here for attending Vipassana meditation course.\n- I’ll be staying for 12 days.",
+                vi: "Nhân viên Hải quan:\n- Mục đích chuyến đi của bạn là gì?\n- Bạn dự định ở lại bao lâu?\n\nHành khách (Bạn):\n- Tôi đến đây tham gia khóa thiền Vipassana.\n- Tôi sẽ ở lại 12 ngày."
+            },
+            {
+                id: 2,
+                title: "2. Nơi lưu trú",
+                en: "Immigration Officer:\n- Where will you be staying?\n\nPassenger (You):\n- I will stay at Dhamma Kamala Meditation Center.",
+                vi: "Nhân viên Hải quan:\n- Bạn sẽ lưu trú ở đâu?\n\nHành khách (Bạn):\n- Tôi sẽ ở tại Trung tâm thiền Dhamma Kamala."
+            },
+            {
+                id: 3,
+                title: "3. Xuất trình giấy tờ",
+                en: "Immigration Officer:\n- Can I see your return ticket?\n\nPassenger (You):\n- Yes, sure. Here is my return ticket and my acceptance letter for the course.",
+                vi: "Nhân viên Hải quan:\n- Tôi có thể xem vé khứ hồi của bạn không?\n\nHành khách (Bạn):\n- Vâng, chắc chắn rồi. Đây là vé khứ hồi và thư chấp thuận khóa thiền của tôi."
+            }
+        ];
 
-  let currentTab = 'read';
-  let currentIndex = 0;
+        const Topic3App = () => {
+            const [activeTab, setActiveTab] = useState('vocabulary');
 
-  // --- HÀM MICROPHONE (VOICE-TO-TEXT) --- BẢN VÁ LỖI ANDROID
-  function startSpeech(langCode, targetId, btnId) {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert("Trình duyệt này không hỗ trợ nhận diện giọng nói. Hãy dùng Chrome hoặc Safari.");
-      return;
-    }
+            // --- States for Vocabulary ---
+            const [idx, setIdx] = useState(0);
+            const [step, setStep] = useState(1); 
+            const [flipped, setFlipped] = useState(false);
+            const [qOptions, setQOptions] = useState([]);
+            const [qRes, setQRes] = useState(null);
+            const [typeIn, setTypeIn] = useState("");
+            const [typeRes, setTypeRes] = useState(null);
 
-    const recognition = new SpeechRecognition();
-    const micBtn = document.getElementById(btnId);
-    const textArea = document.getElementById(targetId);
+            // --- States for Mic (Vocab) ---
+            const [rec, setRec] = useState(false);
+            const [audioUrl, setAudioUrl] = useState(null);
+            const recorderRef = useRef(null);
 
-    recognition.lang = langCode;
-    recognition.interimResults = true; // Bật để hiện chữ real-time trên Android
-    recognition.maxAlternatives = 1;
+            // --- States for Practice Area ---
+            const [sitIdx, setSitIdx] = useState(0);
+            const [draftText, setDraftText] = useState("");
+            const [showVi, setShowVi] = useState(false);
 
-    const originalText = textArea.value;
+            const cur = vocabularyData[idx];
+            const curSit = situationTemplates[sitIdx];
 
-    recognition.onstart = () => {
-      micBtn.classList.add('mic-active');
-      micBtn.innerHTML = `<svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg> Đang nghe...`;
-    };
+            useEffect(() => {
+                if (activeTab === 'vocabulary' && step === 2) {
+                    let opts = [cur];
+                    let pool = vocabularyData.filter(v => v.id !== cur.id).sort(() => 0.5 - Math.random());
+                    opts = opts.concat(pool.slice(0, 3)).sort(() => 0.5 - Math.random());
+                    setQOptions(opts);
+                }
+            }, [step, idx, activeTab]);
 
-    recognition.onresult = (event) => {
-      let currentTranscript = '';
-      for (let i = 0; i < event.results.length; i++) {
-        currentTranscript += event.results[i][0].transcript;
-      }
-      textArea.value = originalText + (originalText && currentTranscript ? ' ' : '') + currentTranscript;
-    };
+            const play = (txt, rate = 1.0) => {
+                window.speechSynthesis.cancel();
+                // Làm sạch text để đọc tốt hơn (loại bỏ dấu ngoặc, gạch chéo)
+                const cleanTxt = txt.replace(/\(.*?\)/g, '').replace(/\//g, 'or');
+                const u = new SpeechSynthesisUtterance(cleanTxt);
+                u.lang = 'en-US'; u.rate = rate;
+                window.speechSynthesis.speak(u);
+            };
 
-    recognition.onerror = (event) => { console.error(event.error); };
+            const startRec = async () => {
+                try {
+                    const s = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    recorderRef.current = new MediaRecorder(s);
+                    const chunks = [];
+                    recorderRef.current.ondataavailable = e => chunks.push(e.data);
+                    recorderRef.current.onstop = () => {
+                        const blob = new Blob(chunks, { type: 'audio/webm' });
+                        setAudioUrl(URL.createObjectURL(blob));
+                    };
+                    recorderRef.current.start(); setRec(true); setAudioUrl(null);
+                } catch (e) { alert("Vui lòng cấp quyền Micro để sử dụng tính năng thu âm!"); }
+            };
 
-    recognition.onend = () => {
-      micBtn.classList.remove('mic-active');
-      micBtn.innerHTML = `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg> Bấm nói`;
-    };
+            const stopRec = () => {
+                if (recorderRef.current && recorderRef.current.state !== 'inactive') {
+                    recorderRef.current.stop();
+                    recorderRef.current.stream.getTracks().forEach(t => t.stop());
+                }
+                setRec(false);
+            };
 
-    recognition.start();
-  }
+            const resetWord = () => {
+                setStep(1); setFlipped(false); setQRes(null); setTypeIn(""); setTypeRes(null); setAudioUrl(null); stopRec();
+            };
 
-  function playAudio(text) {
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    utterance.rate = 0.85; 
-    window.speechSynthesis.speak(utterance);
-  }
+            const handleNextStep = () => { if (step < 5) setStep(step + 1); };
 
-  function renderTabs() {
-    const TABS = [
-      { id: 'read', icon: '📖', label: 'Reading' },
-      { id: 'shadow', icon: '🗣️', label: 'Shadowing' },
-      { id: 'dict', icon: '🎧', label: 'Dictation' },
-      { id: 'entovn', icon: '🇬🇧➔🇻🇳', label: 'Eng-Vn' },
-      { id: 'vntoen', icon: '🇻🇳➔🇬🇧', label: 'Vn-Eng' }
-    ];
-    document.getElementById('tabNav').innerHTML = TABS.map(tab => `
-      <button onclick="switchTab('${tab.id}')" class="px-4 py-3 whitespace-nowrap text-sm transition-all ${currentTab === tab.id ? 'tab-active' : 'tab-inactive'}">
-        <span class="mr-2">${tab.icon}</span>${tab.label}
-      </button>
-    `).join('');
-  }
+            const checkType = () => {
+                const clean = cur.word.replace(/[\.\(\)\?\;\,]/g, '').toLowerCase().trim();
+                if (typeIn.toLowerCase().trim() === clean || typeIn.toLowerCase().trim() === cur.word.toLowerCase()) setTypeRes('ok');
+                else setTypeRes('no');
+            };
 
-  function switchTab(tabId) {
-    currentTab = tabId; currentIndex = 0;
-    window.speechSynthesis.cancel();
-    renderTabs(); renderWorkspace();
-  }
+            const renderTabStatus = (sNum, icon, lab) => {
+                let cls = "locked";
+                if (step === sNum || (step === 5 && sNum === 4)) cls = "active";
+                else if (step > sNum) cls = "completed";
+                return <div className={`mode-tab ${cls}`}>{cls === 'completed' ? '✅' : icon} {lab}</div>;
+            };
 
-  function renderPagination(total, current, onNext, onPrev) {
-    return `
-      <div class="flex justify-between items-center mt-8 text-clay-600">
-        <button onclick="${onPrev}" class="px-4 py-2 hover:bg-sand-100 rounded-lg disabled:opacity-30" ${current === 0 ? 'disabled' : ''}>← Trước</button>
-        <div class="text-xs font-medium">${current + 1} / ${total}</div>
-        <button onclick="${onNext}" class="px-4 py-2 hover:bg-sand-100 rounded-lg disabled:opacity-30" ${current === total - 1 ? 'disabled' : ''}>Sau →</button>
-      </div>
-    `;
-  }
+            const handleCompletePractice = () => {
+                if (draftText.trim().length < 15) {
+                    alert("Đoạn hội thoại của bạn có vẻ hơi ngắn. Hãy thực hành gõ đầy đủ các câu nhé!");
+                } else {
+                    alert("Hoàn thành tình huống xuất sắc! 🎉\nBạn đã sẵn sàng đối đáp với nhân viên hải quan rồi đó.");
+                    setDraftText("");
+                }
+            };
 
-  // --- 0. READING ---
-  function renderReading() {
-    const textPairs = [
-      {
-        isHeader: true,
-        en: "CHECKING QUESTIONS",
-        vn: "CÁC CÂU HỎI KIỂM PHÁP THƯỜNG GẶP"
-      },
-      ...LESSON_DATA
-    ];
+            return (
+                <div className="container">
+                    <div className="header-title">✈️ Topic 3 - At The Airport / Tại Sân Bay</div>
 
-    const rowsHtml = textPairs.map(pair => {
-      if (pair.isHeader) {
-        return `
-          <div class="col-span-1 md:col-span-2 text-center mt-4 mb-6">
-            <h2 class="font-display text-2xl md:text-3xl text-ink-900 font-medium">${pair.en}</h2>
-            <h2 class="font-display text-xl md:text-2xl text-clay-600 mt-2 italic">${pair.vn}</h2>
-            <div class="w-16 h-1 bg-moss-50 mx-auto mt-4 rounded-full"></div>
-          </div>
-        `;
-      }
-      return `
-        <div class="bg-sand-50/50 p-4 rounded-xl text-ink-800 text-sm md:text-base leading-relaxed border border-sand-100">${pair.en}</div>
-        <div class="bg-white p-4 rounded-xl text-clay-700 text-sm md:text-base leading-relaxed border border-sand-100">${pair.vn}</div>
-      `;
-    }).join('');
+                    {/* Main Navigation Tab */}
+                    <div className="top-nav">
+                        <button className={`nav-pill ${activeTab === 'vocabulary' ? 'active' : ''}`} onClick={() => {setActiveTab('vocabulary'); stopRec();}}>📚 1. Học Từ Vựng</button>
+                        <button className={`nav-pill ${activeTab === 'practice' ? 'active' : ''}`} onClick={() => {setActiveTab('practice'); stopRec();}}>🗣️ 2. Thực Hành Tình Huống</button>
+                    </div>
 
-    return `
-      <div class="card-zen p-6 md:p-10 rounded-2xl fade-in-up max-h-[75vh] overflow-y-auto custom-scrollbar">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 items-center">
-          ${rowsHtml}
-        </div>
-      </div>
-    `;
-  }
+                    {activeTab === 'vocabulary' && (
+                        <>
+                            <div className="sub-nav-container">
+                                <div className="progress-bar">
+                                    {[1,2,3,4].map(s => <div key={s} className={`progress-segment ${step >= s ? 'active' : ''}`}></div>)}
+                                </div>
+                                <div className="mode-nav">
+                                    <div className="mode-tabs">
+                                        {renderTabStatus(1, "🃏", "Lật thẻ")}
+                                        {renderTabStatus(2, "📝", "Trắc nghiệm")}
+                                        {renderTabStatus(3, "⌨️", "Gõ từ")}
+                                        {renderTabStatus(4, "🔊", "Phát âm")}
+                                    </div>
+                                    <div style={{fontWeight: 'bold', color: '#64748b'}}>{idx + 1} / {vocabularyData.length}</div>
+                                </div>
+                            </div>
 
-  // --- 1. SHADOWING ---
-  function renderShadowing() {
-    const data = LESSON_DATA[currentIndex];
-    return `
-      <div class="card-zen p-6 md:p-10 rounded-2xl text-center fade-in-up">
-        <div class="text-[10px] uppercase tracking-widest text-clay-500 mb-6 font-bold">Listen & Repeat</div>
-        <h2 class="font-display text-xl md:text-2xl text-ink-900 leading-relaxed mb-8">${data.en}</h2>
-        
-        <div class="flex justify-center gap-3 mb-6">
-          <button onclick="playAudio(LESSON_DATA[currentIndex].en)" class="flex items-center gap-2 bg-moss-600 text-white px-5 py-2.5 rounded-full hover:bg-moss-700 shadow-sm transition-colors text-sm">
-            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-            Nghe máy đọc
-          </button>
-          <button id="shadowMicBtn" onclick="startSpeech('en-US', 'shadowInput', 'shadowMicBtn')" class="flex items-center gap-2 border border-clay-300 text-clay-700 bg-white px-5 py-2.5 rounded-full hover:bg-sand-50 transition-colors text-sm shadow-sm">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
-            Bấm nói
-          </button>
-        </div>
-        
-        <textarea id="shadowInput" rows="2" placeholder="Bấm micro và đọc lại câu tiếng Anh ở trên. Máy sẽ viết ra đây để bạn tự đối chiếu..." class="w-full bg-sand-50 border border-sand-200 rounded-xl p-4 text-ink-700 focus:outline-none focus:border-moss-400 resize-none text-sm mb-4"></textarea>
-        
-        <button onclick="document.getElementById('vnTrans').classList.toggle('hidden')" class="text-xs text-clay-500 hover:text-clay-700 underline mt-2 mb-4 block mx-auto">Hiển thị tiếng Việt</button>
-        <p id="vnTrans" class="hidden text-clay-600 italic font-display text-base border-t border-sand-200 pt-4">${data.vn}</p>
-      </div>
-      ${renderPagination(LESSON_DATA.length, currentIndex, 'next()', 'prev()')}
-    `;
-  }
+                            <div className={`card-area ${flipped ? 'flipped' : ''}`}>
+                                {step === 1 && (
+                                    !flipped ? (
+                                        <>
+                                            <div className="word-large">{cur.word}</div>
+                                            <div className="ipa-text">{cur.ipa}</div>
+                                            <button className="btn-audio-pink" onClick={() => play(cur.word)}>🔊 Nghe máy đọc</button>
+                                            <button className="btn-flip" onClick={() => setFlipped(true)}>Xem nghĩa 👉</button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="vi-text">{cur.vi}</div>
+                                            <div className="example-text">"{cur.example}"</div>
+                                            <button className="btn-flip" onClick={() => setFlipped(false)}>👈 Quay lại thẻ Tiếng Anh</button>
+                                        </>
+                                    )
+                                )}
 
-  // --- 2. DICTATION ---
-  function renderDictation() {
-    const data = LESSON_DATA[currentIndex];
-    return `
-      <div class="card-zen p-6 md:p-8 rounded-2xl fade-in-up">
-        <div class="flex justify-between items-center mb-6">
-          <div class="text-[10px] uppercase tracking-widest text-clay-500 font-bold">Listen & Type</div>
-          <button onclick="playAudio(LESSON_DATA[currentIndex].en)" class="text-moss-600 bg-moss-50 p-3 rounded-full hover:bg-moss-100 transition-colors">
-            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-          </button>
-        </div>
-        
-        <textarea id="dictInput" rows="4" placeholder="Nghe và gõ lại tiếng Anh vào đây..." class="w-full bg-white border border-sand-200 rounded-xl p-4 text-ink-900 focus:outline-none focus:border-moss-400 focus:ring-1 focus:ring-moss-400 resize-none text-base"></textarea>
-        
-        <div class="mt-4 flex justify-end">
-           <button onclick="document.getElementById('dictAns').classList.remove('hidden')" class="bg-ink-800 text-white px-5 py-2 rounded-full hover:bg-ink-900 text-xs">Kiểm tra Đáp án</button>
-        </div>
+                                {step === 2 && (
+                                    <>
+                                        <div className="quiz-title">Chọn nghĩa đúng nhất:</div>
+                                        <div className="word-large">{cur.word}</div>
+                                        <div className="quiz-grid">
+                                            {qOptions.map((o, i) => (
+                                                <div key={i} className={`quiz-option ${qRes && o.id === cur.id ? 'correct' : (qRes === 'no' && o.id !== cur.id ? 'incorrect' : '')}`} onClick={() => setQRes(o.id === cur.id ? 'ok' : 'no')}>{o.vi}</div>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
 
-        <div id="dictAns" class="hidden mt-6 bg-moss-50 border border-moss-100 rounded-xl p-5">
-           <div class="text-[10px] text-moss-700 font-bold mb-1 uppercase tracking-wider">Nguyên bản:</div>
-           <div class="text-ink-900 text-base font-medium">${data.en}</div>
-           <div class="text-clay-600 italic text-sm mt-2">${data.vn}</div>
-        </div>
-      </div>
-      ${renderPagination(LESSON_DATA.length, currentIndex, 'next()', 'prev()')}
-    `;
-  }
+                                {step === 3 && (
+                                    <>
+                                        <div className="quiz-title" style={{fontSize: '20px'}}>Nghe và gõ lại từ vựng/cụm từ:</div>
+                                        <button className="btn-audio-blue" onClick={() => play(cur.word)}>🔊 Bấm để nghe</button>
+                                        <div className="type-input-group">
+                                            <input className="type-input" placeholder="Gõ tiếng Anh..." value={typeIn} onChange={e => setTypeIn(e.target.value)} onKeyDown={e => e.key === 'Enter' && checkType()} />
+                                            <button className="btn-check" onClick={checkType}>Check</button>
+                                        </div>
+                                        {typeRes === 'ok' && <div style={{color: '#10b981', marginTop: '10px', fontWeight: 'bold'}}>✅ Chính xác!</div>}
+                                        {typeRes === 'no' && <div style={{color: '#ef4444', marginTop: '10px', fontWeight: 'bold'}}>❌ Chưa chính xác, hãy thử lại!</div>}
+                                    </>
+                                )}
 
-  // --- 3 & 4. TRANSLATION ---
-  function renderTranslation(direction) {
-    const data = LESSON_DATA[currentIndex];
-    const isEnToVn = direction === 'en2vn';
-    const sourceText = isEnToVn ? data.en : data.vn;
-    const targetText = isEnToVn ? data.vn : data.en;
-    const langCode = isEnToVn ? 'vi-VN' : 'en-US'; 
+                                {step === 4 && (
+                                    <>
+                                        <div className="ipa-text" style={{fontSize: '32px'}}>{cur.ipa}</div>
+                                        <div className="speed-controls">
+                                            <button className="btn-audio-blue" onClick={() => play(cur.word, 0.7)}>🐢 0.7x</button>
+                                            <button className="btn-audio-pink" onClick={() => play(cur.word, 1.0)}>🔊 1.0x</button>
+                                        </div>
+                                        <div className="divider"></div>
+                                        <button className={`btn-record ${rec ? 'recording' : ''}`} onClick={rec ? stopRec : startRec}>{rec ? '⏹️ DỪNG THU' : '🎤 BẤM THU ÂM'}</button>
+                                        {audioUrl && <audio className="audio-player" src={audioUrl} controls />}
+                                    </>
+                                )}
 
-    return `
-      <div class="card-zen p-6 md:p-8 rounded-2xl fade-in-up">
-        <div class="text-[10px] uppercase tracking-widest text-clay-500 mb-4 font-bold">${isEnToVn ? 'Dịch sang tiếng Việt' : 'Dịch sang tiếng Anh'}</div>
-        <h2 class="font-display text-lg md:text-xl text-ink-900 leading-relaxed mb-6 bg-sand-50 p-5 rounded-xl border border-sand-100 italic">${sourceText}</h2>
-        
-        <div class="relative">
-          <textarea id="transArea" rows="4" placeholder="Nhập bản dịch hoặc bấm micro..." class="w-full bg-white border border-sand-200 rounded-xl p-4 text-ink-900 focus:outline-none focus:border-moss-400 focus:ring-1 focus:ring-moss-400 resize-none text-base"></textarea>
-          
-          <button id="micBtn${direction}" onclick="startSpeech('${langCode}', 'transArea', 'micBtn${direction}')" class="absolute bottom-3 right-3 flex items-center gap-2 border border-sand-200 bg-white text-clay-600 px-3 py-1.5 rounded-lg hover:bg-sand-50 transition-all text-xs font-medium shadow-sm">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
-            Bấm nói
-          </button>
-        </div>
-        
-        <div class="mt-4 flex justify-between items-center">
-           <p class="text-[10px] text-clay-400">Micro hỗ trợ: ${isEnToVn ? 'Tiếng Việt' : 'English'}</p>
-           <button onclick="document.getElementById('transAns').classList.toggle('hidden')" class="bg-clay-600 text-white px-5 py-2 rounded-full hover:bg-clay-700 text-xs transition-colors">Hiện đáp án</button>
-        </div>
+                                {step === 5 && (
+                                    <>
+                                        <h2 style={{color: '#047857'}}>🎉 Hoàn thành cụm từ:</h2>
+                                        <div className="word-large">{cur.word}</div>
+                                        <div className="vi-text" style={{fontWeight: 'normal'}}>{cur.vi}</div>
+                                        <div className="final-choice-box">
+                                            <button className="btn-retry" onClick={resetWord}>🔄 Học lại</button>
+                                            <button className="btn-next" onClick={() => { if (idx < vocabularyData.length-1) { setIdx(idx+1); resetWord(); } else alert("Hoàn thành Topic 3! 🎉"); }}>{idx < vocabularyData.length-1 ? 'Từ tiếp theo ➔' : 'HOÀN THÀNH 🏆'}</button>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
 
-        <div id="transAns" class="hidden mt-6 bg-moss-50 border border-moss-100 rounded-xl p-5">
-           <div class="text-[10px] text-moss-600 font-bold mb-2 uppercase tracking-wider">Bản dịch tham khảo:</div>
-           <div class="text-ink-900 text-base font-medium">${targetText}</div>
-        </div>
-      </div>
-      ${renderPagination(LESSON_DATA.length, currentIndex, 'next()', 'prev()')}
-    `;
-  }
+                            {step < 5 && (
+                                <button className="btn-next" onClick={handleNextStep} disabled={(step===1 && !flipped) || (step===2 && qRes!=='ok') || (step===3 && typeRes!=='ok') || (step===4 && !audioUrl)}>Tiếp tục →</button>
+                            )}
 
-  // --- ĐIỀU HƯỚNG ---
-  function renderWorkspace() {
-    const ws = document.getElementById('workspace');
-    if (currentTab === 'read') ws.innerHTML = renderReading();
-    else if (currentTab === 'shadow') ws.innerHTML = renderShadowing();
-    else if (currentTab === 'dict') ws.innerHTML = renderDictation();
-    else if (currentTab === 'entovn') ws.innerHTML = renderTranslation('en2vn');
-    else if (currentTab === 'vntoen') ws.innerHTML = renderTranslation('vntoen');
-  }
+                            {/* Phân trang Từ Vựng */}
+                            <div className="pagination">
+                                {vocabularyData.map((_, i) => (
+                                    <div 
+                                        key={i} 
+                                        className={`page-dot ${i === idx ? 'active' : ''}`}
+                                        onClick={() => { setIdx(i); resetWord(); }}
+                                    >
+                                        {i + 1}
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
 
-  window.next = () => { if(currentIndex < LESSON_DATA.length - 1) { currentIndex++; renderWorkspace(); } };
-  window.prev = () => { if(currentIndex > 0) { currentIndex--; renderWorkspace(); } };
+                    {activeTab === 'practice' && (
+                        <>
+                            <div className="sub-nav-container" style={{display: 'flex', gap: '10px', overflowX: 'auto'}}>
+                                {situationTemplates.map((tpl, i) => (
+                                    <button 
+                                        key={i}
+                                        className={`mode-tab ${sitIdx === i ? 'active' : ''}`}
+                                        onClick={() => {setSitIdx(i); setShowVi(false); setDraftText("");}}
+                                        style={{cursor: 'pointer'}}
+                                    >
+                                        {tpl.title}
+                                    </button>
+                                ))}
+                            </div>
 
-  // Khởi động
-  renderTabs();
-  renderWorkspace();
-</script>
+                            <div className="card-area" style={{justifyContent: 'flex-start', alignItems: 'stretch'}}>
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px'}}>
+                                    <h3 style={{margin: 0, color: '#0f172a'}}>📖 Mẫu hội thoại (Nhập cảnh)</h3>
+                                    <div style={{display: 'flex', gap: '10px'}}>
+                                        <button className="btn-audio-blue" style={{padding: '8px 15px', fontSize: '14px'}} onClick={() => play(curSit.en)}>🔊 Nghe đoạn thoại</button>
+                                        <button className="btn-audio-pink" style={{padding: '8px 15px', fontSize: '14px'}} onClick={() => setShowVi(!showVi)}>{showVi ? 'Ẩn dịch' : 'Hiện dịch'}</button>
+                                    </div>
+                                </div>
+
+                                <div className="email-template-box">
+                                    {curSit.en}
+                                    {showVi && <div className="email-vi-text">{curSit.vi}</div>}
+                                </div>
+
+                                <div className="divider"></div>
+
+                                <h3 style={{color: '#0f172a', marginBottom: '15px'}}>⌨️ Thực hành gõ lại hội thoại</h3>
+                                <p style={{fontSize: '14px', color: '#64748b', marginTop: 0}}>Hãy đóng vai hành khách và gõ lại câu trả lời bằng tiếng Anh để ghi nhớ cách phản xạ khi gặp hải quan nhé!</p>
+                                
+                                <textarea 
+                                    className="email-textarea" 
+                                    placeholder="Gõ lại câu thoại của bạn tại đây..."
+                                    value={draftText}
+                                    onChange={(e) => setDraftText(e.target.value)}
+                                ></textarea>
+
+                                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                                    <button className="btn-send-email" onClick={handleCompletePractice}>
+                                        ✅ Hoàn thành đóng vai
+                                    </button>
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Topic3App />);
+    </script>
 </body>
 </html>
